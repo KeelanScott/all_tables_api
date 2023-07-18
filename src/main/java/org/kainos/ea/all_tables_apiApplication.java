@@ -5,6 +5,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.kainos.ea.resources.JobRoleController;
 
 public class all_tables_apiApplication extends Application<all_tables_apiConfiguration> {
 
@@ -31,6 +32,7 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
     public void run(final all_tables_apiConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
+        environment.jersey().register(new JobRoleController());
     }
 
 }
