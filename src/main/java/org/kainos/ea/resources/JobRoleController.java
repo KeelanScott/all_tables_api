@@ -19,9 +19,21 @@ public class JobRoleController {
     @GET
     @Path("/job-roles")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDeliveryEmployees() {
+    public Response getJobRoles() {
         try {
             return Response.ok(jobRoleService.getAllJobRoles()).build();
+        } catch (FailedToGetJobRoleException e) {
+            System.err.println((e.getMessage()));
+            return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/job-roles/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobRoleById(@PathParam("id") int id) {
+        try {
+            return Response.ok(jobRoleService.getJobRolesById(id)).build();
         } catch (FailedToGetJobRoleException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();

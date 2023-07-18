@@ -7,10 +7,19 @@ public class JobRole {
     private String name;
     private int bandId;
 
+    private String specification;
+
     public JobRole(int id, String name, int bandId) {
         this.setId(id);
         this.setName(name);
         this.setBandId(bandId);
+    }
+
+    public JobRole(int id, String name, int bandId, String specifictaion) {
+        setId(id);
+        setName(name);
+        setBandId(bandId);
+        setSpecification(specifictaion);
     }
 
     public int getId() {
@@ -35,5 +44,13 @@ public class JobRole {
 
     public void setBandId(int bandId) {
         this.bandId = bandId;
+    }
+
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
     }
 }

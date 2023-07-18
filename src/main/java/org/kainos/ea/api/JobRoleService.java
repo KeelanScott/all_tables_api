@@ -24,6 +24,16 @@ public class JobRoleService {
             System.err.println(e.getMessage());
             throw new FailedToGetJobRoleException();
         }
+    }
 
+    public JobRole getJobRolesById(int id) throws FailedToGetJobRoleException {
+        try{
+            JobRole jobRole = jobRoleDao.getJobRoleById(id);
+
+            return jobRole;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetJobRoleException();
+        }
     }
 }
