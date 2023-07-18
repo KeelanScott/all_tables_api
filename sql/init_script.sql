@@ -16,8 +16,8 @@ BEGIN
         id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(50) NOT NULL,
         specification VARCHAR(255) NOT NULL,
-        band SMALLINT UNSIGNED NOT NULL,
-        FOREIGN KEY (band) REFERENCES bands(id)
+        band_id SMALLINT UNSIGNED NOT NULL,
+        FOREIGN KEY (band_id) REFERENCES bands(id)
     );
 
 
