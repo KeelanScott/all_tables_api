@@ -5,13 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BandRequest {
     private String name;
-    private int level;
+    private int levelId;
+    private String responsibilities;
 
     @JsonCreator
     public BandRequest(@JsonProperty("name") String name,
-                       @JsonProperty("level") int level) {
+                       @JsonProperty("levelId") int levelId,
+                       @JsonProperty("responsibilities") String responsibilities) {
         this.name = name;
-        this.level = level;
+        this.levelId = levelId;
+        this.responsibilities = responsibilities;
     }
 
     public String getName() {
@@ -22,11 +25,19 @@ public class BandRequest {
         this.name = name;
     }
 
-    public int getLevel() {
-        return level;
+    public int getLevelId() {
+        return levelId;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setLevelId(int levelId) {
+        this.levelId = levelId;
+    }
+
+    public String getResponsibilities() {
+        return responsibilities;
+    }
+
+    public void setResponsibilities(String responsibilities) {
+        this.responsibilities = responsibilities;
     }
 }

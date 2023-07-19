@@ -8,7 +8,8 @@ BEGIN
     CREATE TABLE IF NOT EXISTS bands (
         id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(50) NOT NULL,
-        level SMALLINT UNSIGNED NOT NULL
+        level SMALLINT UNSIGNED NOT NULL,
+        responsibilities VARCHAR(255)
     );
 
     

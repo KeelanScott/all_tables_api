@@ -9,12 +9,13 @@ public class BandDao {
     public int createBand(BandRequest bandRequest) throws SQLException {
         Connection c = DatabaseConnector.getConnection();
 
-        String insertStatement = "INSERT INTO bands(name, level)" +
-                " VALUES(?,?);";
+        String insertStatement = "INSERT INTO bands(name, level, responsibilities)" +
+                " VALUES(?,?,?);";
 
         PreparedStatement st = c.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
         st.setString(1, bandRequest.getName());
-        st.setInt(2, bandRequest.getLevel());
+        st.setInt(2, bandRequest.getLevelId());
+        st.setString(3, bandRequest.getResponsibilities());
 
         st.executeUpdate();
 
