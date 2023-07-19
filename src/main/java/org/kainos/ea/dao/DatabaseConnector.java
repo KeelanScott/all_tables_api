@@ -1,4 +1,4 @@
-package org.kainos.ea.db;
+package org.kainos.ea.dao;
 import org.kainos.ea.client.DatabaseConnectionException;
 
 import java.io.FileInputStream;

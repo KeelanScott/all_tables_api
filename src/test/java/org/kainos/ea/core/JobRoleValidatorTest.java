@@ -2,9 +2,9 @@ package org.kainos.ea.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.kainos.ea.cli.JobRoleRequest;
-import org.kainos.ea.client.JobRoleNameTooLongException;
-import org.kainos.ea.client.JobRoleSpecificationTooLongException;
+import org.kainos.ea.model.JobRoleRequest;
+import org.kainos.ea.exception.JobRoleNameTooLongException;
+import org.kainos.ea.exception.JobRoleSpecificationTooLongException;
 
 public class JobRoleValidatorTest {
 
