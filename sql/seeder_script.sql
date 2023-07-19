@@ -80,6 +80,31 @@ BEGIN
     INSERT INTO job_roles (name, specification, band_id) VALUES ('Senior Software Engineer', 'Develops software', 2);
     INSERT INTO job_roles (name, specification, band_id) VALUES ('Lead Software Engineer', 'Develops software', 3);
 
+    INSERT INTO training_courses (name, description) VALUES ('Java', 'Java training');
+    INSERT INTO training_courses (name, description) VALUES ('C#', 'C# training');
+    INSERT INTO training_courses (name, description) VALUES ('Python', 'Python training');
+    INSERT INTO training_courses (name, description) VALUES ('Leadership', 'Leadership training');
+    INSERT INTO training_courses (name, description) VALUES ('Management', 'Management training');
+    INSERT INTO training_courses (name, description) VALUES ('Communication', 'Communication training');
+    INSERT INTO training_courses (name, description) VALUES ('Presentation', 'Presentation training');
+    INSERT INTO training_courses (name, description) VALUES ('Time Management', 'Time Management training');
+    INSERT INTO training_courses (name, description) VALUES ('Problem Solving', 'Problem Solving training');
+    INSERT INTO training_courses (name, description) VALUES ('Teamwork', 'Teamwork training');
+
+
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (1, 1);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (1, 2);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (1, 3);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (1, 4);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (2, 1);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (2, 2);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (2, 3);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (3, 4);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (3, 5);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (3, 6);
+    INSERT INTO band_training_courses (band_id, training_course_id) VALUES (3, 7);
+
+
 -- check the number of affected rows
 	GET DIAGNOSTICS @rows = ROW_COUNT;
 	IF @rows = 0 THEN

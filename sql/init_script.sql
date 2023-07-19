@@ -46,6 +46,20 @@ BEGIN
         FOREIGN KEY (competency_element_id) REFERENCES competency_elements(id)
     );
 
+
+    CREATE TABLE IF NOT EXISTS training_courses (
+       id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(50) NOT NULL,
+       description VARCHAR(255) NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS band_training_courses (
+         band_id SMALLINT UNSIGNED NOT NULL,
+         training_course_id SMALLINT UNSIGNED NOT NULL,
+         FOREIGN KEY (band_id) REFERENCES bands(id),
+         FOREIGN KEY (training_course_id) REFERENCES training_courses(id)
+    );
+
 	
 	
 END $$
