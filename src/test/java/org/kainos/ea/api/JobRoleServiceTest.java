@@ -9,6 +9,7 @@ import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
 import org.kainos.ea.dao.DatabaseConnector;
+import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
