@@ -1,10 +1,10 @@
 package org.kainos.ea.resources;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.api.BandService;
-import org.kainos.ea.cli.BandRequest;
-import org.kainos.ea.client.FailedToCreateBandException;
-import org.kainos.ea.client.InvalidBandException;
+import org.kainos.ea.services.BandService;
+import org.kainos.ea.models.BandRequest;
+import org.kainos.ea.exceptions.FailedToCreateBandException;
+import org.kainos.ea.exceptions.InvalidBandException;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

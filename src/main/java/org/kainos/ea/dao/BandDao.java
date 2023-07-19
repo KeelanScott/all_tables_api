@@ -1,6 +1,6 @@
-package org.kainos.ea.db;
+package org.kainos.ea.dao;
 
-import org.kainos.ea.cli.BandRequest;
+import org.kainos.ea.models.BandRequest;
 
 import java.sql.*;
 

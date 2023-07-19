@@ -1,10 +1,10 @@
 package org.kainos.ea.resources;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.api.CompetencyService;
-import org.kainos.ea.client.FailedToGetCompetenciesException;
-import org.kainos.ea.client.FailedToGetCompetencyElementsException;
-import org.kainos.ea.client.FailedToGetLevelsException;
+import org.kainos.ea.services.CompetencyService;
+import org.kainos.ea.exceptions.FailedToGetCompetenciesException;
+import org.kainos.ea.exceptions.FailedToGetCompetencyElementsException;
+import org.kainos.ea.exceptions.FailedToGetLevelsException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

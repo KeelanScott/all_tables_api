@@ -1,8 +1,8 @@
-package org.kainos.ea.db;
+package org.kainos.ea.dao;
 
-import org.kainos.ea.cli.Competency;
-import org.kainos.ea.cli.CompetencyElement;
-import org.kainos.ea.cli.Level;
+import org.kainos.ea.models.Competency;
+import org.kainos.ea.models.CompetencyElement;
+import org.kainos.ea.models.Level;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

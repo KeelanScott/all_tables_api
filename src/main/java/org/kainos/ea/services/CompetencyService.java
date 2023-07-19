@@ -1,13 +1,13 @@
-package org.kainos.ea.api;
+package org.kainos.ea.services;
 
 
-import org.kainos.ea.cli.Competency;
-import org.kainos.ea.cli.CompetencyElement;
-import org.kainos.ea.cli.Level;
-import org.kainos.ea.client.FailedToGetCompetenciesException;
-import org.kainos.ea.client.FailedToGetCompetencyElementsException;
-import org.kainos.ea.client.FailedToGetLevelsException;
-import org.kainos.ea.db.CompetencyDao;
+import org.kainos.ea.models.Competency;
+import org.kainos.ea.models.CompetencyElement;
+import org.kainos.ea.models.Level;
+import org.kainos.ea.exceptions.FailedToGetCompetenciesException;
+import org.kainos.ea.exceptions.FailedToGetCompetencyElementsException;
+import org.kainos.ea.exceptions.FailedToGetLevelsException;
+import org.kainos.ea.dao.CompetencyDao;
 
 import java.sql.SQLException;
 import java.util.List;

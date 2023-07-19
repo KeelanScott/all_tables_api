@@ -1,10 +1,10 @@
-package org.kainos.ea.api;
+package org.kainos.ea.services;
 
-import org.kainos.ea.cli.BandRequest;
-import org.kainos.ea.client.FailedToCreateBandException;
-import org.kainos.ea.client.InvalidBandException;
-import org.kainos.ea.core.BandValidator;
-import org.kainos.ea.db.BandDao;
+import org.kainos.ea.models.BandRequest;
+import org.kainos.ea.exceptions.FailedToCreateBandException;
+import org.kainos.ea.exceptions.InvalidBandException;
+import org.kainos.ea.validators.BandValidator;
+import org.kainos.ea.dao.BandDao;
 
 import java.sql.SQLException;
 

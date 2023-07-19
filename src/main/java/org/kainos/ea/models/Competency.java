@@ -1,4 +1,4 @@
-package org.kainos.ea.cli;
+package org.kainos.ea.models;
 
 public class Competency {
     private int competencyId;

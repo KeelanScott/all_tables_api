@@ -1,6 +1,6 @@
-package org.kainos.ea.core;
+package org.kainos.ea.validators;
 
-import org.kainos.ea.cli.BandRequest;
+import org.kainos.ea.models.BandRequest;
 
 public class BandValidator {
     public String isValidBand(BandRequest bandRequest) {

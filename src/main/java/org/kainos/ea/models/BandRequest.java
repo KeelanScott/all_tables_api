@@ -1,4 +1,4 @@
-package org.kainos.ea.cli;
+package org.kainos.ea.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

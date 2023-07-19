@@ -1,4 +1,4 @@
-package org.kainos.ea.client;
+package org.kainos.ea.exceptions;
 
 public class FailedToGetCompetencyElementsException extends Exception {
     @Override
