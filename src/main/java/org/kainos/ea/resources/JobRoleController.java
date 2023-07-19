@@ -1,7 +1,9 @@
 package org.kainos.ea.resources;
 
 import io.swagger.annotations.Api;
+import org.eclipse.jetty.http.HttpStatus;
 import org.kainos.ea.api.JobRoleService;
+import org.kainos.ea.client.DatabaseConnectionException;
 import org.kainos.ea.client.FailedToGetJobRoleException;
 
 import javax.ws.rs.*;
@@ -24,6 +26,9 @@ public class JobRoleController {
             return Response.ok(jobRoleService.getAllJobRoles()).build();
         } catch (FailedToGetJobRoleException e) {
             System.err.println((e.getMessage()));
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch (DatabaseConnectionException e) {
+            System.err.println((e.getMessage()));
             return Response.serverError().build();
         }
     }
@@ -33,8 +38,11 @@ public class JobRoleController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobRoleById(@PathParam("id") int id) {
         try {
-            return Response.ok(jobRoleService.getJobRolesById(id)).build();
+            return Response.status(HttpStatus.OK_200).entity(jobRoleService.getJobRolesById(id)).build();
         } catch (FailedToGetJobRoleException e) {
+            System.err.println((e.getMessage()));
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch (DatabaseConnectionException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
         }

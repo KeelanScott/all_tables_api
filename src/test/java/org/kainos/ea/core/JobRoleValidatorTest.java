@@ -13,7 +13,7 @@ public class JobRoleValidatorTest {
     @Test
     public void isValidJobRole_shouldReturnNull_whenValidEmployee() throws JobRoleSpecificationTooLongException, JobRoleNameTooLongException {
         JobRoleRequest jobRoleRequest = new JobRoleRequest(
-                "James",
+                "Software Engineer",
                 1,
                 "Spec"
         );
@@ -21,26 +21,28 @@ public class JobRoleValidatorTest {
         Assertions.assertNull(jobRoleValidator.isValidJobRole(jobRoleRequest));
     }
 
-//    @Test
-//    public void isValidEmployee_shouldThrowSalaryTooLowException_whenSalaryTooLow() {
-//        EmployeeRequest employeeRequest = new EmployeeRequest(
-//                10000,
-//                "Tim",
-//                "Bloggs",
-//                "tbloggs@email.com",
-//                "1 Main Street",
-//                "Main Road",
-//                "Belfast",
-//                "Antrim",
-//                "BT99BT",
-//                "Northern Ireland",
-//                "12345678901",
-//                "12345678",
-//                "AA1A11AA"
-//        );
-//
-//        assertThrows(SalaryTooLowException.class,
-//                () -> employeeValidator.isValidEmployee(employeeRequest));
-//    }
+    @Test
+    public void isValidJobRole_shouldThrowJobRoleNameTooLongException_whenNameTooLong(){
+        JobRoleRequest jobRoleRequest = new JobRoleRequest(
+                "Svbiuvuiviuerbviuerbviubviuabuvibeuvvbsiuvbsaiubviasuuvbisuabviubviuaviubviubdiuvbiuvdbiubfviusdbviubdviubdiuvbsdufbvusdffbvudbvk",
+                1,
+                "Spec"
+        );
+
+        Assertions.assertThrows(JobRoleNameTooLongException.class,
+                () -> jobRoleValidator.isValidJobRole(jobRoleRequest));
+    }
+
+    @Test
+    public void isValidJobRole_shouldThrowJobRoleSpecificationTooLongException_whenSpecificationTooLong(){
+        JobRoleRequest jobRoleRequest = new JobRoleRequest(
+                "Software Engineer",
+                1,
+                "SvbiuvuiviuerbviuerbviubviuabuvibeuvvbsiuvbsaiubviasuuvbisuabviubviuaviubviubdiuvbiuvdbiubfviusdbviubdviubdiuvbsdufbvusdffbvudbvkSvbiuvuiviuerbviuerbviubviuabuvibeuvvbsiuvbsaiubviasuuvbisuabviubviuaviubviubdiuvbiuvdbiubfviusdbviubdviubdiuvbsdufbvusdffbvudbvk"
+        );
+
+        Assertions.assertThrows(JobRoleSpecificationTooLongException.class,
+                () -> jobRoleValidator.isValidJobRole(jobRoleRequest));
+    }
 
 }

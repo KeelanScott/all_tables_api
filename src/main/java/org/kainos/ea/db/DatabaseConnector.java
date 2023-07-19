@@ -1,4 +1,6 @@
 package org.kainos.ea.db;
+import org.kainos.ea.client.DatabaseConnectionException;
+
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -7,7 +9,7 @@ import java.util.Properties;
 public class DatabaseConnector {
     private static Connection conn;
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, DatabaseConnectionException {
         String user, password, host, name;
 
         if (conn != null && !conn.isClosed()) {
@@ -32,10 +34,10 @@ public class DatabaseConnector {
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw new DatabaseConnectionException();
         } finally {
             System.out.println("I will always run!");
         }
-        return null;
     }
 
 }

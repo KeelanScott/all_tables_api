@@ -1,6 +1,7 @@
 package org.kainos.ea.db;
 
 import org.kainos.ea.cli.JobRole;
+import org.kainos.ea.client.DatabaseConnectionException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 public class JobRoleDao {
 
 
-    public List<JobRole> getAllJobRoles() throws SQLException {
+    public List<JobRole> getAllJobRoles() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         assert c != null;
@@ -31,7 +32,7 @@ public class JobRoleDao {
         return delivery_employee_list;
     }
 
-    public JobRole getJobRoleById(int id) throws SQLException{
+    public JobRole getJobRoleById(int id) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         Statement st = c.createStatement();

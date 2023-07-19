@@ -1,7 +1,11 @@
 package org.kainos.ea.cli;
 
-public class JobRole {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
+public class JobRole {
 
     private int id;
     private String name;
@@ -20,6 +24,15 @@ public class JobRole {
         setName(name);
         setBandId(bandId);
         setSpecification(specifictaion);
+    }
+
+    @JsonCreator
+    public JobRole(@JsonProperty("name") String name,
+                   @JsonProperty("band_id") int bandId,
+                   @JsonProperty("specification")String specification) {
+        setName(name);
+        setBandId(bandId);
+        setSpecification(specification);
     }
 
     public int getId() {
@@ -53,4 +66,6 @@ public class JobRole {
     public void setSpecification(String specification) {
         this.specification = specification;
     }
+
+
 }
