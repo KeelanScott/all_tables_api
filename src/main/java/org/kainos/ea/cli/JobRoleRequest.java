@@ -8,6 +8,7 @@ public class JobRoleRequest {
 
     private String name;
     private int bandId;
+    private String specification;
 
     public String getName() {
         return name;
@@ -25,11 +26,21 @@ public class JobRoleRequest {
         this.bandId = bandId;
     }
 
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
+    }
+
     @JsonCreator
     public JobRoleRequest(
             @JsonProperty("name") String name,
-            @JsonProperty("bandId") int bandId) {
+            @JsonProperty("bandId") int bandId,
+            @JsonProperty("specification") String specification) {
             this.name = name;
             this.bandId = bandId;
+            setSpecification(specification);
     }
 }
