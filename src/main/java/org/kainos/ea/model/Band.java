@@ -1,4 +1,4 @@
-package org.kainos.ea.cli;
+package org.kainos.ea.model;
 
 public class Band {
     private int id;

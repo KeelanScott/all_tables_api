@@ -1,4 +1,4 @@
-package org.kainos.ea.cli;
+package org.kainos.ea.model;
 
 public class Capability {
     private int id;
@@ -9,6 +9,11 @@ public class Capability {
         this.setId(id);
         this.setName(name);
         this.setDescription(description);
+    }
+
+    public Capability(int id, String name) {
+        this.setId(id);
+        this.setName(name);
     }
 
     public int getId() {
