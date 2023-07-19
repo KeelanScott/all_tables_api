@@ -1,6 +1,7 @@
 package org.kainos.ea.db;
 
 import org.kainos.ea.cli.Competency;
+import org.kainos.ea.cli.CompetencyElement;
 import org.kainos.ea.cli.Level;
 
 import java.sql.Connection;
@@ -47,5 +48,25 @@ public class CompetencyDao {
         }
 
         return levelList;
+    }
+
+    public List<CompetencyElement> getCompetencyElements(int competencyId) throws SQLException {
+        Connection c = DatabaseConnector.getConnection();
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT id, competency_id, name " +
+                "FROM competency_elements WHERE competency_id = " + competencyId + ";");
+
+        List<CompetencyElement> elementsList = new ArrayList<>();
+
+        while (rs.next()) {
+            CompetencyElement level = new CompetencyElement(
+                    rs.getInt("competency_elements.id"),
+                    rs.getInt("competency_elements.competency_id"),
+                    rs.getString("competency_elements.name"));
+            elementsList.add(level);
+        }
+
+        return elementsList;
     }
 }

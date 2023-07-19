@@ -2,8 +2,10 @@ package org.kainos.ea.api;
 
 
 import org.kainos.ea.cli.Competency;
+import org.kainos.ea.cli.CompetencyElement;
 import org.kainos.ea.cli.Level;
 import org.kainos.ea.client.FailedToGetCompetenciesException;
+import org.kainos.ea.client.FailedToGetCompetencyElementsException;
 import org.kainos.ea.client.FailedToGetLevelsException;
 import org.kainos.ea.db.CompetencyDao;
 
@@ -35,5 +37,17 @@ public class CompetencyService {
         }
 
         return levelList;
+    }
+
+    public List<CompetencyElement> getCompetencyElements(int competencyId) throws FailedToGetCompetencyElementsException {
+        List<CompetencyElement> elementList = null;
+        try {
+            elementList = competencyDao.getCompetencyElements(competencyId);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetCompetencyElementsException();
+        }
+
+        return elementList;
     }
 }
