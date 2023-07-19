@@ -1,12 +1,22 @@
 package org.kainos.ea.models;
 
 public class TrainingCourse {
+
+    private int id;
     private String name;
     private String description;
 
-    public TrainingCourse(String name, String description) {
+    public TrainingCourse(int id, String name) {
+        this.setId(id);
         this.setName(name);
-        this.setDescription(description);
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public int getId(){
+        return this.id;
     }
 
 
