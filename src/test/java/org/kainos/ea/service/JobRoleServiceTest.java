@@ -50,22 +50,6 @@ public class JobRoleServiceTest {
 
     Connection conn;
 
-//    @Test
-//    void getJobRolesById_shouldThrowFailedToGetJobRoleException_whenDaoReturnsNull() throws SQLException, FailedToGetJobRoleException {
-//        //Mockito.when(DatabaseConnector.getConnection()).thenReturn(conn);
-//        Mockito.when(jobRoleDao.getJobRoleById(0)).thenReturn(null);
-//
-//        assertThrows(FailedToGetJobRoleException.class, () -> jobRoleService.getJobRolesById(0));
-//    }
-//
-//    @Test
-//    void getJobRolesById_shouldReturnEmployee_whenDaoReturnsEmployee() throws SQLException, FailedToGetJobRoleException {
-//        //Mockito.when(databaseConnector.getConnection()).thenReturn(conn);
-//        Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
-//
-//        assertEquals(jobRole, jobRoleService.getJobRolesById(1));
-//    }
-
     @Test
     void getAllJobRoles_shouldReturnJobRoleList_whenDaoReturnsJobRoleList() throws SQLException, FailedToGetJobRoleException {
         ArrayList<JobRole> list = new ArrayList<>();

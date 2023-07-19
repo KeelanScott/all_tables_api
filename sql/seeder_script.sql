@@ -27,6 +27,10 @@ BEGIN
 
 
 
+
+
+
+
 -- check the number of affected rows
 	GET DIAGNOSTICS @rows = ROW_COUNT;
 	IF @rows = 0 THEN

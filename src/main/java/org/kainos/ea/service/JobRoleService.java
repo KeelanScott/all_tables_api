@@ -9,7 +9,7 @@ import java.util.List;
 
 public class JobRoleService {
 
-    private JobRoleDao jobRoleDao = new JobRoleDao();
+    private JobRoleDao jobRoleDao;
 
     public JobRoleService(JobRoleDao jobRoleDao){
         this.jobRoleDao = jobRoleDao;
@@ -18,25 +18,9 @@ public class JobRoleService {
 
     public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException {
         try {
-            return jobRoleDao.getAllJobRoles();
+            return this.jobRoleDao.getAllJobRoles();
         } catch (SQLException e) {
             throw new FailedToGetJobRoleException();
         }
     }
-
-//    public JobRole getJobRolesById(int id) throws FailedToGetJobRoleException {
-//        try{
-//            JobRole jobRole = jobRoleDao.getJobRoleById(id);
-//
-//            if (jobRole != null) {
-//                return jobRole;
-//            }
-//            else{
-//                throw new FailedToGetJobRoleException();
-//            }
-//        } catch (SQLException e) {
-//            System.err.println(e.getMessage());
-//            throw new FailedToGetJobRoleException();
-//        }
-//    }
 }
