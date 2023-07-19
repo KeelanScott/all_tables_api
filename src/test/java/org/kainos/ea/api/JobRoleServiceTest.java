@@ -10,8 +10,10 @@ import org.kainos.ea.db.JobRoleDao;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,5 +54,17 @@ public class JobRoleServiceTest {
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
 
         assertEquals(jobRole, jobRoleService.getJobRolesById(1));
+    }
+
+    @Test
+    void getAllJobRoles_shouldReturnJobRoleList_whenDaoReturnsJobRoleList() throws SQLException {
+        ArrayList<JobRole> list = new ArrayList<>();
+        list.add(jobRole);
+        list.add(jobRole);
+        list.add(jobRole);
+
+        Mockito.when(jobRoleDao.getAllJobRoles()).thenReturn(list);
+
+        assertEquals(list, jobRoleService.getAllJobRoles());
     }
 }
