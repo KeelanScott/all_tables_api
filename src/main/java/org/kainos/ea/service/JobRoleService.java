@@ -1,5 +1,6 @@
 package org.kainos.ea.service;
 
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.JobRole;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
 import org.kainos.ea.dao.JobRoleDao;
@@ -16,7 +17,7 @@ public class JobRoleService {
     }
 
 
-    public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException {
+    public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException, DatabaseConnectionException {
         try {
             return jobRoleDao.getAllJobRoles();
         } catch (SQLException e) {
@@ -24,19 +25,19 @@ public class JobRoleService {
         }
     }
 
-//    public JobRole getJobRolesById(int id) throws FailedToGetJobRoleException {
-//        try{
-//            JobRole jobRole = jobRoleDao.getJobRoleById(id);
-//
-//            if (jobRole != null) {
-//                return jobRole;
-//            }
-//            else{
-//                throw new FailedToGetJobRoleException();
-//            }
-//        } catch (SQLException e) {
-//            System.err.println(e.getMessage());
-//            throw new FailedToGetJobRoleException();
-//        }
-//    }
+    public JobRole getJobRolesById(int id) throws FailedToGetJobRoleException, DatabaseConnectionException {
+        try{
+            JobRole jobRole = jobRoleDao.getJobRoleById(id);
+
+            if (jobRole != null) {
+                return jobRole;
+            }
+            else{
+                throw new FailedToGetJobRoleException();
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetJobRoleException();
+        }
+    }
 }

@@ -2,6 +2,7 @@ package org.kainos.ea.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
@@ -67,7 +68,7 @@ public class JobRoleServiceTest {
 //    }
 
     @Test
-    void getAllJobRoles_shouldReturnJobRoleList_whenDaoReturnsJobRoleList() throws SQLException, FailedToGetJobRoleException {
+    void getAllJobRoles_shouldReturnJobRoleList_whenDaoReturnsJobRoleList() throws SQLException, FailedToGetJobRoleException, DatabaseConnectionException {
         ArrayList<JobRole> list = new ArrayList<>();
         list.add(jobRole);
         list.add(jobRole);

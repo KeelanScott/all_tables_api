@@ -1,5 +1,5 @@
 package org.kainos.ea.dao;
-import org.kainos.ea.client.DatabaseConnectionException;
+import org.kainos.ea.exception.DatabaseConnectionException;
 
 import java.io.FileInputStream;
 import java.sql.*;

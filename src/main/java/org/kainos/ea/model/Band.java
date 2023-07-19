@@ -8,6 +8,10 @@ public class Band {
     private String name;
     private int level;
 
+    public Band() {
+
+    }
+
     @JsonCreator
     public Band(
             @JsonProperty("id") int id,

@@ -5,6 +5,10 @@ public class Capability {
     private String name;
     private String description;
 
+    public Capability() {
+
+    }
+
     public Capability(int id, String name, String description) {
         this.setId(id);
         this.setName(name);

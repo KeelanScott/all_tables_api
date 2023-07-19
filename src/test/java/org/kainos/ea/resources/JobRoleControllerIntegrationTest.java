@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
-import org.kainos.ea.cli.JobRole;
+import org.kainos.ea.model.JobRole;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -30,7 +30,7 @@ public class JobRoleControllerIntegrationTest {
                 .request()
                 .get(JobRole.class);
 
-        Assertions.assertEquals(response.getId(), 1);
+        Assertions.assertEquals(1, response.getId());
     }
 
     @Test
@@ -43,14 +43,5 @@ public class JobRoleControllerIntegrationTest {
         Assertions.assertEquals(400, responseJobRole.getStatus());
     }
 
-    @Test
-    void getJobRoleById_shouldReturn500_whenCantConnectToDatabase() {
-
-        Response responseJobRole = APP.client().target("http://localhost:8080/api/job-roles/" + 0)
-                .request()
-                .get(Response.class);
-
-        Assertions.assertEquals(400, responseJobRole.getStatus());
-    }
 
 }

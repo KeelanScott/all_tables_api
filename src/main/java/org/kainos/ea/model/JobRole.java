@@ -32,9 +32,9 @@ public class JobRole {
     }
 
     @JsonCreator
-    public JobRole(@JsonProperty("name") String name,
-                   @JsonProperty("band_id") int bandId,
-                   @JsonProperty("specification")String specification) {
+    public JobRole( @JsonProperty("name") String name,
+                    @JsonProperty("band_id") int bandId,
+                    @JsonProperty("specification")String specification) {
         setName(name);
         setBandId(bandId);
         setSpecification(specification);
