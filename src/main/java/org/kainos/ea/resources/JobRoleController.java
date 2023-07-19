@@ -7,6 +7,7 @@ import org.kainos.ea.client.FailedToGetJobRoleException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 
 @Api("Job Roles")
@@ -22,7 +23,7 @@ public class JobRoleController {
     public Response getJobRoles() {
         try {
             return Response.ok(jobRoleService.getAllJobRoles()).build();
-        } catch (FailedToGetJobRoleException e) {
+        } catch (SQLException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
         }

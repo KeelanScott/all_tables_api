@@ -15,15 +15,9 @@ public class JobRoleService {
     private JobRoleValidator jobRoleValidator = new JobRoleValidator();
 
 
-    public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException {
-        try {
-            List<JobRole> jobRoleList = jobRoleDao.getAllJobRoles();
-
-            return jobRoleList;
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            throw new FailedToGetJobRoleException();
-        }
+    public List<JobRole> getAllJobRoles() throws SQLException {
+        List<JobRole> jobRoleList = jobRoleDao.getAllJobRoles();
+        return jobRoleList;
     }
 
     public JobRole getJobRolesById(int id) throws FailedToGetJobRoleException {
