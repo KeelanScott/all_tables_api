@@ -7,9 +7,11 @@ import java.io.Serializable;
 
 public class JobRole {
 
+
     private int id;
     private String name;
     private int bandId;
+    private Band band;
 
     private String specification;
 
@@ -17,6 +19,12 @@ public class JobRole {
         this.setId(id);
         this.setName(name);
         this.setBandId(bandId);
+    }
+
+    public JobRole(int id, String name, Band band) {
+        this.setId(id);
+        this.setName(name);
+        this.setBand(band);
     }
 
     public JobRole(int id, String name, int bandId, String specifictaion) {
@@ -67,5 +75,11 @@ public class JobRole {
         this.specification = specification;
     }
 
+    public Band getBand() {
+        return band;
+    }
 
+    public void setBand(Band band) {
+        this.band = band;
+    }
 }

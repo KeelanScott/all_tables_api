@@ -1,5 +1,6 @@
 package org.kainos.ea.db;
 
+import org.kainos.ea.cli.Band;
 import org.kainos.ea.cli.JobRole;
 import org.kainos.ea.client.DatabaseConnectionException;
 
@@ -16,20 +17,26 @@ public class JobRoleDao {
         assert c != null;
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT id, name, band_id FROM job_roles;");
+        ResultSet rs = st.executeQuery(
+                "SELECT job_roles.id, job_roles.name, bands.`name`, level, bands.id  FROM job_roles JOIN bands ON job_roles.band_id = bands.id;");
 
-        List<JobRole> delivery_employee_list = new ArrayList<>();
+        List<JobRole> jobRoleList = new ArrayList<>();
 
         while (rs.next()) {
-            JobRole delivery_employee = new JobRole (
-                    rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getInt("band_id")
+            Band band = new Band(
+                    rs.getInt("bands.id"),
+                    rs.getString("bands.name"),
+                    rs.getInt("level")
+            );
+            JobRole jobRole = new JobRole (
+                    rs.getInt("job_roles.id"),
+                    rs.getString("job_roles.name"),
+                    band
             );
 
-            delivery_employee_list.add(delivery_employee);
+            jobRoleList.add(jobRole);
         }
-        return delivery_employee_list;
+        return jobRoleList;
     }
 
     public JobRole getJobRoleById(int id) throws SQLException, DatabaseConnectionException {
