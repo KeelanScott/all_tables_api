@@ -22,17 +22,17 @@ BEGIN
 
     
     CREATE TABLE IF NOT EXISTS users (
-		username varchar(64) NOT NULL,
-        password varchar(64) NOT NULL,
+		username VARCHAR(64) NOT NULL,
+        password VARCHAR(64) NOT NULL,
         job_role_id SMALLINT UNSIGNED NOT NULL,
+        is_admin BOOLEAN NOT NULL,
         PRIMARY KEY (username),
         FOREIGN KEY (job_role_id) REFERENCES job_roles(id)
     );
     
     CREATE TABLE IF NOT EXISTS tokens (
-		username varchar(64) NOT NULL,
-        password varchar(64) NOT NULL,
-        token varchar(64) NOT NULL,
+		username VARCHAR(64) NOT NULL,
+        token VARCHAR(64) NOT NULL,
         expiry DATETIME NOT NULL,
         FOREIGN KEY (username) REFERENCES users(username)
     );
