@@ -1,4 +1,4 @@
-package org.kainos.ea.resources;
+package org.kainos.ea.controllers;
 
 import io.swagger.annotations.Api;
 import org.kainos.ea.services.BandService;
