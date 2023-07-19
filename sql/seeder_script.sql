@@ -10,9 +10,22 @@ BEGIN
     INSERT INTO bands (name, level) VALUES ('Band 2', 2);
     INSERT INTO bands (name, level) VALUES ('Band 3', 3);
 
-    INSERT INTO job_roles (name, specification, band_id) VALUES ('Trainee Software Engineer', 'Develops software', 1);
-    INSERT INTO job_roles (name, specification, band_id) VALUES ('Senior Software Engineer', 'Develops software', 2);
-    INSERT INTO job_roles (name, specification, band_id) VALUES ('Lead Software Engineer', 'Develops software', 3);
+    INSERT INTO capabilities (name, description) VALUES ('Engineering', 'Engineers software solutions to business problems');
+    INSERT INTO capabilities (name, description) VALUES ('Cyper Security', 'Secures software solutions');
+    INSERT INTO capabilities (name, description) VALUES ('Quality Assurance', 'Ensures software solutions are of high quality');
+
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Trainee Software Engineer', 'Develops software', 1, 1);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Senior Software Engineer', 'Develops software', 2, 1);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Lead Software Engineer', 'Develops software', 3, 1);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Trainee Cyber Security Engineer', 'Secures software', 1, 2);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Senior Cyber Security Engineer', 'Secures software', 2, 2);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Lead Cyber Security Engineer', 'Secures software', 3, 2);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Trainee Quality Assurance Engineer', 'Ensures software quality', 1, 3);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Senior Quality Assurance Engineer', 'Ensures software quality', 2, 3);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Lead Quality Assurance Engineer', 'Ensures software quality', 3, 3);
+
+
+
 
 -- check the number of affected rows
 	GET DIAGNOSTICS @rows = ROW_COUNT;
