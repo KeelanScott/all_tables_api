@@ -1,10 +1,7 @@
 package org.kainos.ea.api;
 
 import org.kainos.ea.cli.Login;
-import org.kainos.ea.client.FailedToGenerateTokenException;
-import org.kainos.ea.client.FailedToLoginException;
-import org.kainos.ea.client.FailedToVerifyTokenException;
-import org.kainos.ea.client.TokenExpiredException;
+import org.kainos.ea.client.*;
 import org.kainos.ea.db.AuthDao;
 
 import java.sql.SQLException;
@@ -15,9 +12,11 @@ public class AuthService {
     public String login(Login login) throws FailedToLoginException, FailedToGenerateTokenException {
         if (authDao.validLogin(login)) {
             try {
-                return authDao.generateToken(login.getUsername());
+                return authDao.generateToken(login.getEmail());
             } catch (SQLException e) {
                 throw new FailedToGenerateTokenException();
+            } catch (DatabaseConnectionException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -33,6 +32,8 @@ public class AuthService {
             }
         } catch (SQLException e) {
             throw new FailedToVerifyTokenException();
+        } catch (DatabaseConnectionException e) {
+            throw new RuntimeException(e);
         }
 
         return false;
@@ -47,6 +48,8 @@ public class AuthService {
             }
         } catch (SQLException e) {
             throw new FailedToVerifyTokenException();
+        } catch (DatabaseConnectionException e) {
+            throw new RuntimeException(e);
         }
 
         return false;
