@@ -3,6 +3,7 @@ package org.kainos.ea.resources;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.CompetencyService;
 import org.kainos.ea.client.FailedToGetCompetenciesException;
+import org.kainos.ea.client.FailedToGetLevelsException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,6 +23,18 @@ public class CompetencyController {
         try {
             return Response.ok(competencyService.getAllCompetencies()).build();
         } catch (FailedToGetCompetenciesException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/levels")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLevels() {
+        try {
+            return Response.ok(competencyService.getAllLevels()).build();
+        } catch (FailedToGetLevelsException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
         }
