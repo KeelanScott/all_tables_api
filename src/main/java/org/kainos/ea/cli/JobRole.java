@@ -34,6 +34,13 @@ public class JobRole {
         setSpecification(specifictaion);
     }
 
+    public JobRole(int id, String name, Band band, String specifictaion) {
+        setId(id);
+        setName(name);
+        setBand(band);
+        setSpecification(specifictaion);
+    }
+
     @JsonCreator
     public JobRole(@JsonProperty("name") String name,
                    @JsonProperty("band_id") int bandId,

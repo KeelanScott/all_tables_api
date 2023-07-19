@@ -58,7 +58,7 @@ public class JobRoleServiceTest {
     }
 
     @Test
-    void getAllJobRoles_shouldReturnJobRoleList_whenDaoReturnsJobRoleList() throws SQLException {
+    void getAllJobRoles_shouldReturnJobRoleList_whenDaoReturnsJobRoleList() throws SQLException, DatabaseConnectionException, FailedToGetJobRoleException {
         ArrayList<JobRole> list = new ArrayList<>();
         list.add(jobRole);
         list.add(jobRole);

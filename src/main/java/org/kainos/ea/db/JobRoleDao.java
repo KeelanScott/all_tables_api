@@ -44,14 +44,19 @@ public class JobRoleDao {
 
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT id, name, band_id, specification FROM job_roles WHERE id = " + id + ";");
+        ResultSet rs = st.executeQuery("SELECT job_roles.id, job_roles.name, bands.`name`, level, bands.id, job_roles.specification  FROM job_roles JOIN bands ON job_roles.band_id = bands.id WHERE job_roles.id = " + id + ";");
 
         while (rs.next()) {
+            Band band = new Band(
+                    rs.getInt("bands.id"),
+                    rs.getString("bands.name"),
+                    rs.getInt("level")
+            );
             return new JobRole(
-                    rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getInt("band_id"),
-                    rs.getString("specification")
+                    rs.getInt("job_roles.id"),
+                    rs.getString("job_roles.name"),
+                    band,
+                    rs.getString("job_roles.specification")
             );
 
         }
