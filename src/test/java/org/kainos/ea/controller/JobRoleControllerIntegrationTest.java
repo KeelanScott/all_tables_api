@@ -12,6 +12,7 @@ import org.kainos.ea.all_tables_apiConfiguration;
 import org.kainos.ea.model.JobRole;
 
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
@@ -24,7 +25,7 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void getJobRoles_shouldReturnList() {
-        List response = APP.client().target("http://localhost:8080/api/job-roles")
+        List<JobRole> response = APP.client().target("http://localhost:8080/api/job-roles")
                 .request()
                 .get(List.class);
 
