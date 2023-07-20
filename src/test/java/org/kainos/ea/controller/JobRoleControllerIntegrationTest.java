@@ -22,12 +22,12 @@ public class JobRoleControllerIntegrationTest {
             new ResourceConfigurationSourceProvider()
     );
 
-//    @Test
-//    void getJobRoles_shouldReturnList() {
-//        List response = APP.client().target("http://localhost:8080/api/job-roles")
-//                .request()
-//                .get(List.class);
-//
-//        Assertions.assertTrue(response.size() > 0);
-//    }
+    @Test
+    void getJobRoles_shouldReturnList() {
+        List response = APP.client().target("http://localhost:8080/api/job-roles")
+                .request()
+                .get(List.class);
+
+        Assertions.assertTrue(response.size() > 0);
+    }
 }
