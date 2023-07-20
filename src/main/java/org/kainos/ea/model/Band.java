@@ -3,9 +3,9 @@ package org.kainos.ea.model;
 public class Band {
     private int id;
     private String name;
-    private int level;
+    private String level;
 
-    public Band(int id, String name, int level) {
+    public Band(int id, String name, String level) {
         this.setId(id);
         this.setName(name);
         this.setLevel(level);
@@ -27,11 +27,11 @@ public class Band {
         this.name = name;
     }
 
-    public int getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 }

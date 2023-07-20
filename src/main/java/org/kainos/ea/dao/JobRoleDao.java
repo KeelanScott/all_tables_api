@@ -28,7 +28,7 @@ public class JobRoleDao {
             Band band = new Band(
                     rs.getInt("bands.id"),
                     rs.getString("bands.name"),
-                    rs.getInt("level")
+                    rs.getString("level")
             );
             JobRole jobRole = new JobRole (
                     rs.getInt("job_roles.id"),
