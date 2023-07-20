@@ -13,7 +13,11 @@ import javax.ws.rs.core.Response;
 @Api("Job Roles")
 @Path("/api")
 public class JobRoleController {
-    private JobRoleService jobRoleService = new JobRoleService(new JobRoleDao());
+
+    public JobRoleController(JobRoleService jobRoleService) {
+        this.jobRoleService = jobRoleService;
+    }
+    private final JobRoleService jobRoleService;
 
     @GET
     @Path("/job-roles")
