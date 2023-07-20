@@ -47,8 +47,6 @@ public class JobRoleServiceTest {
             capability
     );
 
-    Connection conn;
-
     @Test
     void getAllJobRoles_shouldReturnJobRoleList_whenDaoReturnsJobRoleList() throws SQLException, FailedToGetJobRoleException {
         ArrayList<JobRole> list = new ArrayList<>();
