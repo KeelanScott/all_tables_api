@@ -16,7 +16,7 @@ public class AuthDaoTest {
             new ResourceConfigurationSourceProvider()
     );
 
-    AuthDao authDao = Mockito.mock(AuthDao.class);
+   //// AuthDao authDao = Mockito.mock(AuthDao.class);
  //   DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
 
 //    @Test

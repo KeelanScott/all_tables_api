@@ -1,9 +1,10 @@
-package org.kainos.ea.db;
+package org.kainos.ea.dao;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.kainos.ea.cli.Login;
-import org.kainos.ea.client.DatabaseConnectionException;
-import org.kainos.ea.client.TokenExpiredException;
+import org.kainos.ea.encryption.TokenEncryption;
+import org.kainos.ea.model.Login;
+import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.TokenExpiredException;
 
 import java.sql.*;
 import java.util.Date;
@@ -32,7 +33,14 @@ public class AuthDao {
 
     public String generateToken(String email) throws SQLException, DatabaseConnectionException {
         String token = UUID.randomUUID().toString();
+        String encryptedToken;
         Date expiry = DateUtils.addHours(new Date(), 8);
+
+        try {
+            encryptedToken = TokenEncryption.encryptToken(token);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         Connection c = databaseConnector.getConnection();
 
@@ -46,7 +54,7 @@ public class AuthDao {
 
         st.executeUpdate();
 
-        return token;
+        return encryptedToken;
     }
 
     public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {

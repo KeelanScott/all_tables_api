@@ -1,8 +1,9 @@
-package org.kainos.ea.api;
+package org.kainos.ea.service;
 
-import org.kainos.ea.cli.Login;
-import org.kainos.ea.client.*;
-import org.kainos.ea.db.AuthDao;
+import org.kainos.ea.exception.*;
+import org.kainos.ea.model.Login;
+
+import org.kainos.ea.dao.AuthDao;
 
 import java.sql.SQLException;
 
@@ -19,7 +20,6 @@ public class AuthService {
                 throw new RuntimeException(e);
             }
         }
-
         throw new FailedToLoginException();
     }
 

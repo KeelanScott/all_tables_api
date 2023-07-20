@@ -1,9 +1,8 @@
-package org.kainos.ea.db;
-import org.kainos.ea.client.DatabaseConnectionException;
-
+package org.kainos.ea.dao;
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
+import org.kainos.ea.exception.DatabaseConnectionException;
 
 
 public class DatabaseConnector {

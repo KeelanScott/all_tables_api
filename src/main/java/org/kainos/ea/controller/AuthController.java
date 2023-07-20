@@ -1,15 +1,14 @@
-package org.kainos.ea.resources;
+package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.api.AuthService;
-import org.kainos.ea.cli.Login;
-import org.kainos.ea.client.FailedToGenerateTokenException;
-import org.kainos.ea.client.FailedToLoginException;
+import org.kainos.ea.service.AuthService;
+import org.kainos.ea.model.Login;
+import org.kainos.ea.exception.FailedToGenerateTokenException;
+import org.kainos.ea.exception.FailedToLoginException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Api("Login")
 @Path("/api")
