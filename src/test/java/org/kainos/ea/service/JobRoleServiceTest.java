@@ -5,14 +5,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
-import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
-import org.kainos.ea.dao.DatabaseConnector;
 import org.kainos.ea.dao.JobRoleDao;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -24,12 +21,6 @@ public class JobRoleServiceTest {
     JobRoleDao jobRoleDao = Mockito.mock(JobRoleDao.class);
 
     JobRoleService jobRoleService = new JobRoleService(jobRoleDao);
-
-    JobRoleRequest jobRoleRequest = new JobRoleRequest(
-            "Tim",
-            2,
-            "Develops Software"
-    );
 
     Band band = new Band(
             1,

@@ -1,0 +1,39 @@
+package org.kainos.ea.controller;
+
+import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.kainos.ea.exception.FailedToGetJobRoleException;
+import org.kainos.ea.model.Band;
+import org.kainos.ea.model.Capability;
+import org.kainos.ea.model.JobRole;
+import org.kainos.ea.service.JobRoleService;
+import org.mockito.Mockito;
+
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
+
+@ExtendWith(DropwizardExtensionsSupport.class)
+public class JobRoleControllerUnitTest {
+    JobRoleController jobRoleController = new JobRoleController();
+    JobRoleService jobRoleService =   Mockito.mock(JobRoleService.class);
+
+    JobRole jobRole = new JobRole(1,
+            "Software Engineer",
+    new Band(1 , "Band 1", "Level 1"),
+    new Capability(1, "Software Engineering", "Software Engineering"));
+    @Test
+    void getJobRoles_shouldReturnOK() throws FailedToGetJobRoleException {
+
+        List<JobRole> sampleJobRoles = new ArrayList<>();
+        sampleJobRoles.add(jobRole);
+        sampleJobRoles.add(jobRole);
+        sampleJobRoles.add(jobRole);
+
+        Mockito.when(jobRoleService.getAllJobRoles()).thenReturn(sampleJobRoles);
+
+        Response response = jobRoleController.getJobRoles();
+        assert(response.getStatus() == 200);
+    }
+}
