@@ -4,9 +4,12 @@ import org.kainos.ea.models.BandRequest;
 
 public class BandValidator {
     public String isValidBand(BandRequest bandRequest) {
-        if (bandRequest.getLevelId() < 0) return "Band level must be more than 0";
-        if (bandRequest.getName().length() > 20) return "Band name must be under 20 characters";
+        if (bandRequest.getLevel().length() > 30) return "Band level must be under 30 characters";
+        if (bandRequest.getName().length() > 30) return "Band name must be under 30 characters";
+        if (bandRequest.getResponsibilities().length() > 255) return "Band responsibilities must be under 255 characters";
+
         if (bandRequest.getName().length() < 1) return "Band must have a name";
+        if (bandRequest.getLevel().length() < 1) return "Band must have a level";
 
         return null;
     }

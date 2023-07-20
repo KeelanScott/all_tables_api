@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BandRequest {
     private String name;
-    private int levelId;
+    private String level;
     private String responsibilities;
 
     @JsonCreator
     public BandRequest(@JsonProperty("name") String name,
-                       @JsonProperty("levelId") int levelId,
+                       @JsonProperty("level") String level,
                        @JsonProperty("responsibilities") String responsibilities) {
         this.name = name;
-        this.levelId = levelId;
+        this.level = level;
         this.responsibilities = responsibilities;
     }
 
@@ -25,12 +25,12 @@ public class BandRequest {
         this.name = name;
     }
 
-    public int getLevelId() {
-        return levelId;
+    public String getLevel() {
+        return level;
     }
 
-    public void setLevelId(int levelId) {
-        this.levelId = levelId;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public String getResponsibilities() {

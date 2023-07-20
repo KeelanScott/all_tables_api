@@ -14,7 +14,7 @@ public class BandDao {
 
         PreparedStatement st = c.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
         st.setString(1, bandRequest.getName());
-        st.setInt(2, bandRequest.getLevelId());
+        st.setString(2, bandRequest.getLevel());
         st.setString(3, bandRequest.getResponsibilities());
 
         st.executeUpdate();
