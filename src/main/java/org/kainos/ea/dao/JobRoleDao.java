@@ -32,7 +32,7 @@ public class JobRoleDao {
             Band band = new Band(
                     rs.getInt("bands.id"),
                     rs.getString("bands.name"),
-                    rs.getInt("level")
+                    rs.getString("level")
             );
             JobRole jobRole = new JobRole (
                     rs.getInt("job_roles.id"),
@@ -55,10 +55,9 @@ public class JobRoleDao {
                 "JOIN capabilities ON job_roles.capability_id = capabilities.id WHERE job_roles.id = " + id + ";");
 
         while (rs.next()) {
-
             Band band = new Band();
             band.setName(rs.getString("bands.name"));
-            band.setLevel(rs.getInt("level"));
+            band.setLevel(rs.getString("level"));
 
             return new JobRole(
                     rs.getInt("job_roles.id"),
@@ -66,9 +65,7 @@ public class JobRoleDao {
                     band,
                     rs.getString("job_roles.specification")
             );
-
         }
-
         return null;
     }
 }

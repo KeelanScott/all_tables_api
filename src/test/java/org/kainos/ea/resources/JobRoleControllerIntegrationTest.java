@@ -11,10 +11,7 @@ import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
 import org.kainos.ea.model.JobRole;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobRoleControllerIntegrationTest {
@@ -35,7 +32,6 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void getJobRoleById_shouldReturn400_whenIDNotFound() {
-
         Response responseJobRole = APP.client().target("http://localhost:8080/api/job-roles/" + 0)
                 .request()
                 .get(Response.class);

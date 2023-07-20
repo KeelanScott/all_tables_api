@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Band {
     private int id;
     private String name;
-    private int level;
+    private String level;
 
     public Band() {
 
@@ -16,7 +16,7 @@ public class Band {
     public Band(
             @JsonProperty("id") int id,
             @JsonProperty("name") String name,
-            @JsonProperty("level") int level) {
+            @JsonProperty("level") String level) {
         this.setId(id);
         this.setName(name);
         this.setLevel(level);
@@ -38,11 +38,11 @@ public class Band {
         this.name = name;
     }
 
-    public int getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 }
