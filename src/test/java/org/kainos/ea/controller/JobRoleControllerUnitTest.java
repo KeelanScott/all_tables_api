@@ -23,8 +23,11 @@ public class JobRoleControllerUnitTest {
             "Software Engineer",
     new Band(1 , "Band 1", "Level 1"),
     new Capability(1, "Software Engineering", "Software Engineering"));
+
+
+
     @Test
-    void getJobRoles_shouldReturnOK() throws FailedToGetJobRoleException {
+    void getJobRoles_shouldReturnOK_whenServiceReturnsList() throws FailedToGetJobRoleException {
 
         List<JobRole> sampleJobRoles = new ArrayList<>();
         sampleJobRoles.add(jobRole);
@@ -36,4 +39,15 @@ public class JobRoleControllerUnitTest {
         Response response = jobRoleController.getJobRoles();
         assert(response.getStatus() == 200);
     }
+
+    @Test
+    void getJobRoles_shouldReturnInternalServerError_whenServiceThrowsException() throws FailedToGetJobRoleException {
+
+        Mockito.when(jobRoleService.getAllJobRoles()).thenThrow(FailedToGetJobRoleException.class);
+
+        Response response = jobRoleController.getJobRoles();
+        System.out.println(response.getStatus());
+        assert(response.getStatus() == 500);
+    }
+
 }
