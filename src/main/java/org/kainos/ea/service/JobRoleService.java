@@ -15,7 +15,6 @@ public class JobRoleService {
         this.jobRoleDao = jobRoleDao;
     }
 
-
     public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException {
         try {
             return this.jobRoleDao.getAllJobRoles();

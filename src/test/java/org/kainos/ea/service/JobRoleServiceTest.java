@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class JobRoleServiceTest {
     JobRoleDao jobRoleDao = Mockito.mock(JobRoleDao.class);
-    DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
 
     JobRoleService jobRoleService = new JobRoleService(jobRoleDao);
 
@@ -60,5 +59,12 @@ public class JobRoleServiceTest {
         Mockito.when(jobRoleDao.getAllJobRoles()).thenReturn(list);
 
         assertEquals(list, jobRoleService.getAllJobRoles());
+    }
+
+    @Test
+    void getAllJobRoles_shouldThrowFailedToGetJobRoleException_whenDaoThrowsSQLException() throws SQLException{
+        Mockito.when(jobRoleDao.getAllJobRoles()).thenThrow(SQLException.class);
+
+        assertThrows(FailedToGetJobRoleException.class, () -> jobRoleService.getAllJobRoles());
     }
 }

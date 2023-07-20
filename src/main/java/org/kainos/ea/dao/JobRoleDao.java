@@ -9,12 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobRoleDao {
-
-
     public List<JobRole> getAllJobRoles() throws SQLException {
         Connection c = DatabaseConnector.getConnection();
 
-        assert c != null;
         Statement st = c.createStatement();
 
         ResultSet rs = st.executeQuery(
@@ -44,5 +41,4 @@ public class JobRoleDao {
         }
         return jobRoleList;
     }
-
 }

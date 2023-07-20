@@ -13,9 +13,6 @@ import javax.ws.rs.core.Response;
 @Api("Job Roles")
 @Path("/api")
 public class JobRoleController {
-
-
-
     private JobRoleService jobRoleService = new JobRoleService(new JobRoleDao());
 
     @GET

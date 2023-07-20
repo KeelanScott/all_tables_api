@@ -35,7 +35,11 @@ public class DatabaseConnector {
         } finally {
             System.out.println("I will always run!");
         }
-        return null;
+
+        if(conn == null){
+            throw new SQLException("Connection is null");
+        }
+        return conn;
     }
 
 }
