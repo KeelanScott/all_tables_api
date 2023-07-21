@@ -6,9 +6,10 @@ public class TrainingCourse {
     private String name;
     private String description;
 
-    public TrainingCourse(int id, String name) {
+    public TrainingCourse(int id, String name, String description) {
         this.setId(id);
         this.setName(name);
+        this.setDescription(description);
     }
 
     public void setId(int id){

@@ -14,14 +14,15 @@ public class TrainingCourseDao {
         Connection c = DatabaseConnector.getConnection();
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT id, name FROM training_courses;");
+        ResultSet rs = st.executeQuery("SELECT id, name, description FROM training_courses;");
 
         List<TrainingCourse> trainingCourseList = new ArrayList<>();
 
         while (rs.next()) {
             TrainingCourse trainingCourse = new TrainingCourse(
                     rs.getInt("training_courses.id"),
-                    rs.getString("training_courses.name"));
+                    rs.getString("training_courses.name"),
+                    rs.getString("training_courses.description"));
             trainingCourseList.add(trainingCourse);
         }
         return trainingCourseList;
