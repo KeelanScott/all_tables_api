@@ -1,13 +1,8 @@
 package org.kainos.ea.dao;
 
-import org.kainos.ea.models.Competency;
-import org.kainos.ea.models.CompetencyElement;
-import org.kainos.ea.models.Level;
+import org.kainos.ea.models.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,42 +26,23 @@ public class CompetencyDao {
         return competencyList;
     }
 
-    public List<Level> getAllLevels() throws SQLException {
+    public int createBandCompetency(BandCompetency bandCompetency) throws SQLException {
         Connection c = DatabaseConnector.getConnection();
-        Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT id, name " +
-                "FROM levels;");
+        String insertStatement = "INSERT INTO bands_competencies(band_id, competency_id, description)" +
+                " VALUES(?,?,?);";
 
-        List<Level> levelList = new ArrayList<>();
+        System.out.println(bandCompetency.getDescription());
 
-        while (rs.next()) {
-            Level level = new Level(
-                    rs.getInt("levels.id"),
-                    rs.getString("levels.name"));
-            levelList.add(level);
-        }
+        PreparedStatement st = c.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
+        st.setInt(1, bandCompetency.getBandID());
+        st.setInt(2, bandCompetency.getCompetencyID());
+        st.setString(3, bandCompetency.getDescription());
 
-        return levelList;
-    }
+        // Compound primary key, so can't use rs.next to get generated id
+        int result = st.executeUpdate();
 
-    public List<CompetencyElement> getCompetencyElements(int competencyId) throws SQLException {
-        Connection c = DatabaseConnector.getConnection();
-        Statement st = c.createStatement();
-
-        ResultSet rs = st.executeQuery("SELECT id, competency_id, name " +
-                "FROM competency_elements WHERE competency_id = " + competencyId + ";");
-
-        List<CompetencyElement> elementsList = new ArrayList<>();
-
-        while (rs.next()) {
-            CompetencyElement level = new CompetencyElement(
-                    rs.getInt("competency_elements.id"),
-                    rs.getInt("competency_elements.competency_id"),
-                    rs.getString("competency_elements.name"));
-            elementsList.add(level);
-        }
-
-        return elementsList;
+        if (result == 0) return -1;
+        else return result;
     }
 }

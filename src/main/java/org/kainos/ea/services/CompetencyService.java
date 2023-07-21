@@ -1,19 +1,17 @@
 package org.kainos.ea.services;
 
 
-import org.kainos.ea.models.Competency;
-import org.kainos.ea.models.CompetencyElement;
-import org.kainos.ea.models.Level;
-import org.kainos.ea.exceptions.FailedToGetCompetenciesException;
-import org.kainos.ea.exceptions.FailedToGetCompetencyElementsException;
-import org.kainos.ea.exceptions.FailedToGetLevelsException;
+import org.kainos.ea.exceptions.*;
+import org.kainos.ea.models.*;
 import org.kainos.ea.dao.CompetencyDao;
+import org.kainos.ea.validators.BandCompetencyValidator;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class CompetencyService {
     private final CompetencyDao competencyDao = new CompetencyDao();
+    private final BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator();
 
     public List<Competency> getAllCompetencies() throws FailedToGetCompetenciesException {
         List<Competency> competencyList = null;
@@ -27,27 +25,19 @@ public class CompetencyService {
         return competencyList;
     }
 
-    public List<Level> getAllLevels() throws FailedToGetLevelsException {
-        List<Level> levelList = null;
+    public int createBandCompetency(BandCompetency bandCompetency) throws FailedToCreateBandCompetencyException, InvalidBandCompetencyException {
         try {
-            levelList = competencyDao.getAllLevels();
+            String validation = bandCompetencyValidator.isValidBandCompetency(bandCompetency);
+            if (validation != null) throw new InvalidBandCompetencyException(validation);
+
+            int id = competencyDao.createBandCompetency(bandCompetency);
+
+            if (id == -1) throw new FailedToCreateBandCompetencyException();
+
+            return id;
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            throw new FailedToGetLevelsException();
+            System.err.println(e);
+            throw new FailedToCreateBandCompetencyException();
         }
-
-        return levelList;
-    }
-
-    public List<CompetencyElement> getCompetencyElements(int competencyId) throws FailedToGetCompetencyElementsException {
-        List<CompetencyElement> elementList = null;
-        try {
-            elementList = competencyDao.getCompetencyElements(competencyId);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            throw new FailedToGetCompetencyElementsException();
-        }
-
-        return elementList;
     }
 }

@@ -1,8 +1,5 @@
 package org.kainos.ea.dao;
 
-import org.kainos.ea.models.Competency;
-import org.kainos.ea.models.CompetencyElement;
-import org.kainos.ea.models.Level;
 import org.kainos.ea.models.TrainingCourse;
 
 import java.sql.Connection;

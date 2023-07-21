@@ -1,15 +1,12 @@
 package org.kainos.ea.controllers;
 
 import io.swagger.annotations.Api;
+import org.kainos.ea.exceptions.*;
+import org.kainos.ea.models.BandCompetency;
+import org.kainos.ea.models.BandRequest;
 import org.kainos.ea.services.CompetencyService;
-import org.kainos.ea.exceptions.FailedToGetCompetenciesException;
-import org.kainos.ea.exceptions.FailedToGetCompetencyElementsException;
-import org.kainos.ea.exceptions.FailedToGetLevelsException;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -30,27 +27,18 @@ public class CompetencyController {
         }
     }
 
-    @GET
-    @Path("/competencies/{competencyId}/elements")
+    @POST
+    @Path("/band-competencies")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCompetencyElements(@PathParam("competencyId") int competencyId) {
+    public Response createBandCompetency(BandCompetency bandCompetency) {
         try {
-            return Response.ok(competencyService.getCompetencyElements(competencyId)).build();
-        } catch (FailedToGetCompetencyElementsException e) {
+            return Response.status(Response.Status.CREATED).entity(competencyService.createBandCompetency(bandCompetency)).build();
+        } catch (FailedToCreateBandCompetencyException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
-        }
-    }
-
-    @GET
-    @Path("/levels")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getLevels() {
-        try {
-            return Response.ok(competencyService.getAllLevels()).build();
-        } catch (FailedToGetLevelsException e) {
+        } catch (InvalidBandCompetencyException e) {
             System.err.println(e.getMessage());
-            return Response.serverError().build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 }
