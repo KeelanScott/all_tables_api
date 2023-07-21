@@ -32,8 +32,6 @@ public class CompetencyDao {
         String insertStatement = "INSERT INTO bands_competencies(band_id, competency_id, description)" +
                 " VALUES(?,?,?);";
 
-        System.out.println(bandCompetency.getDescription());
-
         PreparedStatement st = c.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
         st.setInt(1, bandCompetency.getBandID());
         st.setInt(2, bandCompetency.getCompetencyID());

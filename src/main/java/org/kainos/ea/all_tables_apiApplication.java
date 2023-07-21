@@ -7,6 +7,7 @@ import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.kainos.ea.controllers.BandController;
 import org.kainos.ea.controllers.CompetencyController;
+import org.kainos.ea.controllers.TrainingCourseController;
 
 public class all_tables_apiApplication extends Application<all_tables_apiConfiguration> {
 
@@ -34,6 +35,7 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
                     final Environment environment) {
         environment.jersey().register(new BandController());
         environment.jersey().register(new CompetencyController());
+        environment.jersey().register(new TrainingCourseController());
     }
 
 }
