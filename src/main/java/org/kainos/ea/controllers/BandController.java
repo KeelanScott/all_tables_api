@@ -16,7 +16,11 @@ import java.sql.SQLException;
 @Api("All Tables Band API")
 @Path("/api")
 public class BandController {
-    private final BandService bandService = new BandService(new BandDao());
+    private final BandService bandService;
+
+    public BandController(BandService bandService) {
+        this.bandService = bandService;
+    }
 
     @POST
     @Path("/bands")
