@@ -26,7 +26,7 @@ public class TrainingCourseController {
     @GET
     @Path("/training-courses")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTrainingCourses() {
+    public Response getAllTrainingCourses() {
         try {
             return Response.ok(trainingCourseService.getAllTrainingCourses()).build();
         } catch (FailedToGetTrainingCoursesException e) {
@@ -46,4 +46,5 @@ public class TrainingCourseController {
             return Response.serverError().build();
         }
     }
+
 }
