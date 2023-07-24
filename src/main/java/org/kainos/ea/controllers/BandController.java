@@ -1,6 +1,8 @@
 package org.kainos.ea.controllers;
 
 import io.swagger.annotations.Api;
+import org.kainos.ea.dao.BandDao;
+import org.kainos.ea.exceptions.FailedToGetBandException;
 import org.kainos.ea.services.BandService;
 import org.kainos.ea.models.BandRequest;
 import org.kainos.ea.exceptions.FailedToCreateBandException;
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 @Api("All Tables Band API")
 @Path("/api")
 public class BandController {
-    private final BandService bandService = new BandService();
+    private final BandService bandService = new BandService(new BandDao());
 
     @POST
     @Path("/bands")
@@ -38,7 +40,7 @@ public class BandController {
     public Response getAllBands() {
         try {
             return Response.ok(bandService.getAllBands()).build();
-        } catch (SQLException e) {
+        } catch (FailedToGetBandException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
         }
@@ -50,7 +52,7 @@ public class BandController {
     public Response getBandById(@PathParam("id") int id) {
         try {
             return Response.ok(bandService.getBandById(id)).build();
-        } catch (SQLException e) {
+        } catch (FailedToGetBandException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
         }
