@@ -1,8 +1,9 @@
-package org.kainos.ea.controller;
+package unit.controller;
 
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kainos.ea.controller.JobRoleController;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;

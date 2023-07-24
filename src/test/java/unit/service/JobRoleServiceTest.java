@@ -1,4 +1,4 @@
-package org.kainos.ea.service;
+package unit.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,6 +7,7 @@ import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
 import org.kainos.ea.dao.JobRoleDao;
+import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
