@@ -14,8 +14,15 @@ import javax.ws.rs.core.Response;
 @Api("Job Roles")
 @Path("/api")
 public class JobRoleController {
+    private static JobRoleService jobRoleService;
 
-    private JobRoleService jobRoleService = new JobRoleService(new JobRoleDao());
+//    public JobRoleController() {
+//        jobRoleService = new JobRoleService(new JobRoleDao());
+//    }
+
+    public JobRoleController(JobRoleService service) {
+        jobRoleService = service;
+    }
 
     @GET
     @Path("/job-roles")
