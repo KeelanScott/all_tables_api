@@ -1,4 +1,6 @@
 package org.kainos.ea.dao;
+import org.kainos.ea.exception.DatabaseConnectionException;
+
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -35,11 +37,6 @@ public class DatabaseConnector {
         } finally {
             System.out.println("I will always run!");
         }
-
-        if(conn == null){
-            throw new SQLException("Connection is null");
-        }
-        return conn;
     }
 
 }
