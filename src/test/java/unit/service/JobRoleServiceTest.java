@@ -1,5 +1,4 @@
 package unit.service;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.exception.DatabaseConnectionException;
@@ -11,10 +10,8 @@ import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -37,7 +34,8 @@ public class JobRoleServiceTest {
             1,
             "Tim",
             band,
-            capability
+            capability,
+            "spec"
     );
 
     @Test

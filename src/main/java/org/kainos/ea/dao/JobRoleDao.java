@@ -11,7 +11,6 @@ import java.util.List;
 
 public class JobRoleDao {
 
-
     public List<JobRole> getAllJobRoles() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
@@ -37,7 +36,8 @@ public class JobRoleDao {
                     rs.getInt("job_roles.id"),
                     rs.getString("job_roles.name"),
                     band,
-                    capability
+                    capability,
+                    null
             );
 
             jobRoleList.add(jobRole);
@@ -50,10 +50,16 @@ public class JobRoleDao {
 
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT job_roles.id, job_roles.name, bands.`name`, level, job_roles.specification  FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
+        ResultSet rs = st.executeQuery("SELECT job_roles.id, job_roles.name, bands.`name`, level, job_roles.specification, capabilities.id, capabilities.name, capabilities.description FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
                 "JOIN capabilities ON job_roles.capability_id = capabilities.id WHERE job_roles.id = " + id + ";");
 
         while (rs.next()) {
+            Capability capability = new Capability(
+                    rs.getInt("capabilities.id"),
+                    rs.getString("capabilities.name"),
+                    rs.getString("capabilities.description")
+            );
+
             Band band = new Band();
             band.setName(rs.getString("bands.name"));
             band.setLevel(rs.getString("level"));
@@ -62,6 +68,7 @@ public class JobRoleDao {
                     rs.getInt("job_roles.id"),
                     rs.getString("job_roles.name"),
                     band,
+                    capability,
                     rs.getString("job_roles.specification")
             );
         }

@@ -1,15 +1,17 @@
 package org.kainos.ea.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Capability {
     private int id;
     private String name;
     private String description;
 
-    public Capability() {
-
-    }
-
-    public Capability(int id, String name, String description) {
+    @JsonCreator
+    public Capability(@JsonProperty("id") int id,
+                      @JsonProperty("name") String name,
+                      @JsonProperty("description") String description) {
         this.setId(id);
         this.setName(name);
         this.setDescription(description);

@@ -1,42 +1,25 @@
 package org.kainos.ea.model;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-
 public class JobRole {
-
-
     private int id;
     private String name;
     private int bandId;
     private Band band;
     private Capability capability;
-
     private String specification;
 
-    public JobRole(int id, String name, Band band, Capability capability) {
-        this.setId(id);
-        this.setName(name);
-        this.setBand(band);
-        this.setCapability(capability);
-    }
-
-
-    public JobRole(int id, String name, Band band, String specifictaion) {
+    @JsonCreator
+    public JobRole(@JsonProperty("id") int id,
+                   @JsonProperty("name") String name,
+                   @JsonProperty("band") Band band,
+                   @JsonProperty("Capability") Capability capability,
+                   @JsonProperty("specification") String specification) {
         setId(id);
         setName(name);
         setBand(band);
-        setSpecification(specifictaion);
-    }
-
-    @JsonCreator
-    public JobRole( @JsonProperty("name") String name,
-                    @JsonProperty("band_id") int bandId,
-                    @JsonProperty("specification")String specification) {
-        setName(name);
-        setBandId(bandId);
+        setCapability(capability);
         setSpecification(specification);
     }
 
