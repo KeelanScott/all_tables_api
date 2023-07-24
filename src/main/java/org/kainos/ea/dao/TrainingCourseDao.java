@@ -1,11 +1,9 @@
 package org.kainos.ea.dao;
 
+import org.kainos.ea.models.BandTrainingCourse;
 import org.kainos.ea.models.TrainingCourse;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,5 +24,25 @@ public class TrainingCourseDao {
             trainingCourseList.add(trainingCourse);
         }
         return trainingCourseList;
+    }
+
+    public int createBandTrainingCourse(BandTrainingCourse bandTrainingCourse) throws SQLException {
+        Connection c = DatabaseConnector.getConnection();
+
+        System.out.println("\n\nBand ID: " + bandTrainingCourse.getBandId());
+        System.out.println("\nTraining course ID: " + bandTrainingCourse.getBandId());
+
+        String insertStatement = "INSERT INTO band_training_courses(band_id, training_course_id)" +
+                " VALUES(?,?);";
+
+        PreparedStatement st = c.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
+        st.setInt(1, bandTrainingCourse.getBandId());
+        st.setInt(2, bandTrainingCourse.getTrainingId());
+
+        // Compound primary key, so can't use rs.next to get generated id
+        int result = st.executeUpdate();
+
+        if (result == 0) return -1;
+        else return result;
     }
 }

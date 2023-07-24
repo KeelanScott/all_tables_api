@@ -1,10 +1,13 @@
 package org.kainos.ea.controllers;
 
 import io.swagger.annotations.Api;
+import org.kainos.ea.exceptions.FailedToCreateBandTrainingCourseException;
 import org.kainos.ea.exceptions.FailedToGetTrainingCoursesException;
+import org.kainos.ea.models.BandTrainingCourse;
 import org.kainos.ea.services.TrainingCourseService;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -27,4 +30,15 @@ public class TrainingCourseController {
         }
     }
 
+    @POST
+    @Path("/band-training-courses")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createBand(BandTrainingCourse bandTrainingCourse) {
+        try {
+            return Response.status(Response.Status.CREATED).entity(trainingCourseService.createBandTrainingCourse(bandTrainingCourse)).build();
+        } catch (FailedToCreateBandTrainingCourseException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        }
+    }
 }
