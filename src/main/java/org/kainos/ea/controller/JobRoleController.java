@@ -14,15 +14,11 @@ import javax.ws.rs.core.Response;
 @Api("Job Roles")
 @Path("/api")
 public class JobRoleController {
-    private static JobRoleService jobRoleService;
 
-//    public JobRoleController() {
-//        jobRoleService = new JobRoleService(new JobRoleDao());
-//    }
-
-    public JobRoleController(JobRoleService service) {
-        jobRoleService = service;
+    public JobRoleController(JobRoleService jobRoleService) {
+        this.jobRoleService = jobRoleService;
     }
+    private final JobRoleService jobRoleService;
 
     @GET
     @Path("/job-roles")
@@ -53,5 +49,4 @@ public class JobRoleController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-
 }

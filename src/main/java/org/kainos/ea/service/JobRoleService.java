@@ -10,7 +10,7 @@ import java.util.List;
 
 public class JobRoleService {
 
-    private JobRoleDao jobRoleDao = new JobRoleDao();
+    private JobRoleDao jobRoleDao;
 
     public JobRoleService(JobRoleDao jobRoleDao){
         this.jobRoleDao = jobRoleDao;
@@ -19,7 +19,7 @@ public class JobRoleService {
 
     public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException, DatabaseConnectionException {
         try {
-            return jobRoleDao.getAllJobRoles();
+            return this.jobRoleDao.getAllJobRoles();
         } catch (SQLException e) {
             throw new FailedToGetJobRoleException();
         }

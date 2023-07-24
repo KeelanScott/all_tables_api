@@ -15,7 +15,6 @@ public class JobRoleDao {
     public List<JobRole> getAllJobRoles() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
-        assert c != null;
         Statement st = c.createStatement();
 
         ResultSet rs = st.executeQuery(

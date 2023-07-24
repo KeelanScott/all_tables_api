@@ -1,6 +1,4 @@
 package org.kainos.ea.dao;
-import org.kainos.ea.exception.DatabaseConnectionException;
-
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -16,15 +14,14 @@ public class DatabaseConnector {
             return conn;
         }
 
-        try(FileInputStream propStream = new FileInputStream("db.properties")) {
+        try {
 
-            Properties props = new Properties();
-            props.load(propStream);
-
-            user = props.getProperty("user");
-            password = props.getProperty("password");
-            host = props.getProperty("host");
-            name = props.getProperty("name");
+            System.out.println("Connecting to database...");
+            // get info form the env variables
+            user = System.getenv("DB_USERNAME");
+            password = System.getenv("DB_PASSWORD");
+            host = System.getenv("DB_HOST");
+            name = System.getenv("DB_NAME");
 
             if (user == null || password == null || host == null)
                 throw new IllegalAccessException("Properties files must exist " + "and must contain user, password, name and host properties.");
@@ -38,6 +35,11 @@ public class DatabaseConnector {
         } finally {
             System.out.println("I will always run!");
         }
+
+        if(conn == null){
+            throw new SQLException("Connection is null");
+        }
+        return conn;
     }
 
 }
