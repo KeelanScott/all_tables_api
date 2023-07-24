@@ -1,7 +1,7 @@
 package org.kainos.ea.dao;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.kainos.ea.encryption.TokenEncryption;
+import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.TokenExpiredException;
@@ -13,7 +13,7 @@ import java.util.UUID;
 public class AuthDao {
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public boolean validLogin(Login login) {
+    public boolean validLogin(Login login) throws DatabaseConnectionException{
         try (Connection c = databaseConnector.getConnection()) {
             Statement st = c.createStatement();
 
@@ -26,35 +26,40 @@ public class AuthDao {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         } catch (DatabaseConnectionException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseConnectionException();
         }
         return false;
     }
 
     public String generateToken(String email) throws SQLException, DatabaseConnectionException {
         String token = UUID.randomUUID().toString();
-        String encryptedToken;
+        //String encryptedToken;
         Date expiry = DateUtils.addHours(new Date(), 8);
 
-        try {
-            encryptedToken = TokenEncryption.encryptToken(token);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            encryptedToken = TokenEncryption.encryptToken(token);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
         Connection c = databaseConnector.getConnection();
 
-        String insertStatement = "INSERT INTO tokens (email, token, expiry) VALUES (?,?,?)";
+        //try {
+            String insertStatement = "INSERT INTO tokens (email, token, expiry) VALUES (?,?,?)";
 
-        PreparedStatement st = c.prepareStatement(insertStatement);
+            PreparedStatement st = c.prepareStatement(insertStatement);
 
-        st.setString(1, email);
-        st.setString(2, token);
-        st.setTimestamp(3, new java.sql.Timestamp(expiry.getTime()));
+            st.setString(1, email);
+            st.setString(2, token);
+            st.setTimestamp(3, new java.sql.Timestamp(expiry.getTime()));
 
-        st.executeUpdate();
+            st.executeUpdate();
 
-        return encryptedToken;
+            //return encryptedToken;
+            return token;
+//        } catch (Exception e){
+//            throw new SQLException(e);
+//        }
     }
 
     public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
@@ -75,4 +80,46 @@ public class AuthDao {
         }
         return false;
     }
+
+    public boolean getIsUserFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
+        Connection c = databaseConnector.getConnection();
+
+        boolean isRegistered = false;
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT email, expiry FROM users join tokens using (email)" + "where token = '" + token + "';");
+
+        while (rs.next()) {
+            Timestamp expiry = rs.getTimestamp("expiry");
+            String email = rs.getString("email");
+
+            if (email != null) {
+                isRegistered = true;
+            }
+
+            if(expiry.after(new Date())) {
+                return isRegistered;
+            } else {
+                throw new TokenExpiredException();
+            }
+        }
+        return false;
+    }
+
+//    public boolean emailRegistered(Login login) {
+//        try (Connection c = databaseConnector.getConnection()) {
+//            Statement st = c.createStatement();
+//
+//            ResultSet rs = st.executeQuery("SELECT email FROM users WHERE email = '"
+//                    + login.getEmail() + "';");
+//
+//
+//           rs.getString("password").equals(login.getPassword());
+//        } catch (SQLException e) {
+//            System.err.println(e.getMessage());
+//        } catch (DatabaseConnectionException e) {
+//            throw new DatabaseConnectionException;
+//        }
+//        return false;
+//    }
 }

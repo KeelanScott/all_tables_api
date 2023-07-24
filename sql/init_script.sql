@@ -30,8 +30,6 @@ BEGIN
         FOREIGN KEY (band_id) REFERENCES bands(id),
         FOREIGN KEY (capability_id) REFERENCES capabilities(id)
     );
-<<<<<<< HEAD
-
     
     CREATE TABLE IF NOT EXISTS users (
 		email VARCHAR(64) NOT NULL,
@@ -48,12 +46,6 @@ BEGIN
         expiry DATETIME NOT NULL,
         FOREIGN KEY (email) REFERENCES users(email)
     );
-
-
-
-=======
->>>>>>> 003-view-capabilities
-	
 	
 END $$
 DELIMITER ;
