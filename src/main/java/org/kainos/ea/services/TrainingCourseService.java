@@ -11,8 +11,11 @@ import java.util.List;
 
 public class TrainingCourseService {
 
-    private final TrainingCourseDao trainingCourseDao = new TrainingCourseDao();
+    private final TrainingCourseDao trainingCourseDao;
 
+    public TrainingCourseService(TrainingCourseDao trainingCourseDao) {
+        this.trainingCourseDao = trainingCourseDao;
+    }
     public List<TrainingCourse> getAllTrainingCourses() throws FailedToGetTrainingCoursesException {
         List<TrainingCourse> trainingCourseListList = null;
         try {

@@ -16,7 +16,12 @@ import javax.ws.rs.core.Response;
 @Api("All Tables Training API")
 @Path("/api")
 public class TrainingCourseController {
-    private final TrainingCourseService trainingCourseService = new TrainingCourseService();
+    private final TrainingCourseService trainingCourseService;
+
+    public TrainingCourseController(TrainingCourseService trainingCourseService) {
+        this.trainingCourseService = trainingCourseService;
+    }
+
 
     @GET
     @Path("/training-courses")
