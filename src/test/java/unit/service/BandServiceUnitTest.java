@@ -4,12 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.BandDao;
-import org.kainos.ea.exceptions.FailedToCreateBandException;
-import org.kainos.ea.exceptions.FailedToGetBandException;
-import org.kainos.ea.exceptions.InvalidBandException;
+import org.kainos.ea.exception.FailedToCreateBandException;
+import org.kainos.ea.exception.FailedToGetBandException;
+import org.kainos.ea.exception.InvalidBandException;
 import org.kainos.ea.models.Band;
-import org.kainos.ea.models.BandRequest;
-import org.kainos.ea.services.BandService;
+import org.kainos.ea.model.BandRequest;
+import org.kainos.ea.service.BandService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 

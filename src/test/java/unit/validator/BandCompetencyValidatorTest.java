@@ -2,10 +2,9 @@ package unit.validator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kainos.ea.exceptions.InvalidBandCompetencyException;
-import org.kainos.ea.models.BandCompetency;
-import org.kainos.ea.models.Competency;
-import org.kainos.ea.validators.BandCompetencyValidator;
+import org.kainos.ea.exception.InvalidBandCompetencyException;
+import org.kainos.ea.model.BandCompetency;
+import org.kainos.ea.validator.BandCompetencyValidator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

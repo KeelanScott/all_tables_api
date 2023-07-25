@@ -1,7 +1,7 @@
 package org.kainos.ea.dao;
 
-import org.kainos.ea.models.BandTrainingCourse;
-import org.kainos.ea.models.TrainingCourse;
+import org.kainos.ea.model.BandTrainingCourse;
+import org.kainos.ea.model.TrainingCourse;
 
 import java.sql.*;
 import java.util.ArrayList;

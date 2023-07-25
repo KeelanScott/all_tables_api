@@ -1,7 +1,7 @@
-package org.kainos.ea.validators;
+package org.kainos.ea.validator;
 
-import org.kainos.ea.exceptions.InvalidBandCompetencyException;
-import org.kainos.ea.models.BandCompetency;
+import org.kainos.ea.exception.InvalidBandCompetencyException;
+import org.kainos.ea.model.BandCompetency;
 
 public class BandCompetencyValidator {
     public boolean isValidBandCompetency(BandCompetency bandCompetency) throws InvalidBandCompetencyException {

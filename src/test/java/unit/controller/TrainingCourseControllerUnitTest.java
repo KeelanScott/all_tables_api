@@ -4,10 +4,10 @@ package unit.controller;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.controllers.TrainingCourseController;
-import org.kainos.ea.exceptions.FailedToGetTrainingCoursesException;
-import org.kainos.ea.models.TrainingCourse;
-import org.kainos.ea.services.TrainingCourseService;
+import org.kainos.ea.controller.TrainingCourseController;
+import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
+import org.kainos.ea.model.TrainingCourse;
+import org.kainos.ea.service.TrainingCourseService;
 import org.mockito.Mockito;
 
 import javax.ws.rs.core.Response;

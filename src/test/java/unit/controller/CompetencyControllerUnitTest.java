@@ -4,10 +4,10 @@ package unit.controller;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.controllers.CompetencyController;
-import org.kainos.ea.exceptions.FailedToGetCompetenciesException;
-import org.kainos.ea.models.Competency;
-import org.kainos.ea.services.CompetencyService;
+import org.kainos.ea.controller.CompetencyController;
+import org.kainos.ea.exception.FailedToGetCompetenciesException;
+import org.kainos.ea.model.Competency;
+import org.kainos.ea.service.CompetencyService;
 import org.mockito.Mockito;
 
 import javax.ws.rs.core.Response;

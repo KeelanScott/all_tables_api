@@ -1,4 +1,4 @@
-package org.kainos.ea.exceptions;
+package org.kainos.ea.exception;
 
 public class FailedToCreateBandException extends Exception {
     @Override

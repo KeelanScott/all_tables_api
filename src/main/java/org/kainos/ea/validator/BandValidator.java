@@ -1,7 +1,7 @@
-package org.kainos.ea.validators;
+package org.kainos.ea.validator;
 
-import org.kainos.ea.exceptions.InvalidBandException;
-import org.kainos.ea.models.BandRequest;
+import org.kainos.ea.exception.InvalidBandException;
+import org.kainos.ea.model.BandRequest;
 
 public class BandValidator {
     public boolean isValidBand(BandRequest bandRequest) throws InvalidBandException {

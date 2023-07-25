@@ -19,6 +19,7 @@ public class JobRoleService {
         try {
             return this.jobRoleDao.getAllJobRoles();
         } catch (SQLException e) {
+            System.out.println(e);
             throw new FailedToGetJobRoleException();
         }
     }

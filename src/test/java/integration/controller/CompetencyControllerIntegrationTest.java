@@ -8,12 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
-import org.kainos.ea.models.Band;
-import org.kainos.ea.models.BandCompetency;
-import org.kainos.ea.models.Competency;
+import org.kainos.ea.model.Competency;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)

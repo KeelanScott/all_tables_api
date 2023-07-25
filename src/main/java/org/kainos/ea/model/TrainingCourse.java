@@ -1,4 +1,4 @@
-package org.kainos.ea.models;
+package org.kainos.ea.model;
 
 public class TrainingCourse {
 

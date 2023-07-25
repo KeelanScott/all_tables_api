@@ -1,22 +1,24 @@
 package org.kainos.ea.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Band {
+
     private int id;
     private String name;
     private String level;
+    private String responsibilities;
 
-    public Band(int id, String name, String level) {
-        this.setId(id);
-        this.setName(name);
-        this.setLevel(level);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    @JsonCreator
+    public Band(@JsonProperty("id") int id,
+                @JsonProperty("name") String name,
+                @JsonProperty("level") String level,
+                @JsonProperty("responsibilities") String responsibilities) {
         this.id = id;
+        this.name = name;
+        this.level = level;
+        this.responsibilities = responsibilities;
     }
 
     public String getName() {
@@ -33,5 +35,21 @@ public class Band {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getResponsibilities() {
+        return responsibilities;
+    }
+
+    public void setResponsibilities(String responsibilities) {
+        this.responsibilities = responsibilities;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

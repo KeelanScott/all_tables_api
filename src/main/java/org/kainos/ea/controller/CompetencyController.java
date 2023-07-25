@@ -1,10 +1,11 @@
-package org.kainos.ea.controllers;
+package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.exceptions.*;
-import org.kainos.ea.models.BandCompetency;
-import org.kainos.ea.models.BandRequest;
-import org.kainos.ea.services.CompetencyService;
+import org.kainos.ea.exception.FailedToCreateBandCompetencyException;
+import org.kainos.ea.exception.FailedToGetCompetenciesException;
+import org.kainos.ea.exception.InvalidBandCompetencyException;
+import org.kainos.ea.model.BandCompetency;
+import org.kainos.ea.service.CompetencyService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

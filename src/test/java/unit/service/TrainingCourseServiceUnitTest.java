@@ -3,9 +3,9 @@ package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.TrainingCourseDao;
-import org.kainos.ea.exceptions.FailedToGetTrainingCoursesException;
-import org.kainos.ea.models.TrainingCourse;
-import org.kainos.ea.services.TrainingCourseService;
+import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
+import org.kainos.ea.model.TrainingCourse;
+import org.kainos.ea.service.TrainingCourseService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 

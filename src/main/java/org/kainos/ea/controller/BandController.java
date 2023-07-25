@@ -1,17 +1,15 @@
-package org.kainos.ea.controllers;
+package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.dao.BandDao;
-import org.kainos.ea.exceptions.FailedToGetBandException;
-import org.kainos.ea.services.BandService;
-import org.kainos.ea.models.BandRequest;
-import org.kainos.ea.exceptions.FailedToCreateBandException;
-import org.kainos.ea.exceptions.InvalidBandException;
+import org.kainos.ea.exception.FailedToGetBandException;
+import org.kainos.ea.service.BandService;
+import org.kainos.ea.model.BandRequest;
+import org.kainos.ea.exception.FailedToCreateBandException;
+import org.kainos.ea.exception.InvalidBandException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
 
 @Api("All Tables Band API")
 @Path("/api")

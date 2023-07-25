@@ -3,12 +3,11 @@ package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.CompetencyDao;
-import org.kainos.ea.exceptions.FailedToGetCompetenciesException;
-import org.kainos.ea.exceptions.InvalidBandCompetencyException;
-import org.kainos.ea.exceptions.InvalidBandException;
-import org.kainos.ea.models.BandCompetency;
-import org.kainos.ea.models.Competency;
-import org.kainos.ea.services.CompetencyService;
+import org.kainos.ea.exception.FailedToGetCompetenciesException;
+import org.kainos.ea.exception.InvalidBandCompetencyException;
+import org.kainos.ea.model.BandCompetency;
+import org.kainos.ea.model.Competency;
+import org.kainos.ea.service.CompetencyService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 

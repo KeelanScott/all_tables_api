@@ -1,10 +1,10 @@
-package org.kainos.ea.services;
+package org.kainos.ea.service;
 
 import org.kainos.ea.dao.TrainingCourseDao;
-import org.kainos.ea.exceptions.FailedToCreateBandTrainingCourseException;
-import org.kainos.ea.exceptions.FailedToGetTrainingCoursesException;
-import org.kainos.ea.models.BandTrainingCourse;
-import org.kainos.ea.models.TrainingCourse;
+import org.kainos.ea.exception.FailedToCreateBandTrainingCourseException;
+import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
+import org.kainos.ea.model.BandTrainingCourse;
+import org.kainos.ea.model.TrainingCourse;
 
 import java.sql.SQLException;
 import java.util.List;

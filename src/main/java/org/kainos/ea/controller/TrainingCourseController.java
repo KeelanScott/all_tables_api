@@ -1,10 +1,10 @@
-package org.kainos.ea.controllers;
+package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.exceptions.FailedToCreateBandTrainingCourseException;
-import org.kainos.ea.exceptions.FailedToGetTrainingCoursesException;
-import org.kainos.ea.models.BandTrainingCourse;
-import org.kainos.ea.services.TrainingCourseService;
+import org.kainos.ea.exception.FailedToCreateBandTrainingCourseException;
+import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
+import org.kainos.ea.model.BandTrainingCourse;
+import org.kainos.ea.service.TrainingCourseService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
