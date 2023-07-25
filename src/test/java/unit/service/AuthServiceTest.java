@@ -3,7 +3,6 @@ package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.AuthDao;
-import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.exception.FailedToGenerateTokenException;
 import org.kainos.ea.exception.FailedToLoginException;
@@ -26,7 +25,7 @@ public class AuthServiceTest {
             "admin"
     );
     @Test
-    void login_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException, FailedToEncryptTokenException {
+    void login_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, FailedToEncryptTokenException {
         Login validLogin = new Login(
                 "keelan@gmail.com",
                 "Scott"
@@ -39,14 +38,12 @@ public class AuthServiceTest {
     }
 
     @Test
-    void login_shouldThrowFailedToLoginException_whenDaoValidLoginThrowsSqlException() throws DatabaseConnectionException {
+    void login_shouldThrowFailedToLoginException_whenDaoValidLoginThrowsSqlException() {
 
         Mockito.when(authDao.validLogin(login)).thenReturn(false);
 
         assertThrows(FailedToLoginException.class, () -> authService.login(login));
     }
-
-
 }
 
 

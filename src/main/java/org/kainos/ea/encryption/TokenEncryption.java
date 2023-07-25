@@ -3,8 +3,9 @@ package org.kainos.ea.encryption;
 import org.kainos.ea.exception.FailedToEncryptTokenException;
 
 public class TokenEncryption {
-    public static String encryptToken(String token, String key) throws FailedToEncryptTokenException {
+    public static String encryptToken(String token) throws FailedToEncryptTokenException {
         StringBuilder encryptedToken = new StringBuilder();
+        String key = System.getenv("APP_ENCRYPTION_KEY");
 
         try {
         for (int i = 0; i < token.length(); i++) {

@@ -34,11 +34,10 @@ public class AuthDao {
         String token = UUID.randomUUID().toString();
         String encryptedToken;
         Date expiry = DateUtils.addHours(new Date(), 8);
-        String key = System.getenv("APP_ENCRYPTION_KEY");
 
 
         try {
-            encryptedToken = TokenEncryption.encryptToken(token, key);
+            encryptedToken = TokenEncryption.encryptToken(token);
         } catch (FailedToEncryptTokenException e) {
             throw new FailedToEncryptTokenException();
         }
@@ -56,7 +55,7 @@ public class AuthDao {
 
             st.executeUpdate();
 
-            return encryptedToken;
+            return token;
         } catch (Exception e) {
             throw new SQLException(e);
         }

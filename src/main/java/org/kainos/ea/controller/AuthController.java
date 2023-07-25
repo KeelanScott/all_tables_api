@@ -27,16 +27,12 @@ public class AuthController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(Login login) {
         try {
-            authService.login(login);
+            String token = authService.login(login);
         } catch (FailedToLoginException e) {
             System.err.println(e.getMessage());
 
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (FailedToGenerateTokenException e) {
-            System.err.println(e.getMessage());
-
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-        } catch (FailedToEncryptTokenException e) {
+        } catch (FailedToGenerateTokenException | FailedToEncryptTokenException e) {
             System.err.println(e.getMessage());
 
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
@@ -44,6 +40,3 @@ public class AuthController {
         return Response.status(Response.Status.OK).entity("Successful").build();
     }
 }
-
-
-

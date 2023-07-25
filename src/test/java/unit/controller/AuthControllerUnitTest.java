@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.controller.AuthController;
 import org.kainos.ea.dao.AuthDao;
-import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.exception.FailedToGenerateTokenException;
 import org.kainos.ea.exception.FailedToLoginException;
@@ -13,12 +12,8 @@ import org.kainos.ea.model.Login;
 import org.kainos.ea.service.AuthService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerUnitTest {

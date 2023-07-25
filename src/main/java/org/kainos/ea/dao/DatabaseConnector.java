@@ -1,13 +1,11 @@
 package org.kainos.ea.dao;
-import java.io.FileInputStream;
+import org.kainos.ea.exception.DatabaseConnectionException;
 import java.sql.*;
-import java.util.Properties;
-
 
 public class DatabaseConnector {
     private static Connection conn;
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, DatabaseConnectionException {
         String user, password, host, name;
 
         if (conn != null && !conn.isClosed()) {
@@ -15,7 +13,6 @@ public class DatabaseConnector {
         }
 
         try {
-
             System.out.println("Connecting to database...");
             // get info form the env variables
             user = System.getenv("DB_USERNAME");
@@ -27,18 +24,17 @@ public class DatabaseConnector {
                 throw new IllegalAccessException("Properties files must exist " + "and must contain user, password, name and host properties.");
 
             conn = DriverManager.getConnection("jdbc:mysql://" + host + "/" + name + "?useSSL=false", user, password);
-            return conn;
 
+            if(conn == null){
+                throw new SQLException("Connection is null");
+            }
+
+            return conn;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw new DatabaseConnectionException();
         } finally {
             System.out.println("I will always run!");
         }
-
-        if(conn == null){
-            throw new SQLException("Connection is null");
-        }
-        return conn;
     }
-
 }
