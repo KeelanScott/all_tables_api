@@ -3,6 +3,7 @@ package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.TrainingCourseDao;
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
 import org.kainos.ea.model.TrainingCourse;
 import org.kainos.ea.service.TrainingCourseService;
@@ -26,7 +27,7 @@ public class TrainingCourseServiceUnitTest {
     );
 
     @Test
-    void getAllTrainingCourses_shouldReturnTrainingCourseList_whenDaoReturnsTrainingCourseList() throws FailedToGetTrainingCoursesException, SQLException {
+    void getAllTrainingCourses_shouldReturnTrainingCourseList_whenDaoReturnsTrainingCourseList() throws FailedToGetTrainingCoursesException, SQLException, DatabaseConnectionException {
         ArrayList<TrainingCourse> list = new ArrayList<>();
         list.add(trainingCourse);
         list.add(trainingCourse);
@@ -38,7 +39,7 @@ public class TrainingCourseServiceUnitTest {
     }
 
     @Test
-    void getAllTrainingCourses_shouldThrowFailedToGetTrainingCourseException_whenDaoThrowsSQLException() throws SQLException{
+    void getAllTrainingCourses_shouldThrowFailedToGetTrainingCourseException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
         Mockito.when(trainingCourseDao.getAllTrainingCourses()).thenThrow(SQLException.class);
 
         assertThrows(FailedToGetTrainingCoursesException.class, () -> trainingCourseService.getAllTrainingCourses());

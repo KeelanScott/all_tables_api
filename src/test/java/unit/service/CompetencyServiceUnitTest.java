@@ -3,6 +3,7 @@ package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.CompetencyDao;
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToGetCompetenciesException;
 import org.kainos.ea.exception.InvalidBandCompetencyException;
 import org.kainos.ea.model.BandCompetency;
@@ -28,7 +29,7 @@ public class CompetencyServiceUnitTest {
     );
 
     @Test
-    void getAllCompetencies_shouldReturnCompetencyList_whenDaoReturnsCompetencyList() throws FailedToGetCompetenciesException, SQLException {
+    void getAllCompetencies_shouldReturnCompetencyList_whenDaoReturnsCompetencyList() throws FailedToGetCompetenciesException, SQLException, DatabaseConnectionException {
         ArrayList<Competency> list = new ArrayList<>();
         list.add(competency);
         list.add(competency);
@@ -40,7 +41,7 @@ public class CompetencyServiceUnitTest {
     }
 
     @Test
-    void getAllCompetencies_shouldThrowFailedToGetCompetencyException_whenDaoThrowsSQLException() throws SQLException{
+    void getAllCompetencies_shouldThrowFailedToGetCompetencyException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
         Mockito.when(competencyDao.getAllCompetencies()).thenThrow(SQLException.class);
 
         assertThrows(FailedToGetCompetenciesException.class, () -> competencyService.getAllCompetencies());

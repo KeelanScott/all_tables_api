@@ -1,5 +1,6 @@
 package org.kainos.ea.dao;
 
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.BandRequest;
 import java.sql.*;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class BandDao {
 
-    public int createBand(BandRequest bandRequest) throws SQLException {
+    public int createBand(BandRequest bandRequest) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         String insertStatement = "INSERT INTO bands(name, level, responsibilities)" +
@@ -31,7 +32,7 @@ public class BandDao {
     }
 
 
-    public List<Band> getAllBands() throws SQLException {
+    public List<Band> getAllBands() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         String selectStatement = "SELECT * FROM bands;";
@@ -56,7 +57,7 @@ public class BandDao {
         return bands;
     }
 
-    public Band getBandById(int id) throws SQLException {
+    public Band getBandById(int id) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         String selectStatement = "SELECT * FROM bands WHERE id = ?;";

@@ -1,5 +1,6 @@
 package org.kainos.ea.service;
 
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToGetBandException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.BandRequest;
@@ -29,7 +30,7 @@ public class BandService {
             if (id == -1) throw new FailedToCreateBandException();
 
             return id;
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToCreateBandException();
         }
@@ -38,7 +39,7 @@ public class BandService {
     public List<Band> getAllBands() throws FailedToGetBandException {
         try {
             return bandDao.getAllBands();
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             throw new FailedToGetBandException();
         }
     }
@@ -46,7 +47,7 @@ public class BandService {
     public Band getBandById(int id) throws FailedToGetBandException {
         try {
             return bandDao.getBandById(id);
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             throw new FailedToGetBandException();
         }
     }

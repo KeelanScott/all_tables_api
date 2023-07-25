@@ -1,6 +1,7 @@
 package org.kainos.ea.service;
 
 import org.kainos.ea.dao.TrainingCourseDao;
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToCreateBandTrainingCourseException;
 import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
 import org.kainos.ea.model.BandTrainingCourse;
@@ -19,7 +20,7 @@ public class TrainingCourseService {
         List<TrainingCourse> trainingCourseListList = null;
         try {
             trainingCourseListList = trainingCourseDao.getAllTrainingCourses();
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToGetTrainingCoursesException();
         }
@@ -33,7 +34,7 @@ public class TrainingCourseService {
             if (id == -1) throw new FailedToCreateBandTrainingCourseException();
 
             return id;
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToCreateBandTrainingCourseException();
         }

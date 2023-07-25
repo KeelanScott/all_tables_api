@@ -1,5 +1,6 @@
 package org.kainos.ea.dao;
 
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.BandTrainingCourse;
 import org.kainos.ea.model.TrainingCourse;
 import java.sql.*;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrainingCourseDao {
-    public List<TrainingCourse> getAllTrainingCourses() throws SQLException {
+    public List<TrainingCourse> getAllTrainingCourses() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
         Statement st = c.createStatement();
 
@@ -25,7 +26,7 @@ public class TrainingCourseDao {
         return trainingCourseList;
     }
 
-    public int createBandTrainingCourse(BandTrainingCourse bandTrainingCourse) throws SQLException {
+    public int createBandTrainingCourse(BandTrainingCourse bandTrainingCourse) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         System.out.println("\n\nBand ID: " + bandTrainingCourse.getBandId());

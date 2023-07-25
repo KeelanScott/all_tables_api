@@ -1,5 +1,6 @@
 package org.kainos.ea.dao;
 
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import java.sql.*;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompetencyDao {
-    public List<Competency> getAllCompetencies() throws SQLException {
+    public List<Competency> getAllCompetencies() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
         Statement st = c.createStatement();
 
@@ -26,7 +27,7 @@ public class CompetencyDao {
         return competencyList;
     }
 
-    public int createBandCompetency(BandCompetency bandCompetency) throws SQLException {
+    public int createBandCompetency(BandCompetency bandCompetency) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         String insertStatement = "INSERT INTO bands_competencies(band_id, competency_id, description)" +
