@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobRoleDao {
-
     public List<JobRole> getAllJobRoles() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
