@@ -10,7 +10,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CompetencyService {
-    private final CompetencyDao competencyDao = new CompetencyDao();
+    private final CompetencyDao competencyDao;
+
+    public CompetencyService(CompetencyDao competencyDao) {
+        this.competencyDao = competencyDao;
+    }
     private final BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator();
 
     public List<Competency> getAllCompetencies() throws FailedToGetCompetenciesException {

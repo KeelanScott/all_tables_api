@@ -16,10 +16,10 @@ import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class TrainingCourseControllerUnitTest {
-    TrainingCourseService trainingCourse = Mockito.mock(TrainingCourseService.class);
-    TrainingCourseController bandController = new TrainingCourseController(trainingCourse);
+    TrainingCourseService trainingCourseService = Mockito.mock(TrainingCourseService.class);
+    TrainingCourseController trainingCourseController = new TrainingCourseController(trainingCourseService);
 
-    TrainingCourse band = new TrainingCourse(
+    TrainingCourse trainingCourse = new TrainingCourse(
             1,
             "TrainingCourse 1",
             "description"
@@ -31,21 +31,21 @@ public class TrainingCourseControllerUnitTest {
     void getAllTrainingCourses_shouldReturnOK_whenServiceReturnsList() throws FailedToGetTrainingCoursesException {
 
         List<TrainingCourse> sampleTrainingCourses = new ArrayList<>();
-        sampleTrainingCourses.add(band);
-        sampleTrainingCourses.add(band);
-        sampleTrainingCourses.add(band);
+        sampleTrainingCourses.add(trainingCourse);
+        sampleTrainingCourses.add(trainingCourse);
+        sampleTrainingCourses.add(trainingCourse);
 
-        Mockito.when(trainingCourse.getAllTrainingCourses()).thenReturn(sampleTrainingCourses);
+        Mockito.when(trainingCourseService.getAllTrainingCourses()).thenReturn(sampleTrainingCourses);
 
-        Response response = bandController.getAllTrainingCourses();
+        Response response = trainingCourseController.getAllTrainingCourses();
         assert(response.getStatus() == 200);
     }
 
     @Test
     void getAllTrainingCourses_shouldReturnInternalServerError_whenServiceThrowsException() throws FailedToGetTrainingCoursesException {
-        Mockito.when(trainingCourse.getAllTrainingCourses()).thenThrow(FailedToGetTrainingCoursesException.class);
+        Mockito.when(trainingCourseService.getAllTrainingCourses()).thenThrow(FailedToGetTrainingCoursesException.class);
 
-        Response response = bandController.getAllTrainingCourses();
+        Response response = trainingCourseController.getAllTrainingCourses();
         assert(response.getStatus() == 500);
     }
 

@@ -13,12 +13,16 @@ import javax.ws.rs.core.Response;
 @Api("All Tables Competency API")
 @Path("/api")
 public class CompetencyController {
-    private final CompetencyService competencyService = new CompetencyService();
+    private final CompetencyService competencyService;
+
+    public CompetencyController(CompetencyService competencyService) {
+        this.competencyService = competencyService;
+    }
 
     @GET
     @Path("/competencies")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCompetencies() {
+    public Response getAllCompetencies() {
         try {
             return Response.ok(competencyService.getAllCompetencies()).build();
         } catch (FailedToGetCompetenciesException e) {
