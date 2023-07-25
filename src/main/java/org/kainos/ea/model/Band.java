@@ -18,11 +18,6 @@ public class Band {
         this.setLevel(level);
     }
 
-    public Band(String name, String level) {
-        this.setName(name);
-        this.setLevel(level);
-    }
-
     public int getId() {
         return id;
     }
