@@ -18,6 +18,8 @@ env:
   DB_USERNAME: ${{ secrets.DB_USERNAME }}
   DB_HOST: ${{ secrets.DB_HOST }}
   DB_NAME: ${{ secrets.DB_NAME }}
+  APP_ENCRYPTION_KEY: ${{ secrets.APP_ENCRYPTION_KEY }}
+
 jobs:
   build:
 
