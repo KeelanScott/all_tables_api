@@ -26,7 +26,8 @@ public class JobRoleServiceTest {
     Band band = new Band(
             1,
             "Band 1",
-            "Executive"
+            "Executive",
+            "Responsibilities"
     );
     Capability capability = new Capability(
             1,

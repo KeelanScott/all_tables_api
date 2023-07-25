@@ -1,7 +1,6 @@
 package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.service.JobRoleService;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
 

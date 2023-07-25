@@ -7,7 +7,7 @@ import org.kainos.ea.dao.BandDao;
 import org.kainos.ea.exception.FailedToCreateBandException;
 import org.kainos.ea.exception.FailedToGetBandException;
 import org.kainos.ea.exception.InvalidBandException;
-import org.kainos.ea.models.Band;
+import org.kainos.ea.model.Band;
 import org.kainos.ea.model.BandRequest;
 import org.kainos.ea.service.BandService;
 import org.mockito.Mockito;

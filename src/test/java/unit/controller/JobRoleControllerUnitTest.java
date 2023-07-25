@@ -22,7 +22,7 @@ public class JobRoleControllerUnitTest {
 
     JobRole jobRole = new JobRole(1,
             "Software Engineer",
-    new Band(1 , "Band 1", "Level 1"),
+    new Band(1 , "Band 1", "Level 1", "Responsibilities"),
     new Capability(1, "Software Engineering", "Software Engineering"));
 
 
