@@ -63,7 +63,7 @@ public class BandControllerUnitTest {
         Mockito.when(bandService.createBand(bandRequest)).thenReturn(1);
 
         Response response = bandController.createBand(bandRequest);
-        assert(response.getStatus() == 200);
+        assert(response.getStatus() == 201);
     }
 
     @Test
