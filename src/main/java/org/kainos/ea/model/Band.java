@@ -1,11 +1,18 @@
 package org.kainos.ea.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Band {
     private int id;
     private String name;
     private String level;
 
-    public Band(int id, String name, String level) {
+    @JsonCreator
+    public Band(
+            @JsonProperty("id") int id,
+            @JsonProperty("name") String name,
+            @JsonProperty("level") String level) {
         this.setId(id);
         this.setName(name);
         this.setLevel(level);
