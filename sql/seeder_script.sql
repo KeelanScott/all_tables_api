@@ -36,9 +36,26 @@ BEGIN
     INSERT INTO bands_competencies VALUES (3, 5, "Comprehends the need for the business to generate additional income and respects that costs need to be managed. Recognises the contribution that role makes to the success of the business, consistently delivering to task deadlines.");
     INSERT INTO bands_competencies VALUES (3, 6, "Involved at meetings, asking questions, listening and develops and presents a well-reasoned point of view. Remaining communicative and clear in own thoughts and ideas when approached by others, giving consideration to the communication needs of other staff and customers.");
 
-    INSERT INTO job_roles (name, specification, band_id) VALUES ('Trainee Software Engineer', 'Develops software', 1);
-    INSERT INTO job_roles (name, specification, band_id) VALUES ('Senior Software Engineer', 'Develops software', 2);
-    INSERT INTO job_roles (name, specification, band_id) VALUES ('Lead Software Engineer', 'Develops software', 3);
+    INSERT INTO capabilities (name, description) VALUES ('Engineering', 'Engineers software solutions to business problems');
+    INSERT INTO capabilities (name, description) VALUES ('Cyper Security', 'Secures software solutions');
+    INSERT INTO capabilities (name, description) VALUES ('Quality Assurance', 'Ensures software solutions are of high quality');
+
+    INSERT INTO job_roles (name, specification, banNJoRd_id, capability_id) VALUES ('Trainee Software Engineer', 'Develops software', 1, 1);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Senior Software Engineer', 'Develops software', 2, 1);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Lead Software Engineer', 'Develops software', 3, 1);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Trainee Cyber Security Engineer', 'Secures software', 1, 2);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Senior Cyber Security Engineer', 'Secures software', 2, 2);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Lead Cyber Security Engineer', 'Secures software', 3, 2);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Trainee Quality Assurance Engineer', 'Ensures software quality', 1, 3);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Senior Quality Assurance Engineer', 'Ensures software quality', 2, 3);
+    INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Lead Quality Assurance Engineer', 'Ensures software quality', 3, 3);
+
+
+
+
+
+
+
 
     INSERT INTO training_courses (name, description) VALUES ('Java', 'Java training');
     INSERT INTO training_courses (name, description) VALUES ('C#', 'C# training');

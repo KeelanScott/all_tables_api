@@ -15,7 +15,7 @@ public class all_tables_apiConfiguration extends Configuration {
 
     @JsonProperty("swagger")
     public SwaggerBundleConfiguration getSwagger() {
-        swagger.setResourcePackage("org.kainos.ea.controllers");
+        swagger.setResourcePackage("org.kainos.ea.controller");
         String[] schemes = { "http", "https" };
         swagger.setSchemes(schemes);
         return swagger;
