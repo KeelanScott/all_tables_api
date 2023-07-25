@@ -31,8 +31,7 @@ public class CompetencyService {
 
     public int createBandCompetency(BandCompetency bandCompetency) throws FailedToCreateBandCompetencyException, InvalidBandCompetencyException {
         try {
-            String validation = bandCompetencyValidator.isValidBandCompetency(bandCompetency);
-            if (validation != null) throw new InvalidBandCompetencyException(validation);
+            bandCompetencyValidator.isValidBandCompetency(bandCompetency);
 
             int id = competencyDao.createBandCompetency(bandCompetency);
 
