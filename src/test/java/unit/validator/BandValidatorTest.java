@@ -3,7 +3,6 @@ package unit.validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kainos.ea.exceptions.InvalidBandException;
-import org.kainos.ea.models.Band;
 import org.kainos.ea.models.BandRequest;
 import org.kainos.ea.validators.BandValidator;
 
