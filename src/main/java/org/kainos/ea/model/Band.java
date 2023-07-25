@@ -22,6 +22,14 @@ public class Band {
         this.setLevel(level);
     }
 
+    @JsonCreator
+    public Band(
+            @JsonProperty("name") String name,
+            @JsonProperty("level") String level) {
+        this.setName(name);
+        this.setLevel(level);
+    }
+
     public int getId() {
         return id;
     }

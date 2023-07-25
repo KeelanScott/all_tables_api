@@ -14,13 +14,20 @@ public class JobRole {
     public JobRole(@JsonProperty("id") int id,
                    @JsonProperty("name") String name,
                    @JsonProperty("band") Band band,
-                   @JsonProperty("Capability") Capability capability,
+                   @JsonProperty("capability") Capability capability,
                    @JsonProperty("specification") String specification) {
         setId(id);
         setName(name);
         setBand(band);
         setCapability(capability);
         setSpecification(specification);
+    }
+
+    public JobRole(int id, String name, Band band, Capability capability) {
+        setId(id);
+        setName(name);
+        setBand(band);
+        setCapability(capability);
     }
 
     public int getId() {

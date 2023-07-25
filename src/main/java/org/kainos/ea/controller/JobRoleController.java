@@ -3,6 +3,7 @@ package org.kainos.ea.controller;
 import io.swagger.annotations.Api;
 import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.JobRoleDoesNotExistException;
 import org.kainos.ea.service.JobRoleService;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
 
@@ -26,10 +27,7 @@ public class JobRoleController {
     public Response getJobRoles() {
         try {
             return Response.ok(jobRoleService.getAllJobRoles()).build();
-        } catch (FailedToGetJobRoleException e) {
-            System.err.println((e.getMessage()));
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        } catch (DatabaseConnectionException e) {
+        } catch (DatabaseConnectionException | FailedToGetJobRoleException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
         }
@@ -41,10 +39,10 @@ public class JobRoleController {
     public Response getJobRoleById(@PathParam("id") int id) {
         try {
             return Response.ok(jobRoleService.getJobRolesById(id)).build();
-        } catch (DatabaseConnectionException e) {
+        } catch (DatabaseConnectionException | FailedToGetJobRoleException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
-        } catch (FailedToGetJobRoleException e) {
+        } catch (JobRoleDoesNotExistException e) {
             System.err.println((e.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

@@ -35,8 +35,7 @@ public class JobRoleDao {
                     rs.getInt("job_roles.id"),
                     rs.getString("job_roles.name"),
                     band,
-                    capability,
-                    null
+                    capability
             );
 
             jobRoleList.add(jobRole);
@@ -59,9 +58,10 @@ public class JobRoleDao {
                     rs.getString("capabilities.description")
             );
 
-            Band band = new Band();
-            band.setName(rs.getString("bands.name"));
-            band.setLevel(rs.getString("level"));
+            Band band = new Band(
+                    rs.getString("bands.name"),
+                    rs.getString("level")
+            );
 
             return new JobRole(
                     rs.getInt("job_roles.id"),
