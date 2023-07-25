@@ -1,6 +1,5 @@
 package org.kainos.ea.service;
 
-
 import org.kainos.ea.exception.FailedToCreateBandCompetencyException;
 import org.kainos.ea.exception.FailedToGetCompetenciesException;
 import org.kainos.ea.exception.InvalidBandCompetencyException;

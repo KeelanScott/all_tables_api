@@ -27,5 +27,4 @@ public class CompetencyControllerIntegrationTest {
 
         Assertions.assertTrue(response.size() > 0);
     }
-
 }
