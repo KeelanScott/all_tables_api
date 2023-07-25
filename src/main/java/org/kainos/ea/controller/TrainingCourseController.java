@@ -5,7 +5,6 @@ import org.kainos.ea.exception.FailedToCreateBandTrainingCourseException;
 import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
 import org.kainos.ea.model.BandTrainingCourse;
 import org.kainos.ea.service.TrainingCourseService;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,7 +20,6 @@ public class TrainingCourseController {
     public TrainingCourseController(TrainingCourseService trainingCourseService) {
         this.trainingCourseService = trainingCourseService;
     }
-
 
     @GET
     @Path("/training-courses")
@@ -46,5 +44,4 @@ public class TrainingCourseController {
             return Response.serverError().build();
         }
     }
-
 }

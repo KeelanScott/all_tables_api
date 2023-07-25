@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -27,7 +26,6 @@ public class CompetencyServiceUnitTest {
             1,
             "Competency 1"
     );
-
 
     @Test
     void getAllCompetencies_shouldReturnCompetencyList_whenDaoReturnsCompetencyList() throws FailedToGetCompetenciesException, SQLException {
@@ -57,5 +55,4 @@ public class CompetencyServiceUnitTest {
         );
         assertThrows(InvalidBandCompetencyException.class, () -> competencyService.createBandCompetency(bandCompetency));
     }
-
 }

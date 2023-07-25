@@ -8,10 +8,8 @@ import org.kainos.ea.model.TrainingCourse;
 import org.kainos.ea.service.TrainingCourseService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -45,5 +43,4 @@ public class TrainingCourseServiceUnitTest {
 
         assertThrows(FailedToGetTrainingCoursesException.class, () -> trainingCourseService.getAllTrainingCourses());
     }
-
 }

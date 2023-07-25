@@ -2,7 +2,6 @@ package org.kainos.ea.dao;
 
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

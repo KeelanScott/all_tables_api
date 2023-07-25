@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
 import org.kainos.ea.model.TrainingCourse;
-
 import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)

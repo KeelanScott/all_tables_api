@@ -8,7 +8,6 @@ import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.dao.CompetencyDao;
 import org.kainos.ea.validator.BandCompetencyValidator;
-
 import java.sql.SQLException;
 import java.util.List;
 

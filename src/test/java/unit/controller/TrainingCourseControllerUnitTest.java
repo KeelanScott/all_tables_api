@@ -9,7 +9,6 @@ import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
 import org.kainos.ea.model.TrainingCourse;
 import org.kainos.ea.service.TrainingCourseService;
 import org.mockito.Mockito;
-
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;

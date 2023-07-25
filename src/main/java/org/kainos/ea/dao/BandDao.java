@@ -2,7 +2,6 @@ package org.kainos.ea.dao;
 
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.BandRequest;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

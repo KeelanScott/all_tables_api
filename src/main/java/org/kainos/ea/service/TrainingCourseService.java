@@ -5,7 +5,6 @@ import org.kainos.ea.exception.FailedToCreateBandTrainingCourseException;
 import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
 import org.kainos.ea.model.BandTrainingCourse;
 import org.kainos.ea.model.TrainingCourse;
-
 import java.sql.SQLException;
 import java.util.List;
 

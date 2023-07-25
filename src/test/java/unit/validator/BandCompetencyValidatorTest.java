@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.kainos.ea.exception.InvalidBandCompetencyException;
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.validator.BandCompetencyValidator;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BandCompetencyValidatorTest {
-
     BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator();
 
     BandCompetency bandCompetency;
@@ -23,7 +21,6 @@ public class BandCompetencyValidatorTest {
                 "Responsibilities"
         );
     }
-
 
     @Test
     public void isValidBandCompetency_shouldReturnTrue_whenValidBandCompetency() throws InvalidBandCompetencyException {
@@ -45,6 +42,4 @@ public class BandCompetencyValidatorTest {
             bandCompetencyValidator.isValidBandCompetency(bandCompetency);
         });
     }
-
-
 }

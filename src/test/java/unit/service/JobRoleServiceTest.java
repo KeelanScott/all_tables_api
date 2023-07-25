@@ -10,10 +10,8 @@ import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

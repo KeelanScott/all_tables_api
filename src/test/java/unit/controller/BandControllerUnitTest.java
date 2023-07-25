@@ -12,7 +12,6 @@ import org.kainos.ea.model.Band;
 import org.kainos.ea.model.BandRequest;
 import org.kainos.ea.service.BandService;
 import org.mockito.Mockito;
-
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,6 @@ public class BandControllerUnitTest {
             "Executive",
             "these are the responsibilities"
     );
-
-
 
     @Test
     void getAllBands_shouldReturnOK_whenServiceReturnsList() throws FailedToGetBandException {
@@ -73,6 +70,4 @@ public class BandControllerUnitTest {
         Response response = bandController.getBandById(1);
         assert(response.getStatus() == 200);
     }
-
-
 }

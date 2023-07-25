@@ -10,7 +10,6 @@ import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
 import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
-
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +23,6 @@ public class JobRoleControllerUnitTest {
             "Software Engineer",
     new Band(1 , "Band 1", "Level 1", "Responsibilities"),
     new Capability(1, "Software Engineering", "Software Engineering"));
-
-
 
     @Test
     void getJobRoles_shouldReturnOK_whenServiceReturnsList() throws FailedToGetJobRoleException {
@@ -48,5 +45,4 @@ public class JobRoleControllerUnitTest {
         Response response = jobRoleController.getJobRoles();
         assert(response.getStatus() == 500);
     }
-
 }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.kainos.ea.exception.InvalidBandException;
 import org.kainos.ea.model.BandRequest;
 import org.kainos.ea.validator.BandValidator;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BandValidatorTest {
@@ -23,7 +22,6 @@ public class BandValidatorTest {
                 "Responsibilities"
         );
     }
-
 
     @Test
     public void isValidBand_shouldReturnTrue_whenValidBand() throws InvalidBandException {
@@ -78,5 +76,4 @@ public class BandValidatorTest {
             bandValidator.isValidBand(bandRequest);
         });
     }
-
 }
