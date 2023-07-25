@@ -57,7 +57,7 @@ public class AuthDao {
             st.executeUpdate();
 
             return encryptedToken;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new SQLException(e);
         }
     }
@@ -72,7 +72,7 @@ public class AuthDao {
         while (rs.next()) {
             Timestamp expiry = rs.getTimestamp("expiry");
 
-            if(expiry.after(new Date())) {
+            if (expiry.after(new Date())) {
                 return rs.getBoolean("is_admin");
             } else {
                 throw new TokenExpiredException();
@@ -97,7 +97,7 @@ public class AuthDao {
                 isRegistered = true;
             }
 
-            if(expiry.after(new Date())) {
+            if (expiry.after(new Date())) {
                 return isRegistered;
             } else {
                 throw new TokenExpiredException();
@@ -105,3 +105,4 @@ public class AuthDao {
         }
         return false;
     }
+}
