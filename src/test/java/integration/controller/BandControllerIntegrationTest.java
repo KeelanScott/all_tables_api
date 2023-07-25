@@ -10,7 +10,9 @@ package integration.controller;
         import org.kainos.ea.all_tables_apiApplication;
         import org.kainos.ea.all_tables_apiConfiguration;
         import org.kainos.ea.models.Band;
+        import org.kainos.ea.models.BandRequest;
 
+        import javax.ws.rs.client.Entity;
         import javax.ws.rs.core.Response;
         import java.util.ArrayList;
         import java.util.List;
@@ -30,5 +32,22 @@ public class BandControllerIntegrationTest {
                 .get(List.class);
 
         Assertions.assertTrue(response.size() > 0);
+    }
+
+    @Test
+    void createBand_shouldReturnId(){
+        int response = APP.client().target("http://localhost:8080/api/bands")
+                .request()
+                .post(Entity.json(new BandRequest("Test Band", "Level", "responsibilities")), Response.class)
+                .readEntity(Integer.class);
+        Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void getBand_shouldReturnBand(){
+        Band response = APP.client().target("http://localhost:8080/api/bands/1")
+                .request()
+                .get(Band.class);
+        Assertions.assertNotNull(response);
     }
 }
