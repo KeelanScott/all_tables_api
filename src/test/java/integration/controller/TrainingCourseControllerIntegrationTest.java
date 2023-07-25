@@ -22,7 +22,7 @@ public class TrainingCourseControllerIntegrationTest {
 
     @Test
     void getAllTrainingCourses_shouldReturnList() {
-        List<TrainingCourse> response = APP.client().target("http://localhost:8080/api/trainging-courses")
+        List<TrainingCourse> response = APP.client().target("http://localhost:8080/api/training-courses")
                 .request()
                 .get(List.class);
 

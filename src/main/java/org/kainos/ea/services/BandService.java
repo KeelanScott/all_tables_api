@@ -22,8 +22,7 @@ public class BandService {
 
     public int createBand(BandRequest bandRequest) throws FailedToCreateBandException, InvalidBandException {
         try {
-            String validation = bandValidator.isValidBand(bandRequest);
-            if (validation != null) throw new InvalidBandException(validation);
+            bandValidator.isValidBand(bandRequest);
 
             int id = bandDao.createBand(bandRequest);
 
