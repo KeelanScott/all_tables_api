@@ -15,23 +15,20 @@ public class AuthService {
     }
     private AuthDao authDao;
 
-
-    //private DatabaseConnector databaseConnector = new DatabaseConnector();
-
-    public String login(Login login) throws FailedToLoginException, FailedToGenerateTokenException, DatabaseConnectionException {
+    public String login(Login login) throws FailedToLoginException, FailedToGenerateTokenException, FailedToEncryptTokenException {
         if (authDao.validLogin(login)) {
             try {
                 return authDao.generateToken(login.getEmail());
             } catch (SQLException e) {
                 throw new FailedToGenerateTokenException();
-            } catch (DatabaseConnectionException e) {
-                throw new DatabaseConnectionException();
+            } catch (FailedToEncryptTokenException e) {
+                throw new FailedToEncryptTokenException();
             }
         }
         throw new FailedToLoginException();
     }
 
-    public boolean isAdmin(String token) throws TokenExpiredException, FailedToVerifyTokenException, DatabaseConnectionException {
+    public boolean isAdmin(String token) throws TokenExpiredException, FailedToVerifyTokenException {
         try {
             boolean is_admin = authDao.getIsAdminFromToken(token);
 
@@ -40,21 +37,17 @@ public class AuthService {
             }
         } catch (SQLException e) {
             throw new FailedToVerifyTokenException();
-        } catch (DatabaseConnectionException e) {
-            throw new DatabaseConnectionException();
         }
 
         return false;
     }
 
-    public boolean isRegistered(String token) throws TokenExpiredException, FailedToVerifyTokenException, DatabaseConnectionException {
+    public boolean isRegistered(String token) throws TokenExpiredException, FailedToVerifyTokenException {
         try {
           boolean isRegistered = authDao.getIsUserFromToken(token);
           return isRegistered;
         } catch (SQLException e) {
             throw new FailedToVerifyTokenException();
-        } catch (DatabaseConnectionException e) {
-            throw new DatabaseConnectionException();
         }
     }
 }

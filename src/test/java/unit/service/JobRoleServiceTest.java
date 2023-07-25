@@ -52,5 +52,7 @@ public class JobRoleServiceTest {
     }
 
     @Test
-    void getAllJobRoles_shouldThrowFailedToGetJobRoleException_whenDaoThrowsSQLException() throws SQLException{
+    void getAllJobRoles_shouldThrowFailedToGetJobRoleException_whenDaoThrowsSQLException() throws SQLException {
         Mockito.when(jobRoleDao.getAllJobRoles()).thenThrow(SQLException.class);
+    }
+}

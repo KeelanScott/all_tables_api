@@ -1,19 +1,18 @@
-package org.kainos.ea.service;
+package unit.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.controller.AuthController;
-import org.kainos.ea.controller.AuthControllerUnitTest;
 import org.kainos.ea.dao.AuthDao;
 import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.exception.FailedToGenerateTokenException;
 import org.kainos.ea.exception.FailedToLoginException;
 import org.kainos.ea.model.Login;
+import org.kainos.ea.service.AuthService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +26,7 @@ public class AuthServiceTest {
             "admin"
     );
     @Test
-    void login_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException {
+    void login_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException, FailedToEncryptTokenException {
         Login validLogin = new Login(
                 "keelan@gmail.com",
                 "Scott"

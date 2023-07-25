@@ -1,6 +1,7 @@
 package org.kainos.ea.dao;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.kainos.ea.encryption.TokenEncryption;
 import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.exception.DatabaseConnectionException;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class AuthDao {
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public boolean validLogin(Login login) throws DatabaseConnectionException{
+    public boolean validLogin(Login login) {
         try (Connection c = databaseConnector.getConnection()) {
             Statement st = c.createStatement();
 
@@ -29,20 +30,22 @@ public class AuthDao {
         return false;
     }
 
-    public String generateToken(String email) throws SQLException, DatabaseConnectionException {
+    public String generateToken(String email) throws SQLException, FailedToEncryptTokenException {
         String token = UUID.randomUUID().toString();
-        //String encryptedToken;
+        String encryptedToken;
         Date expiry = DateUtils.addHours(new Date(), 8);
+        String key = System.getenv("APP_ENCRYPTION_KEY");
 
-//        try {
-//            encryptedToken = TokenEncryption.encryptToken(token);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+
+        try {
+            encryptedToken = TokenEncryption.encryptToken(token, key);
+        } catch (FailedToEncryptTokenException e) {
+            throw new FailedToEncryptTokenException();
+        }
 
         Connection c = databaseConnector.getConnection();
 
-        //try {
+        try {
             String insertStatement = "INSERT INTO tokens (email, token, expiry) VALUES (?,?,?)";
 
             PreparedStatement st = c.prepareStatement(insertStatement);
@@ -53,14 +56,13 @@ public class AuthDao {
 
             st.executeUpdate();
 
-            //return encryptedToken;
-            return token;
-//        } catch (Exception e){
-//            throw new SQLException(e);
-//        }
+            return encryptedToken;
+        } catch (Exception e){
+            throw new SQLException(e);
+        }
     }
 
-    public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
+    public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException {
         Connection c = databaseConnector.getConnection();
 
         Statement st = c.createStatement();
@@ -79,7 +81,7 @@ public class AuthDao {
         return false;
     }
 
-    public boolean getIsUserFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
+    public boolean getIsUserFromToken(String token) throws SQLException, TokenExpiredException {
         Connection c = databaseConnector.getConnection();
 
         boolean isRegistered = false;
@@ -103,21 +105,3 @@ public class AuthDao {
         }
         return false;
     }
-
-//    public boolean emailRegistered(Login login) {
-//        try (Connection c = databaseConnector.getConnection()) {
-//            Statement st = c.createStatement();
-//
-//            ResultSet rs = st.executeQuery("SELECT email FROM users WHERE email = '"
-//                    + login.getEmail() + "';");
-//
-//
-//           rs.getString("password").equals(login.getPassword());
-//        } catch (SQLException e) {
-//            System.err.println(e.getMessage());
-//        } catch (DatabaseConnectionException e) {
-//            throw new DatabaseConnectionException;
-//        }
-//        return false;
-//    }
-}

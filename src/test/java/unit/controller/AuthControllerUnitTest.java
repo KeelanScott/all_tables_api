@@ -1,10 +1,12 @@
-package org.kainos.ea.controller;
+package unit.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kainos.ea.controller.AuthController;
 import org.kainos.ea.dao.AuthDao;
 import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.exception.FailedToGenerateTokenException;
 import org.kainos.ea.exception.FailedToLoginException;
 import org.kainos.ea.model.Login;
@@ -29,7 +31,7 @@ public class AuthControllerUnitTest {
             "admin"
     );
     @Test
-    void login_shouldReturnOK_whenLoginSuccessful() throws DatabaseConnectionException, FailedToLoginException, FailedToGenerateTokenException, SQLException {
+    void login_shouldReturnOK_whenLoginSuccessful() throws FailedToLoginException, FailedToGenerateTokenException, FailedToEncryptTokenException {
         String token = "4677678787878";
         Login validLogin = new Login(
                 "keelan@gmail.com",
@@ -42,7 +44,7 @@ public class AuthControllerUnitTest {
     }
 
     @Test
-    void login_shouldReturnBAD_whenFailedToLogin() throws DatabaseConnectionException, FailedToLoginException, FailedToGenerateTokenException, SQLException {
+    void login_shouldReturnBAD_whenFailedToLogin() throws FailedToLoginException, FailedToGenerateTokenException, FailedToEncryptTokenException {
         Mockito.when(authService.login(login)).thenThrow(FailedToLoginException.class);
 
         Response response = authController.login(login);
@@ -50,7 +52,7 @@ public class AuthControllerUnitTest {
     }
 
     @Test
-    void login_shouldReturnInternalServerError_whenFailedToGenerateToken() throws DatabaseConnectionException, FailedToLoginException, FailedToGenerateTokenException, SQLException {
+    void login_shouldReturnInternalServerError_whenFailedToGenerateToken() throws FailedToLoginException, FailedToGenerateTokenException, FailedToEncryptTokenException {
         Login validLogin = new Login(
                 "keelan@gmail.com",
                 "Scott"

@@ -3,6 +3,7 @@ package org.kainos.ea.controller;
 import io.swagger.annotations.Api;
 import org.kainos.ea.dao.AuthDao;
 import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.service.AuthService;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.exception.FailedToGenerateTokenException;
@@ -35,7 +36,7 @@ public class AuthController {
             System.err.println(e.getMessage());
 
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-        } catch (DatabaseConnectionException e) {
+        } catch (FailedToEncryptTokenException e) {
             System.err.println(e.getMessage());
 
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
