@@ -1,13 +1,12 @@
 package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.exception.JobRoleDoesNotExistException;
+import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
-import org.kainos.ea.exception.FailedToGetJobRoleException;
 import org.kainos.ea.dao.JobRoleDao;
+import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -37,6 +36,13 @@ public class JobRoleServiceTest {
             "Tim",
             band,
             capability,
+            "spec"
+    );
+
+    JobRoleRequest jobRoleRequest = new JobRoleRequest(
+            "Job Role",
+            1,
+            1,
             "spec"
     );
 
@@ -75,5 +81,11 @@ public class JobRoleServiceTest {
     void getJobRolesById_shouldThrowSQLException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenThrow(SQLException.class);
         assertThrows(FailedToGetJobRoleException.class, () -> jobRoleService.getJobRolesById(1));
+    }
+
+    @Test
+    void createJobRole_shouldReturnId_whenDaoReturnsId() throws SQLException, DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
+        assertEquals(1, jobRoleService.createJobRole(jobRoleRequest));
     }
 }

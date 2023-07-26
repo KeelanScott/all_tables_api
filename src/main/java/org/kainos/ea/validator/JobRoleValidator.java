@@ -13,19 +13,25 @@ public class JobRoleValidator {
         if (jobRoleRequest.getName() == null || jobRoleRequest.getName().isEmpty()) {
             throw new InvalidJobRoleException("Job role name cannot be empty");
         }
-        if (jobRoleRequest.getBandId() == 0) {
-            throw new InvalidJobRoleException("Band ID cannot be 0");
+        if (jobRoleRequest.getName().length() > 50) {
+            throw new InvalidJobRoleException("Job role name cannot be longer than 50 characters");
         }
-        if (jobRoleRequest.getCapabilityId() == 0) {
-            throw new InvalidJobRoleException("Capability ID cannot be 0");
+        if (jobRoleRequest.getBandId() <= 0) {
+            throw new InvalidJobRoleException("Band ID cannot be 0 or less");
+        }
+        if (jobRoleRequest.getCapabilityId() <= 0) {
+            throw new InvalidJobRoleException("Capability ID cannot be 0 or less");
         }
         if (jobRoleRequest.getSpecification() == null || jobRoleRequest.getSpecification().isEmpty()) {
             throw new InvalidJobRoleException("Specification cannot be empty");
         }
+        if(jobRoleRequest.getSpecification().length() > 255){
+            throw new InvalidJobRoleException("Specification cannot be longer than 255 characters");
+        }
         try {
-            if ( (new BandService(new BandDao())).getBandById(jobRoleRequest.getBandId()) != null) {
+            if ( (new BandService(new BandDao())).getBandById(jobRoleRequest.getBandId()) == null) {
                 throw new InvalidJobRoleException("Band ID does not exist");
-            } if ( (new CapabilityService(new CapabilityDao())).getCapabilityById(jobRoleRequest.getCapabilityId()) != null) {
+            } if ( (new CapabilityService(new CapabilityDao())).getCapabilityById(jobRoleRequest.getCapabilityId()) == null) {
                 throw new InvalidJobRoleException("Capability ID does not exist");
             }
             return true;
