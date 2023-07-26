@@ -44,4 +44,11 @@ public class TrainingCourseServiceUnitTest {
 
         assertThrows(FailedToGetTrainingCoursesException.class, () -> trainingCourseService.getAllTrainingCourses());
     }
+
+    @Test
+    void getAllTrainingCourses_shouldThrowFailedToGetTrainingCourseException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(trainingCourseDao.getAllTrainingCourses()).thenThrow(DatabaseConnectionException.class);
+
+        assertThrows(FailedToGetTrainingCoursesException.class, () -> trainingCourseService.getAllTrainingCourses());
+    }
 }
