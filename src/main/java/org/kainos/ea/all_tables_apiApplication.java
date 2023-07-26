@@ -40,8 +40,10 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
     public void run(final all_tables_apiConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
-        environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao())));
-        environment.jersey().register(new CapabilityController(new CapabilityService(new CapabilityDao())));
-        environment.jersey().register(new BandController(new BandService(new BandDao())));
+        CapabilityDao capabilityDao = new CapabilityDao();
+        BandDao bandDao = new BandDao();
+        environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao(), bandDao, capabilityDao)));
+        environment.jersey().register(new CapabilityController(new CapabilityService(capabilityDao)));
+        environment.jersey().register(new BandController(new BandService(bandDao)));
     }
 }

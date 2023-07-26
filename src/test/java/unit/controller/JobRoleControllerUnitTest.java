@@ -4,12 +4,11 @@ import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.controller.JobRoleController;
-import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.exception.FailedToGetJobRoleException;
-import org.kainos.ea.exception.JobRoleDoesNotExistException;
+import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
+import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
 
@@ -27,6 +26,13 @@ public class JobRoleControllerUnitTest {
             new Band(1 , "Band 1", "Level 1", "Spec"),
             new Capability(1, "Software Engineering", "Software Engineering"),
             "Spec"
+    );
+
+    JobRoleRequest jobRoleRequest = new JobRoleRequest(
+            "Job Role",
+            1,
+            1,
+            "spec"
     );
 
     @Test
@@ -80,4 +86,24 @@ public class JobRoleControllerUnitTest {
         assert(200 == response.getStatus());
     }
 
+    @Test
+    void createJobRole_shouldReturnId_whenServiceReturnsId() throws DatabaseConnectionException, FailedToGetJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        Mockito.when(jobRoleService.createJobRole(jobRoleRequest)).thenReturn(1);
+        Response response= jobRoleController.createJobRole(jobRoleRequest);
+        assert(200 == response.getStatus());
+    }
+
+    @Test
+    void createJobRole_shouldReturnServerError_whenServiceThrowsFailedToCreateJobRoleException() throws DatabaseConnectionException, FailedToGetJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        Mockito.when(jobRoleService.createJobRole(jobRoleRequest)).thenThrow(FailedToCreateJobRoleException.class);
+        Response response= jobRoleController.createJobRole(jobRoleRequest);
+        assert(500 == response.getStatus());
+    }
+
+    @Test
+    void createJobRole_shouldReturnServerError_whenServiceThrowsInvalidJobRoleException() throws DatabaseConnectionException, FailedToGetJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        Mockito.when(jobRoleService.createJobRole(jobRoleRequest)).thenThrow(InvalidJobRoleException.class);
+        Response response= jobRoleController.createJobRole(jobRoleRequest);
+        assert(400 == response.getStatus());
+    }
 }

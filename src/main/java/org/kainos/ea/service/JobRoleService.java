@@ -1,4 +1,6 @@
 package org.kainos.ea.service;
+import org.kainos.ea.dao.BandDao;
+import org.kainos.ea.dao.CapabilityDao;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.JobRole;
 import org.kainos.ea.dao.JobRoleDao;
@@ -10,9 +12,13 @@ import java.util.List;
 
 public class JobRoleService {
     private JobRoleDao jobRoleDao;
+    private BandDao bandDao;
+    private CapabilityDao capabilityDao;
 
-    public JobRoleService(JobRoleDao jobRoleDao){
+    public JobRoleService(JobRoleDao jobRoleDao, BandDao bandDao, CapabilityDao capabilityDao){
         this.jobRoleDao = jobRoleDao;
+        this.bandDao = bandDao;
+        this.capabilityDao = capabilityDao;
     }
 
     public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException, DatabaseConnectionException {
@@ -41,7 +47,7 @@ public class JobRoleService {
 
     public int createJobRole(JobRoleRequest jobRoleRequest) throws FailedToCreateJobRoleException, DatabaseConnectionException, InvalidJobRoleException {
         try {
-//            JobRoleValidator.isValidJobRole(jobRoleRequest);
+            JobRoleValidator.isValidJobRole(jobRoleRequest, bandDao, capabilityDao);
             return jobRoleDao.createJobRole(jobRoleRequest);
         } catch (SQLException e) {
             System.err.println(e.getMessage());

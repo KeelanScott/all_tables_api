@@ -8,8 +8,10 @@ import org.kainos.ea.service.BandService;
 import org.kainos.ea.service.CapabilityService;
 import org.kainos.ea.service.JobRoleService;
 
+import java.sql.SQLException;
+
 public class JobRoleValidator {
-    public static boolean isValidJobRole(JobRoleRequest jobRoleRequest) throws InvalidJobRoleException {
+    public static boolean isValidJobRole(JobRoleRequest jobRoleRequest, BandDao bandDao, CapabilityDao capabilityDao) throws InvalidJobRoleException {
         if (jobRoleRequest.getName() == null || jobRoleRequest.getName().isEmpty()) {
             throw new InvalidJobRoleException("Job role name cannot be empty");
         }
@@ -29,15 +31,13 @@ public class JobRoleValidator {
             throw new InvalidJobRoleException("Specification cannot be longer than 255 characters");
         }
         try {
-            if ( (new BandService(new BandDao())).getBandById(jobRoleRequest.getBandId()) == null) {
+            if ( bandDao.getBandById(jobRoleRequest.getBandId()) == null) {
                 throw new InvalidJobRoleException("Band ID does not exist");
-            } if ( (new CapabilityService(new CapabilityDao())).getCapabilityById(jobRoleRequest.getCapabilityId()) == null) {
+            } if ( capabilityDao.getCapabilityById(jobRoleRequest.getCapabilityId()) == null) {
                 throw new InvalidJobRoleException("Capability ID does not exist");
             }
             return true;
-        } catch (DatabaseConnectionException |
-                 FailedToGetBandException | BandDoesNotExistException | FailedToGetCapabilityException |
-                 CapabilityDoesNotExistException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             throw new InvalidJobRoleException("Failed to validate job role");
         }
     }

@@ -1,6 +1,8 @@
 package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kainos.ea.dao.BandDao;
+import org.kainos.ea.dao.CapabilityDao;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
@@ -18,8 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class JobRoleServiceTest {
     JobRoleDao jobRoleDao = Mockito.mock(JobRoleDao.class);
+    BandDao bandDao = Mockito.mock(BandDao.class);
+    CapabilityDao capabilityDao = Mockito.mock(CapabilityDao.class);
 
-    JobRoleService jobRoleService = new JobRoleService(jobRoleDao);
+    JobRoleService jobRoleService = new JobRoleService(jobRoleDao, bandDao, capabilityDao);
 
     Band band = new Band(
             1,
@@ -85,6 +89,8 @@ public class JobRoleServiceTest {
 
     @Test
     void createJobRole_shouldReturnId_whenDaoReturnsId() throws SQLException, DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
         Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
         assertEquals(1, jobRoleService.createJobRole(jobRoleRequest));
     }
