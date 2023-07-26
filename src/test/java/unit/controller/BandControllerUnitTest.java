@@ -25,8 +25,21 @@ public class BandControllerUnitTest {
     @Test
     void createBand_shouldReturnOK_whenServiceReturnsId() throws InvalidBandException, FailedToCreateBandException {
         Mockito.when(bandService.createBand(bandRequest)).thenReturn(1);
-
         Response response = bandController.createBand(bandRequest);
         assert(response.getStatus() == 201);
+    }
+
+    @Test
+    void createBand_shouldReturnServerError_whenServiceThrowsFailedToCreateBandException() throws InvalidBandException, FailedToCreateBandException {
+        Mockito.when(bandService.createBand(bandRequest)).thenThrow(FailedToCreateBandException.class);
+        Response response = bandController.createBand(bandRequest);
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
+    void createBand_shouldReturnBadRequest_whenServiceThrowsInvalidBandException() throws InvalidBandException, FailedToCreateBandException {
+        Mockito.when(bandService.createBand(bandRequest)).thenThrow(InvalidBandException.class);
+        Response response = bandController.createBand(bandRequest);
+        assert(response.getStatus() == 400);
     }
 }
