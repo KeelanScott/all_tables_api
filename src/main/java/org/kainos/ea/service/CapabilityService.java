@@ -20,4 +20,20 @@ public class CapabilityService {
             throw new FailedToGetCapabilityException();
         }
     }
+
+    public Capability getCapabilityById(int id) throws FailedToGetCapabilityException, DatabaseConnectionException, CapabilityDoesNotExistException {
+        try{
+            Capability capability = jobRoleDao.getCapabilityById(id);
+
+            if (capability != null) {
+                return capability;
+            }
+            else{
+                throw new CapabilityDoesNotExistException();
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetCapabilityException();
+        }
+    }
 }

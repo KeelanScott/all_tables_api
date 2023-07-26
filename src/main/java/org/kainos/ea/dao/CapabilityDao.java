@@ -28,4 +28,22 @@ public class CapabilityDao {
         return capabilityList;
     }
 
+    public Capability getCapabilityById(int id) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT id, name, description FROM capabilities WHERE id = " + id + ";");
+
+        while (rs.next()) {
+
+            return new Capability(
+                    rs.getInt("capabilities.id"),
+                    rs.getString("capabilities.name"),
+                    rs.getString("capabilities.description")
+            );
+        }
+        return null;
+    }
+
 }
