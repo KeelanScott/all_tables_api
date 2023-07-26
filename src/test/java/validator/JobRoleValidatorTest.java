@@ -102,4 +102,12 @@ public class JobRoleValidatorTest {
             JobRoleValidator.isValidJobRole(jobRoleRequest, bandDao, capabilityDao);
         });
     }
+
+    @Test
+    public void isValidJobRole_shouldThrowInvalidJobRoleException_whenSpecificationTooShort() {
+        jobRoleRequest.setSpecification("");
+        assertThrows(InvalidJobRoleException.class, () -> {
+            JobRoleValidator.isValidJobRole(jobRoleRequest, bandDao, capabilityDao);
+        });
+    }
 }

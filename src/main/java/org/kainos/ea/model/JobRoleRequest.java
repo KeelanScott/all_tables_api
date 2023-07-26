@@ -19,14 +19,6 @@ public class JobRoleRequest {
         setSpecification(specification);
     }
 
-    public JobRoleRequest(String name, int band, int capability) {
-        setName(name);
-        setBandId(bandId);
-        setCapabilityId(capabilityId);
-        setSpecification(specification);
-    }
-
-
     public String getName() {
         return name;
     }

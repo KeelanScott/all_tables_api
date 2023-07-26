@@ -57,7 +57,7 @@ public class JobRoleControllerIntegrationTest {
     }
 
     @Test
-    void createJobRole_shouldReturn201_whenCreated() {
+    void createJobRole_shouldReturn200_whenCreated() {
         Response response = APP.client().target("http://localhost:8080/api/job-roles")
                 .request()
                 .post(javax.ws.rs.client.Entity.json(jobRoleRequest));
