@@ -3,6 +3,7 @@ package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.CapabilityDao;
+import org.kainos.ea.exception.CapabilityDoesNotExistException;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToGetCapabilityException;
 import org.kainos.ea.model.Capability;
@@ -44,5 +45,19 @@ public class CapabilityServiceTest {
         Mockito.when(capabilityDao.getAllCapabilities()).thenThrow(SQLException.class);
 
         assertThrows(FailedToGetCapabilityException.class, () -> capabilityService.getAllCapabilities());
+    }
+
+    @Test
+    void getCapabilityById_shouldReturnCapability_whenDaoReturnsCapability() throws SQLException, FailedToGetCapabilityException, DatabaseConnectionException, CapabilityDoesNotExistException {
+        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
+
+        assertEquals(capability, capabilityService.getCapabilityById(1));
+    }
+
+    @Test
+    void getCapabilityById_shouldThrowCapabilityDoesNotExistException_whenDaoReturnsNull() throws SQLException, DatabaseConnectionException {
+        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(null);
+
+        assertThrows(CapabilityDoesNotExistException.class, () -> capabilityService.getCapabilityById(1));
     }
 }
