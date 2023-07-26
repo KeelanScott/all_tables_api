@@ -50,6 +50,13 @@ public class CompetencyServiceUnitTest {
     }
 
     @Test
+    void getAllCompetencies_shouldThrowFailedToGetCompetencyException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(competencyDao.getAllCompetencies()).thenThrow(DatabaseConnectionException.class);
+
+        assertThrows(FailedToGetCompetenciesException.class, () -> competencyService.getAllCompetencies());
+    }
+
+    @Test
     void createBandCompetency_shouldThrowInvalidBandCompetencyException_whenValidatorThrowsInvalidBandCompetencyException() throws InvalidBandCompetencyException {
         BandCompetency bandCompetency = new BandCompetency(
                 1,
