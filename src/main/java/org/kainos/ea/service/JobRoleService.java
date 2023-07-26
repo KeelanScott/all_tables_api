@@ -14,10 +14,10 @@ public class JobRoleService {
         this.jobRoleDao = jobRoleDao;
     }
 
-    public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException {
+    public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException, DatabaseConnectionException {
         try {
             return this.jobRoleDao.getAllJobRoles();
-        } catch (SQLException | DatabaseConnectionException e) {
+        } catch (SQLException e) {
             System.out.println(e);
             throw new FailedToGetJobRoleException();
         }

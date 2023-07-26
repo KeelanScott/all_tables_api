@@ -24,7 +24,7 @@ public class JobRoleController {
     public Response getJobRoles() {
         try {
             return Response.ok(jobRoleService.getAllJobRoles()).build();
-        } catch (FailedToGetJobRoleException e) {
+        } catch (FailedToGetJobRoleException | DatabaseConnectionException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
         }
