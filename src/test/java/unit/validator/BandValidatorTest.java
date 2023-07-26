@@ -11,26 +11,23 @@ public class BandValidatorTest {
 
     BandValidator bandValidator = new BandValidator();
 
-    BandRequest bandRequest;
-
-    // before each reset bandRequest
-    @BeforeEach
-    public void resetBandRequest() {
-        bandRequest = new BandRequest(
+    @Test
+    public void isValidBand_shouldReturnTrue_whenValidBand() throws InvalidBandException {
+        BandRequest bandRequest = new BandRequest(
                 "Band 1",
                 "Executive",
                 "Responsibilities"
         );
-    }
-
-    @Test
-    public void isValidBand_shouldReturnTrue_whenValidBand() throws InvalidBandException {
         assert(bandValidator.isValidBand(bandRequest));
     }
 
     @Test
     public void isValidBand_shouldThrowInvalidBandException_whenLevelTooLong() {
-        bandRequest.setLevel("X".repeat(31));
+        BandRequest bandRequest = new BandRequest(
+                "Band 1",
+                "X".repeat(31),
+                "Responsibilities"
+        );
         assertThrows(InvalidBandException.class, () -> {
             bandValidator.isValidBand(bandRequest);
         });
@@ -38,7 +35,11 @@ public class BandValidatorTest {
 
     @Test
     public void isValidBand_shouldThrowInvalidBandException_whenNameTooLong() {
-        bandRequest.setName("X".repeat(31));
+        BandRequest bandRequest = new BandRequest(
+                "X".repeat(31),
+                "Executive",
+                "Responsibilities"
+        );
         assertThrows(InvalidBandException.class, () -> {
             bandValidator.isValidBand(bandRequest);
         });
@@ -46,7 +47,11 @@ public class BandValidatorTest {
 
     @Test
     public void isValidBand_shouldThrowInvalidBandException_whenResponsibilitiesTooLong() {
-        bandRequest.setResponsibilities("X".repeat(256));
+        BandRequest bandRequest = new BandRequest(
+                "Band 1",
+                "Executive",
+                "X".repeat(256)
+        );
         assertThrows(InvalidBandException.class, () -> {
             bandValidator.isValidBand(bandRequest);
         });
@@ -55,7 +60,11 @@ public class BandValidatorTest {
 
     @Test
     public void isValidBand_shouldThrowInvalidBandException_whenLevelTooShort() {
-        bandRequest.setLevel("");
+        BandRequest bandRequest = new BandRequest(
+                "Band 1",
+                "",
+                "Responsibilities"
+        );
         assertThrows(InvalidBandException.class, () -> {
             bandValidator.isValidBand(bandRequest);
         });
@@ -63,7 +72,11 @@ public class BandValidatorTest {
 
     @Test
     public void isValidBand_shouldThrowInvalidBandException_whenNameTooShort() {
-        bandRequest.setName("");
+        BandRequest bandRequest = new BandRequest(
+                "",
+                "Executive",
+                "Responsibilities"
+        );
         assertThrows(InvalidBandException.class, () -> {
             bandValidator.isValidBand(bandRequest);
         });
@@ -71,7 +84,11 @@ public class BandValidatorTest {
 
     @Test
     public void isValidBand_shouldThrowInvalidBandException_whenResponsibilitiesTooShort() {
-        bandRequest.setResponsibilities("X".repeat(4));
+        BandRequest bandRequest = new BandRequest(
+                "Band 1",
+                "Executive",
+                "X".repeat(4)
+        );
         assertThrows(InvalidBandException.class, () -> {
             bandValidator.isValidBand(bandRequest);
         });
