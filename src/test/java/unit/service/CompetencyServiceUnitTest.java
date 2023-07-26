@@ -9,6 +9,7 @@ import org.kainos.ea.exception.InvalidBandCompetencyException;
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.service.CompetencyService;
+import org.kainos.ea.validator.BandCompetencyValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -20,8 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class CompetencyServiceUnitTest {
     CompetencyDao competencyDao = Mockito.mock(CompetencyDao.class);
+    BandCompetencyValidator bandCompetencyValidator = Mockito.mock(BandCompetencyValidator.class);
 
-    CompetencyService competencyService = new CompetencyService(competencyDao);
+    CompetencyService competencyService = new CompetencyService(competencyDao, bandCompetencyValidator);
 
     Competency competency = new Competency(
             1,
@@ -48,12 +50,13 @@ public class CompetencyServiceUnitTest {
     }
 
     @Test
-    void createBandCompetency_shouldThrowInvalidBandCompetencyException_whenValidatorThrowsInvalidBandCompetencyException() {
+    void createBandCompetency_shouldThrowInvalidBandCompetencyException_whenValidatorThrowsInvalidBandCompetencyException() throws InvalidBandCompetencyException {
         BandCompetency bandCompetency = new BandCompetency(
                 1,
                 1,
-                "d"
+                "Description"
         );
+        Mockito.when(bandCompetencyValidator.isValidBandCompetency(bandCompetency)).thenThrow(InvalidBandCompetencyException.class);
         assertThrows(InvalidBandCompetencyException.class, () -> competencyService.createBandCompetency(bandCompetency));
     }
 }

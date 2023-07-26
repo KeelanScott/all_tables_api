@@ -15,10 +15,11 @@ import java.util.List;
 public class BandService {
 
     private BandDao bandDao;
-    private final BandValidator bandValidator = new BandValidator();
+    private final BandValidator bandValidator;
 
-    public BandService(BandDao bandDao) {
+    public BandService(BandDao bandDao, BandValidator bandValidator) {
         this.bandDao = bandDao;
+        this.bandValidator = bandValidator;
     }
 
     public int createBand(BandRequest bandRequest) throws FailedToCreateBandException, InvalidBandException {

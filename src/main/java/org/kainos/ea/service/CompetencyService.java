@@ -13,11 +13,12 @@ import java.util.List;
 
 public class CompetencyService {
     private final CompetencyDao competencyDao;
+    private final BandCompetencyValidator bandCompetencyValidator;
 
-    public CompetencyService(CompetencyDao competencyDao) {
+    public CompetencyService(CompetencyDao competencyDao, BandCompetencyValidator bandCompetencyValidator) {
         this.competencyDao = competencyDao;
+        this.bandCompetencyValidator = bandCompetencyValidator;
     }
-    private final BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator();
 
     public List<Competency> getAllCompetencies() throws FailedToGetCompetenciesException {
         List<Competency> competencyList = null;
