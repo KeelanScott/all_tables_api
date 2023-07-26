@@ -4,6 +4,7 @@ import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
+import org.kainos.ea.model.JobRoleRequest;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -73,5 +74,25 @@ public class JobRoleDao {
             );
         }
         return null;
+    }
+
+    public int createJobRole(JobRoleRequest jobRoleRequest) throws DatabaseConnectionException, SQLException {
+            Connection c = DatabaseConnector.getConnection();
+
+            PreparedStatement ps = c.prepareStatement("INSERT INTO job_roles (name, band_id, capability_id, specification) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, jobRoleRequest.getName());
+            ps.setInt(2, jobRoleRequest.getBandId());
+            ps.setInt(3, jobRoleRequest.getCapabilityId());
+            ps.setString(4, jobRoleRequest.getSpecification());
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        return -1;
     }
 }

@@ -2,10 +2,9 @@ package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
 import org.kainos.ea.dao.JobRoleDao;
-import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.exception.JobRoleDoesNotExistException;
+import org.kainos.ea.exception.*;
+import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.service.JobRoleService;
-import org.kainos.ea.exception.FailedToGetJobRoleException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -47,4 +46,21 @@ public class JobRoleController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+
+    @POST
+    @Path("/job-roles")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createJobRole(JobRoleRequest jobRoleRequest) {
+        try {
+            return Response.ok(jobRoleService.createJobRole(jobRoleRequest)).build();
+        } catch (DatabaseConnectionException | FailedToCreateJobRoleException e) {
+            System.err.println((e.getMessage()));
+            return Response.serverError().build();
+        } catch (InvalidJobRoleException e) {
+            System.err.println((e.getMessage()));
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
 }

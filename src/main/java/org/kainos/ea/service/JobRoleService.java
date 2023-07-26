@@ -1,9 +1,10 @@
 package org.kainos.ea.service;
-import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.exception.JobRoleDoesNotExistException;
+import org.kainos.ea.exception.*;
 import org.kainos.ea.model.JobRole;
-import org.kainos.ea.exception.FailedToGetJobRoleException;
 import org.kainos.ea.dao.JobRoleDao;
+import org.kainos.ea.model.JobRoleRequest;
+import org.kainos.ea.validator.JobRoleValidator;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,6 +36,16 @@ public class JobRoleService {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             throw new FailedToGetJobRoleException();
+        }
+    }
+
+    public int createJobRole(JobRoleRequest jobRoleRequest) throws FailedToCreateJobRoleException, DatabaseConnectionException, InvalidJobRoleException {
+        try {
+            JobRoleValidator.isValidJobRole(jobRoleRequest);
+            return jobRoleDao.createJobRole(jobRoleRequest);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToCreateJobRoleException();
         }
     }
 }
