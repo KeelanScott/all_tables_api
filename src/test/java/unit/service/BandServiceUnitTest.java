@@ -39,15 +39,6 @@ public class BandServiceUnitTest {
             "these are the responsibilities"
     );
 
-    @BeforeEach
-    public void resetBandRequest() {
-        bandRequest = new BandRequest(
-                "Band 1",
-                "Executive",
-                "Responsibilities"
-        );
-    }
-
     @Test
     void getAllBands_shouldReturnBandList_whenDaoReturnsBandList() throws FailedToGetBandException, SQLException, DatabaseConnectionException {
         ArrayList<Band> list = new ArrayList<>();
