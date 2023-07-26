@@ -35,5 +35,27 @@ public class BandDao {
         return bands;
     }
 
+    public Band getBandById(int id) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+
+        String selectStatement = "SELECT * FROM bands WHERE id = ?;";
+
+        PreparedStatement st = c.prepareStatement(selectStatement);
+        st.setInt(1, id);
+
+        ResultSet rs = st.executeQuery();
+
+        if (rs.next()) {
+            return new Band(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("level"),
+                    rs.getString("responsibilities")
+            );
+        }
+
+        return null;
+    }
+
 
 }

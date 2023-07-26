@@ -1,5 +1,7 @@
 package org.kainos.ea.service;
 
+import org.kainos.ea.exception.BandDoesNotExistException;
+import org.kainos.ea.exception.CapabilityDoesNotExistException;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToGetBandException;
 import org.kainos.ea.model.Band;
@@ -20,6 +22,20 @@ public class BandService {
         try {
             return bandDao.getAllBands();
         } catch (SQLException e) {
+            throw new FailedToGetBandException();
+        }
+    }
+
+    public Band getBandById(int id) throws FailedToGetBandException, DatabaseConnectionException, BandDoesNotExistException {
+        try {
+            Band band = bandDao.getBandById(id);
+            if (band != null) {
+                return band;
+            } else {
+                throw new BandDoesNotExistException();
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
             throw new FailedToGetBandException();
         }
     }
