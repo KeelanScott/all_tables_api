@@ -5,7 +5,6 @@ import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
 import org.kainos.ea.model.JobRoleRequest;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
