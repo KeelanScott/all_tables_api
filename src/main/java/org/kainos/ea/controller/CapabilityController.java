@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-@Api("Capability")
+@Api("Capabilities")
 @Path("/api")
 public class CapabilityController {
 

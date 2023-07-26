@@ -16,7 +16,7 @@ public class JobRoleDao {
         Statement st = c.createStatement();
 
         ResultSet rs = st.executeQuery(
-                "SELECT job_roles.id, job_roles.name, bands.`name`, level, bands.id, capabilities.id, capabilities.name  FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
+                "SELECT job_roles.id, job_roles.name, bands.`name`, level, bands.id, capabilities.id, capabilities.name, bands.responsibilities  FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
                         "JOIN capabilities ON job_roles.capability_id = capabilities.id;");
 
         List<JobRole> jobRoleList = new ArrayList<>();
@@ -29,7 +29,8 @@ public class JobRoleDao {
             Band band = new Band(
                     rs.getInt("bands.id"),
                     rs.getString("bands.name"),
-                    rs.getString("level")
+                    rs.getString("level"),
+                    rs.getString("bands.responsibilities")
             );
             JobRole jobRole = new JobRole (
                     rs.getInt("job_roles.id"),
@@ -48,7 +49,7 @@ public class JobRoleDao {
 
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT job_roles.id, job_roles.name, bands.id, bands.`name`, level, job_roles.specification, capabilities.id, capabilities.name, capabilities.description FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
+        ResultSet rs = st.executeQuery("SELECT job_roles.id, job_roles.name, bands.id, bands.`name`, level, job_roles.specification, capabilities.id, capabilities.name, capabilities.description, bands.responsibilities FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
                 "JOIN capabilities ON job_roles.capability_id = capabilities.id WHERE job_roles.id = " + id + ";");
 
         while (rs.next()) {
@@ -61,7 +62,8 @@ public class JobRoleDao {
             Band band = new Band(
                     rs.getInt("bands.id"),
                     rs.getString("bands.name"),
-                    rs.getString("level")
+                    rs.getString("level"),
+                    rs.getString("bands.responsibilities")
             );
 
             return new JobRole(

@@ -5,10 +5,13 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.kainos.ea.controller.BandController;
 import org.kainos.ea.controller.CapabilityController;
 import org.kainos.ea.controller.JobRoleController;
+import org.kainos.ea.dao.BandDao;
 import org.kainos.ea.dao.CapabilityDao;
 import org.kainos.ea.dao.JobRoleDao;
+import org.kainos.ea.service.BandService;
 import org.kainos.ea.service.CapabilityService;
 import org.kainos.ea.service.JobRoleService;
 
@@ -39,7 +42,6 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
         // TODO: implement application
         environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao())));
         environment.jersey().register(new CapabilityController(new CapabilityService(new CapabilityDao())));
-
+        environment.jersey().register(new BandController(new BandService(new BandDao())));
     }
-
 }
