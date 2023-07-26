@@ -1,6 +1,7 @@
 package org.kainos.ea.service;
 
 import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.FailedToGetBandException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.dao.BandDao;
 
