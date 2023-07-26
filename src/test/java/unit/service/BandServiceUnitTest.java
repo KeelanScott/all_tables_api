@@ -89,8 +89,8 @@ public class BandServiceUnitTest {
     }
 
     @Test
-    void createBand_shouldThrowSqlException_whenDaoThrowsSqlException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(bandDao.createBand(bandRequest)).thenThrow(SQLException.class);
+    void createBand_shouldThrowFailedToCreateBandException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(bandDao.createBand(bandRequest)).thenThrow(DatabaseConnectionException.class);
 
         assertThrows(FailedToCreateBandException.class, () -> bandService.createBand(bandRequest));
     }
