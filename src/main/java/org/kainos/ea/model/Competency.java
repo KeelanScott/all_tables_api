@@ -1,10 +1,15 @@
 package org.kainos.ea.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Competency {
     private int competencyId;
     private String name;
 
-    public Competency(int competencyId, String name) {
+    @JsonCreator
+    public Competency(@JsonProperty("competencyId") int competencyId,
+                      @JsonProperty("name") String name) {
         this.competencyId = competencyId;
         this.name = name;
     }

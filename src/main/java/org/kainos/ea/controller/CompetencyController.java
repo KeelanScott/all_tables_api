@@ -1,9 +1,7 @@
 package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.exception.FailedToCreateBandCompetencyException;
-import org.kainos.ea.exception.FailedToGetCompetenciesException;
-import org.kainos.ea.exception.InvalidBandCompetencyException;
+import org.kainos.ea.exception.*;
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.service.CompetencyService;
 
@@ -29,6 +27,21 @@ public class CompetencyController {
         } catch (FailedToGetCompetenciesException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/competencies/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompetency(@PathParam("id") int id) {
+        try {
+            return Response.ok(competencyService.getCompetencyById(id)).build();
+        } catch (FailedToGetCompetencyException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        } catch (CompetencyDoesNotExistException e) {
+            System.err.println((e.getMessage()));
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 

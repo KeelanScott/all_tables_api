@@ -1,9 +1,6 @@
 package org.kainos.ea.service;
 
-import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.exception.FailedToCreateBandCompetencyException;
-import org.kainos.ea.exception.FailedToGetCompetenciesException;
-import org.kainos.ea.exception.InvalidBandCompetencyException;
+import org.kainos.ea.exception.*;
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.dao.CompetencyDao;
@@ -30,6 +27,21 @@ public class CompetencyService {
         }
 
         return competencyList;
+    }
+
+    public Competency getCompetencyById(int id) throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
+        try {
+            Competency competency = competencyDao.getCompetencyById(id);
+
+            if (competency != null) {
+                return competency;
+            } else {
+                throw new CompetencyDoesNotExistException();
+            }
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetCompetencyException();
+        }
     }
 
     public int createBandCompetency(BandCompetency bandCompetency) throws FailedToCreateBandCompetencyException, InvalidBandCompetencyException {

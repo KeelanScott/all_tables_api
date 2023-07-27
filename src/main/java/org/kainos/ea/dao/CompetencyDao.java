@@ -1,8 +1,7 @@
 package org.kainos.ea.dao;
 
 import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.model.BandCompetency;
-import org.kainos.ea.model.Competency;
+import org.kainos.ea.model.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +24,21 @@ public class CompetencyDao {
         }
 
         return competencyList;
+    }
+
+    public Competency getCompetencyById(int id) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT id, name " +
+                "FROM competencies WHERE id = " + id + ";");
+
+        while (rs.next()) {
+            return new Competency(
+                    rs.getInt("competencies.id"),
+                    rs.getString("competencies.name"));
+        }
+        return null;
     }
 
     public int createBandCompetency(BandCompetency bandCompetency) throws SQLException, DatabaseConnectionException {

@@ -3,16 +3,13 @@ package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.CompetencyDao;
-import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.exception.FailedToGetCompetenciesException;
-import org.kainos.ea.exception.InvalidBandCompetencyException;
+import org.kainos.ea.exception.*;
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.service.CompetencyService;
 import org.kainos.ea.validator.BandCompetencyValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,5 +62,23 @@ public class CompetencyServiceUnitTest {
         );
         Mockito.when(bandCompetencyValidator.isValidBandCompetency(bandCompetency)).thenThrow(InvalidBandCompetencyException.class);
         assertThrows(InvalidBandCompetencyException.class, () -> competencyService.createBandCompetency(bandCompetency));
+    }
+
+    @Test
+    void getCompetencyId_shouldThrowCompetencyDoesNotExistException_whenDaoReturnsNull() throws SQLException, DatabaseConnectionException {
+        Mockito.when(competencyDao.getCompetencyById(0)).thenReturn(null);
+        assertThrows(CompetencyDoesNotExistException.class, () -> competencyService.getCompetencyById(0));
+    }
+
+    @Test
+    void getCompetencyById_shouldReturnCompetency_whenDaoReturnsCompetency() throws SQLException, DatabaseConnectionException, CompetencyDoesNotExistException, FailedToGetCompetencyException {
+        Mockito.when(competencyDao.getCompetencyById(1)).thenReturn(competency);
+        assertEquals(competency, competencyService.getCompetencyById(1));
+    }
+
+    @Test
+    void getCompetencyById_shouldThrowSQLException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(competencyDao.getCompetencyById(1)).thenThrow(SQLException.class);
+        assertThrows(FailedToGetCompetencyException.class, () -> competencyService.getCompetencyById(1));
     }
 }
