@@ -29,7 +29,6 @@ public class CapabilityControllerUnitTest {
 
     @Test
     void getCapabilities_shouldReturnOK_whenServiceReturnsList() throws FailedToGetCapabilityException, DatabaseConnectionException {
-
         List<Capability> sampleCapabilities = new ArrayList<>();
         sampleCapabilities.add(capability);
         sampleCapabilities.add(capability);
@@ -48,34 +47,4 @@ public class CapabilityControllerUnitTest {
         Response response = capabilityController.getCapabilities();
         assert(response.getStatus() == 500);
     }
-
-    @Test
-    void getCapabilityById_shouldReturnBadRequest_whenServiceThrowCapabilityDoesNotExistException() throws DatabaseConnectionException, FailedToGetCapabilityException, CapabilityDoesNotExistException {
-        Mockito.when(capabilityService.getCapabilityById(11111)).thenThrow(CapabilityDoesNotExistException.class);
-        assert(404 == capabilityController.getCapabilityById(11111).getStatus());
-    }
-
-    @Test
-    void getCapabilityById_shouldReturnServerError_whenServiceThrowDatabaseConnectionException() throws DatabaseConnectionException, FailedToGetCapabilityException, CapabilityDoesNotExistException {
-        Mockito.when(capabilityService.getCapabilityById(1)).thenThrow(DatabaseConnectionException.class);
-        Response response = capabilityController.getCapabilityById(1);
-        System.out.println(response.getStatus());
-        assert(500 == response.getStatus());
-    }
-
-    @Test
-    void getCapabilityById_shouldReturnServerError_whenServiceThrowFailedToGetCapabilityException() throws DatabaseConnectionException, FailedToGetCapabilityException, CapabilityDoesNotExistException {
-        Mockito.when(capabilityService.getCapabilityById(1)).thenThrow(FailedToGetCapabilityException.class);
-        Response response = capabilityController.getCapabilityById(1);
-        System.out.println(response.getStatus());
-        assert(500 == response.getStatus());
-    }
-
-    @Test
-    void getCapabilityById_shouldReturnCapability_whenServiceReturnsCapability() throws DatabaseConnectionException, FailedToGetCapabilityException, CapabilityDoesNotExistException {
-        Mockito.when(capabilityService.getCapabilityById(1)).thenReturn(capability);
-        Response response= capabilityController.getCapabilityById(1);
-        assert(200 == response.getStatus());
-    }
-
 }

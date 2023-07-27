@@ -29,22 +29,4 @@ public class CapabilityControllerIntegrationTest {
 
         Assertions.assertTrue(response.size() > 0);
     }
-
-    @Test
-    void getCapabilityById_shouldReturnCapability() {
-        Capability response = APP.client().target("http://localhost:8080/api/capabilities/1")
-                .request()
-                .get(Capability.class);
-
-        Assertions.assertEquals(1, response.getId());
-    }
-
-    @Test
-    void getCapabilityById_shouldReturn404_whenIDNotFound() {
-        Response responseCapability = APP.client().target("http://localhost:8080/api/capabilities/" + 0)
-                .request()
-                .get(Response.class);
-
-        Assertions.assertEquals(404, responseCapability.getStatus());
-    }
 }

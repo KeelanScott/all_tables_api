@@ -2,16 +2,22 @@ package org.kainos.ea.validator;
 
 import org.kainos.ea.dao.BandDao;
 import org.kainos.ea.dao.CapabilityDao;
+import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.JobRoleRequest;
-import org.kainos.ea.service.BandService;
-import org.kainos.ea.service.CapabilityService;
-import org.kainos.ea.service.JobRoleService;
-
 import java.sql.SQLException;
 
 public class JobRoleValidator {
-    public static boolean isValidJobRole(JobRoleRequest jobRoleRequest, BandDao bandDao, CapabilityDao capabilityDao) throws InvalidJobRoleException {
+
+    JobRoleDao jobRoleDao;
+    BandDao bandDao;
+    CapabilityDao capabilityDao;
+    public JobRoleValidator(JobRoleDao jobRoleDao, BandDao bandDao, CapabilityDao capabilityDao) {
+        this.jobRoleDao = jobRoleDao;
+        this.bandDao = bandDao;
+        this.capabilityDao = capabilityDao;
+    }
+    public boolean isValidJobRole(JobRoleRequest jobRoleRequest) throws InvalidJobRoleException {
         if (jobRoleRequest.getName() == null || jobRoleRequest.getName().isEmpty()) {
             throw new InvalidJobRoleException("Job role name cannot be empty");
         }
@@ -33,12 +39,13 @@ public class JobRoleValidator {
         try {
             if ( bandDao.getBandById(jobRoleRequest.getBandId()) == null) {
                 throw new InvalidJobRoleException("Band ID does not exist");
-            } if ( capabilityDao.getCapabilityById(jobRoleRequest.getCapabilityId()) == null) {
+            }
+            if ( capabilityDao.getCapabilityById(jobRoleRequest.getCapabilityId()) == null) {
                 throw new InvalidJobRoleException("Capability ID does not exist");
             }
             return true;
         } catch (SQLException | DatabaseConnectionException e) {
-            throw new InvalidJobRoleException("Failed to validate job role");
+            throw new InvalidJobRoleException(e.getMessage());
         }
     }
 }

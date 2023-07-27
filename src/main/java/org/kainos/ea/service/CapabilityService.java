@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CapabilityService {
-    private CapabilityDao jobRoleDao;
+    private final CapabilityDao jobRoleDao;
 
     public CapabilityService(CapabilityDao jobRoleDao){
         this.jobRoleDao = jobRoleDao;
@@ -17,22 +17,6 @@ public class CapabilityService {
         try {
             return this.jobRoleDao.getAllCapabilities();
         } catch (SQLException e) {
-            throw new FailedToGetCapabilityException();
-        }
-    }
-
-    public Capability getCapabilityById(int id) throws FailedToGetCapabilityException, DatabaseConnectionException, CapabilityDoesNotExistException {
-        try{
-            Capability capability = jobRoleDao.getCapabilityById(id);
-
-            if (capability != null) {
-                return capability;
-            }
-            else{
-                throw new CapabilityDoesNotExistException();
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
             throw new FailedToGetCapabilityException();
         }
     }

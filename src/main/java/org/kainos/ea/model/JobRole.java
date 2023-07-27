@@ -45,7 +45,6 @@ public class JobRole {
         this.name = name;
     }
 
-
     public String getSpecification() {
         return specification;
     }

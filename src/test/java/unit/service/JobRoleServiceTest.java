@@ -10,6 +10,7 @@ import org.kainos.ea.model.JobRole;
 import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.service.JobRoleService;
+import org.kainos.ea.validator.JobRoleValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
@@ -20,10 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class JobRoleServiceTest {
     JobRoleDao jobRoleDao = Mockito.mock(JobRoleDao.class);
-    BandDao bandDao = Mockito.mock(BandDao.class);
-    CapabilityDao capabilityDao = Mockito.mock(CapabilityDao.class);
-
-    JobRoleService jobRoleService = new JobRoleService(jobRoleDao, bandDao, capabilityDao);
+    JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+    JobRoleService jobRoleService = new JobRoleService(jobRoleDao, jobRoleValidator);
 
     Band band = new Band(
             1,
@@ -89,16 +88,14 @@ public class JobRoleServiceTest {
 
     @Test
     void createJobRole_shouldReturnId_whenDaoReturnsId() throws SQLException, DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
-        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
         Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
+        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest)).thenReturn(true);
         assertEquals(1, jobRoleService.createJobRole(jobRoleRequest));
     }
 
     @Test
     void updateJobRole_shouldReturnTrue_whenDaoReturnsTrue() throws SQLException, DatabaseConnectionException, InvalidJobRoleException, FailedToUpdateJobRoleException, JobRoleDoesNotExistException {
-        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
+        Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
         Mockito.when(jobRoleDao.updateJobRole(1, jobRoleRequest)).thenReturn(true);
         assertEquals(true, jobRoleService.updateJobRole(1, jobRoleRequest));
@@ -106,36 +103,23 @@ public class JobRoleServiceTest {
 
     @Test
     void updateJobRole_shouldThrowJobRoleDoesNotExistException_whenDaoReturnsNull() throws SQLException, DatabaseConnectionException, InvalidJobRoleException, FailedToUpdateJobRoleException {
-        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
+        Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(null);
         assertThrows(JobRoleDoesNotExistException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
     }
 
     @Test
     void updateJobRole_shouldThrowSQLException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException, InvalidJobRoleException {
-        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
+        Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
         Mockito.when(jobRoleDao.updateJobRole(1, jobRoleRequest)).thenThrow(SQLException.class);
         assertThrows(FailedToUpdateJobRoleException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
     }
 
     @Test
-    void updateJobRole_shouldThrowInvalidJobRoleException_whenBandDoesNotExist() throws SQLException, DatabaseConnectionException, InvalidJobRoleException {
-        Mockito.when(bandDao.getBandById(1)).thenReturn(null);
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
+    void updateJobRole_shouldThrowInvalidJobRoleException_whenInvalidJobRole() throws InvalidJobRoleException, DatabaseConnectionException, SQLException {
+        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest)).thenThrow(InvalidJobRoleException.class);
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
-        Mockito.when(jobRoleDao.updateJobRole(1, jobRoleRequest)).thenThrow(SQLException.class);
-        assertThrows(InvalidJobRoleException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
-    }
-
-    @Test
-    void updateJobRole_shouldThrowInvalidJobRoleException_whenCapabilityDoesNotExist() throws SQLException, DatabaseConnectionException, InvalidJobRoleException {
-        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(null);
-        Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
-        Mockito.when(jobRoleDao.updateJobRole(1, jobRoleRequest)).thenThrow(SQLException.class);
         assertThrows(InvalidJobRoleException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
     }
 }

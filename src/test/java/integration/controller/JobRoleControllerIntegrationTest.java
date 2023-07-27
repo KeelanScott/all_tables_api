@@ -57,12 +57,22 @@ public class JobRoleControllerIntegrationTest {
     }
 
     @Test
-    void createJobRole_shouldReturn200_whenCreated() {
+    void createJobRole_shouldReturn201_whenCreated() {
         Response response = APP.client().target("http://localhost:8080/api/job-roles")
                 .request()
                 .post(javax.ws.rs.client.Entity.json(jobRoleRequest));
 
-        Assertions.assertEquals(200, response.getStatus());
+        Assertions.assertEquals(201, response.getStatus());
+    }
+
+    @Test
+    void createJobRole_shouldReturn400_whenInvalidData() {
+        jobRoleRequest.setName(null);
+        Response response = APP.client().target("http://localhost:8080/api/job-roles")
+                .request()
+                .post(javax.ws.rs.client.Entity.json(jobRoleRequest));
+
+        Assertions.assertEquals(400, response.getStatus());
     }
 
     @Test

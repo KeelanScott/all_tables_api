@@ -38,7 +38,7 @@ public class BandDao {
     public Band getBandById(int id) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
-        String selectStatement = "SELECT * FROM bands WHERE id = ?;";
+        String selectStatement = "SELECT name, level, responsibilities FROM bands WHERE id = ?;";
 
         PreparedStatement st = c.prepareStatement(selectStatement);
         st.setInt(1, id);
@@ -47,7 +47,7 @@ public class BandDao {
 
         if (rs.next()) {
             return new Band(
-                    rs.getInt("id"),
+                    id,
                     rs.getString("name"),
                     rs.getString("level"),
                     rs.getString("responsibilities")

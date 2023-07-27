@@ -87,10 +87,10 @@ public class JobRoleControllerUnitTest {
     }
 
     @Test
-    void createJobRole_shouldReturnId_whenServiceReturnsId() throws DatabaseConnectionException, FailedToGetJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException, FailedToCreateJobRoleException {
+    void createJobRole_shouldReturn201_whenServiceReturnsId() throws DatabaseConnectionException, FailedToGetJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException, FailedToCreateJobRoleException {
         Mockito.when(jobRoleService.createJobRole(jobRoleRequest)).thenReturn(1);
         Response response= jobRoleController.createJobRole(jobRoleRequest);
-        assert(200 == response.getStatus());
+        assert(201 == response.getStatus());
     }
 
     @Test

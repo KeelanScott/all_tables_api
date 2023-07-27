@@ -28,19 +28,4 @@ public class CapabilityController {
             return Response.serverError().build();
         }
     }
-
-    @GET
-    @Path("/capabilities/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCapabilityById(@PathParam("id") int id) {
-        try {
-            return Response.ok(capabilityService.getCapabilityById(id)).build();
-        } catch (DatabaseConnectionException | FailedToGetCapabilityException e) {
-            System.err.println((e.getMessage()));
-            return Response.serverError().build();
-        } catch (CapabilityDoesNotExistException e) {
-            System.err.println((e.getMessage()));
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
 }
