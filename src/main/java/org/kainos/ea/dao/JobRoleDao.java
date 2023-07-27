@@ -110,4 +110,14 @@ public class JobRoleDao {
 
         return ps.executeUpdate() > 0;
     }
+
+    public boolean deleteJobRole(int id) throws DatabaseConnectionException, SQLException {
+        Connection c = DatabaseConnector.getConnection();
+
+        PreparedStatement ps = c.prepareStatement("DELETE FROM job_roles WHERE id = ?;");
+
+        ps.setInt(1, id);
+
+        return ps.executeUpdate() > 0;
+    }
 }

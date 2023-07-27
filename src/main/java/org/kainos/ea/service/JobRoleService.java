@@ -64,4 +64,16 @@ public class JobRoleService {
             throw new FailedToUpdateJobRoleException();
         }
     }
+
+    public boolean deleteJobRole(int id) throws FailedToDeleteJobRoleException, DatabaseConnectionException, JobRoleDoesNotExistException {
+        try {
+            if(jobRoleDao.getJobRoleById(id) == null){
+                throw new JobRoleDoesNotExistException();
+            }
+            return jobRoleDao.deleteJobRole(id);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToDeleteJobRoleException();
+        }
+    }
 }

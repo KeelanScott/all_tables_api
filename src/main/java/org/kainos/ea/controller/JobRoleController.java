@@ -79,4 +79,19 @@ public class JobRoleController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+
+    @DELETE
+    @Path("/job-roles/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteJobRole(@PathParam("id") int id) {
+        try {
+            return Response.ok(jobRoleService.deleteJobRole(id)).build();
+        } catch (DatabaseConnectionException | FailedToDeleteJobRoleException e) {
+            System.err.println((e.getMessage()));
+            return Response.serverError().build();
+        } catch (JobRoleDoesNotExistException e) {
+            System.err.println((e.getMessage()));
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
 }

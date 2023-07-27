@@ -106,4 +106,13 @@ public class JobRoleControllerIntegrationTest {
 
         Assertions.assertEquals(400, response.getStatus());
     }
+
+    @Test
+    void deleteJobRole_shouldReturn200_whenDeleted() {
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/1")
+                .request()
+                .delete();
+
+        Assertions.assertEquals(200, response.getStatus());
+    }
 }

@@ -122,4 +122,18 @@ public class JobRoleServiceTest {
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
         assertThrows(InvalidJobRoleException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
     }
+
+    @Test
+    void deleteJobRole_shouldReturnTrue_whenDaoReturnsTrue() throws SQLException, DatabaseConnectionException, FailedToDeleteJobRoleException, JobRoleDoesNotExistException {
+        Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
+        Mockito.when(jobRoleDao.deleteJobRole(1)).thenReturn(true);
+        assertTrue(jobRoleService.deleteJobRole(1));
+    }
+
+    @Test
+    void deleteJobRole_shouldThrowJobRoleDoesNotExistException_whenDaoReturnsFalse() throws SQLException, DatabaseConnectionException, FailedToDeleteJobRoleException {
+        Mockito.when(jobRoleDao.deleteJobRole(1)).thenReturn(false);
+        Mockito.when(jobRoleDao.deleteJobRole(1)).thenReturn(false);
+        assertThrows(JobRoleDoesNotExistException.class, () -> jobRoleService.deleteJobRole(1));
+    }
 }

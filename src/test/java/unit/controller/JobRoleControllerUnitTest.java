@@ -134,4 +134,25 @@ public class JobRoleControllerUnitTest {
         Response response= jobRoleController.updateJobRole(1, jobRoleRequest);
         assert(400 == response.getStatus());
     }
+
+    @Test
+    void deleteJobRole_shouldReturnOK_whenServiceReturnsTrue() throws DatabaseConnectionException, FailedToDeleteJobRoleException, JobRoleDoesNotExistException {
+        Mockito.when(jobRoleService.deleteJobRole(1)).thenReturn(true);
+        Response response= jobRoleController.deleteJobRole(1);
+        assert(200 == response.getStatus());
+    }
+
+    @Test
+    void deleteJobRole_shouldReturnServerError_whenServiceThrowsFailedToDeleteJobRoleException() throws DatabaseConnectionException, FailedToDeleteJobRoleException, JobRoleDoesNotExistException {
+        Mockito.when(jobRoleService.deleteJobRole(1)).thenThrow(FailedToDeleteJobRoleException.class);
+        Response response= jobRoleController.deleteJobRole(1);
+        assert(500 == response.getStatus());
+    }
+
+    @Test
+    void deleteJobRole_shouldReturnBadRequest_whenServiceThrowsJobRoleDoesNotExistException() throws DatabaseConnectionException, FailedToDeleteJobRoleException, JobRoleDoesNotExistException {
+        Mockito.when(jobRoleService.deleteJobRole(1)).thenThrow(JobRoleDoesNotExistException.class);
+        Response response = jobRoleController.deleteJobRole(1);
+        assert (400 == response.getStatus());
+    }
 }
