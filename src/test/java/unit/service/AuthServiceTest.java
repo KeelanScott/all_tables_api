@@ -22,7 +22,7 @@ public class AuthServiceTest {
     String token = "73768rr37734r87678368";
 
     @Test
-    void login_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, FailedToEncryptTokenException, DatabaseConnectionException {
+    void login_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException {
         Mockito.when(authDao.validLogin(login)).thenReturn(true);
         Mockito.when(authDao.generateToken(login.getEmail())).thenThrow(new SQLException());
 
@@ -64,6 +64,4 @@ public class AuthServiceTest {
         assertThrows(DatabaseConnectionException.class, () -> authService.isRegistered(token));
     }
 }
-
-
 

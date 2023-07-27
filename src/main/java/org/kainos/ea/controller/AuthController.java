@@ -15,8 +15,8 @@ public class AuthController {
     public AuthController(AuthService authService){
         this.authService= authService;
     }
-    private final AuthService authService;
-    String token = "";
+    public final AuthService authService;
+    private String token = "";
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
