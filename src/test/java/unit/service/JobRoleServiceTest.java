@@ -22,8 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class JobRoleServiceTest {
     JobRoleDao jobRoleDao = Mockito.mock(JobRoleDao.class);
     JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
-    BandDao bandDao = Mockito.mock(BandDao.class);
-    CapabilityDao capabilityDao = Mockito.mock(CapabilityDao.class);
     JobRoleService jobRoleService = new JobRoleService(jobRoleDao, jobRoleValidator);
 
     Band band = new Band(
