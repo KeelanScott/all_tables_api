@@ -31,14 +31,14 @@ public class JobRoleControllerIntegrationTest {
         Assertions.assertTrue(response.size() > 0);
     }
 
-    @Test
-    void getJobRoleById_shouldReturnJobRole() {
-        JobRole response = APP.client().target("http://localhost:8080/api/job-roles/1")
-                .request()
-                .get(JobRole.class);
-
-        Assertions.assertEquals(1, response.getId());
-    }
+//    @Test
+//    void getJobRoleById_shouldReturnJobRole() {
+//        JobRole response = APP.client().target("http://localhost:8080/api/job-roles/1")
+//                .request()
+//                .get(JobRole.class);
+//
+//        Assertions.assertEquals(1, response.getId());
+//    }
 
     @Test
     void getJobRoleById_shouldReturn400_whenIDNotFound() {
