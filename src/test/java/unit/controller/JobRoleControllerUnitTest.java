@@ -106,4 +106,32 @@ public class JobRoleControllerUnitTest {
         Response response= jobRoleController.createJobRole(jobRoleRequest);
         assert(400 == response.getStatus());
     }
+
+    @Test
+    void updateJobRole_shouldReturnOK_whenServiceReturnsTrue() throws DatabaseConnectionException, FailedToUpdateJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException {
+        Mockito.when(jobRoleService.updateJobRole(1, jobRoleRequest)).thenReturn(true);
+        Response response= jobRoleController.updateJobRole(1, jobRoleRequest);
+        assert(200 == response.getStatus());
+    }
+
+    @Test
+    void updateJobRole_shouldReturnServerError_whenServiceThrowsFailedToUpdateJobRoleException() throws DatabaseConnectionException, FailedToUpdateJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException {
+        Mockito.when(jobRoleService.updateJobRole(1, jobRoleRequest)).thenThrow(FailedToUpdateJobRoleException.class);
+        Response response= jobRoleController.updateJobRole(1, jobRoleRequest);
+        assert(500 == response.getStatus());
+    }
+
+    @Test
+    void updateJobRole_shouldReturnServerError_whenServiceThrowsInvalidJobRoleException() throws DatabaseConnectionException, FailedToUpdateJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException {
+        Mockito.when(jobRoleService.updateJobRole(1, jobRoleRequest)).thenThrow(InvalidJobRoleException.class);
+        Response response= jobRoleController.updateJobRole(1, jobRoleRequest);
+        assert(400 == response.getStatus());
+    }
+
+    @Test
+    void updateJobRole_shouldReturnBadRequest_whenServiceThrowsJobRoleDoesNotExistException() throws DatabaseConnectionException, FailedToUpdateJobRoleException, JobRoleDoesNotExistException, InvalidJobRoleException {
+        Mockito.when(jobRoleService.updateJobRole(1, jobRoleRequest)).thenThrow(JobRoleDoesNotExistException.class);
+        Response response= jobRoleController.updateJobRole(1, jobRoleRequest);
+        assert(400 == response.getStatus());
+    }
 }

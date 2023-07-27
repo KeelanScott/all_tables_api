@@ -64,4 +64,36 @@ public class JobRoleControllerIntegrationTest {
 
         Assertions.assertEquals(200, response.getStatus());
     }
+
+    @Test
+    void updateJobRole_shouldReturn200_whenUpdated() {
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/1")
+                .request()
+                .put(javax.ws.rs.client.Entity.json(jobRoleRequest));
+
+        Assertions.assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void updateJobRole_shouldReturn400_whenIDNotFound() {
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/0")
+                .request()
+                .put(javax.ws.rs.client.Entity.json(jobRoleRequest));
+
+        Assertions.assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    void updateJobRole_shouldReturn400_whenInvalidRequest() {
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/1")
+                .request()
+                .put(javax.ws.rs.client.Entity.json(new JobRoleRequest(
+                        "",
+                        1,
+                        1,
+                        "spec"
+                )));
+
+        Assertions.assertEquals(400, response.getStatus());
+    }
 }
