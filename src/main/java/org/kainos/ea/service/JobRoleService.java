@@ -54,4 +54,17 @@ public class JobRoleService {
             throw new FailedToCreateJobRoleException();
         }
     }
+
+    public boolean updateJobRole(int id, JobRoleRequest jobRoleRequest) throws FailedToUpdateJobRoleException, DatabaseConnectionException, InvalidJobRoleException, JobRoleDoesNotExistException {
+        try {
+            if(jobRoleDao.getJobRoleById(id) == null){
+                throw new JobRoleDoesNotExistException();
+            }
+            JobRoleValidator.isValidJobRole(jobRoleRequest, bandDao, capabilityDao);
+            return jobRoleDao.updateJobRole(id, jobRoleRequest);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToUpdateJobRoleException();
+        }
+    }
 }

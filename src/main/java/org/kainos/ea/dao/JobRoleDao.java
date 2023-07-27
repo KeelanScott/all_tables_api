@@ -96,4 +96,18 @@ public class JobRoleDao {
             }
         return -1;
     }
+
+    public boolean updateJobRole(int id, JobRoleRequest jobRoleRequest) throws DatabaseConnectionException, SQLException {
+        Connection c = DatabaseConnector.getConnection();
+
+        PreparedStatement ps = c.prepareStatement("UPDATE job_roles SET name = ?, band_id = ?, capability_id = ?, specification = ? WHERE id = ?;");
+
+        ps.setString(1, jobRoleRequest.getName());
+        ps.setInt(2, jobRoleRequest.getBandId());
+        ps.setInt(3, jobRoleRequest.getCapabilityId());
+        ps.setString(4, jobRoleRequest.getSpecification());
+        ps.setInt(5, id);
+
+        return ps.executeUpdate() > 0;
+    }
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class JobRole {
     private int id;
     private String name;
-    private int bandId;
     private Band band;
     private Capability capability;
     private String specification;
@@ -46,13 +45,6 @@ public class JobRole {
         this.name = name;
     }
 
-    public int getBandId() {
-        return bandId;
-    }
-
-    public void setBandId(int bandId) {
-        this.bandId = bandId;
-    }
 
     public String getSpecification() {
         return specification;

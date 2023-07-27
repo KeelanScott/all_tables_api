@@ -63,4 +63,19 @@ public class JobRoleController {
         }
     }
 
+    @PUT
+    @Path("/job-roles/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateJobRole(@PathParam("id") int id, JobRoleRequest jobRoleRequest) {
+        try {
+            return Response.ok(jobRoleService.updateJobRole(id, jobRoleRequest)).build();
+        } catch (DatabaseConnectionException | FailedToUpdateJobRoleException e) {
+            System.err.println((e.getMessage()));
+            return Response.serverError().build();
+        } catch (InvalidJobRoleException | JobRoleDoesNotExistException e) {
+            System.err.println((e.getMessage()));
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
 }
