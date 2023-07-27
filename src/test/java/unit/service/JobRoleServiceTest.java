@@ -15,8 +15,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class JobRoleServiceTest {
@@ -98,7 +98,7 @@ public class JobRoleServiceTest {
         Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
         Mockito.when(jobRoleDao.updateJobRole(1, jobRoleRequest)).thenReturn(true);
-        assertEquals(true, jobRoleService.updateJobRole(1, jobRoleRequest));
+        assertTrue(jobRoleService.updateJobRole(1, jobRoleRequest));
     }
 
     @Test
