@@ -6,4 +6,3 @@ public class FailedToEncryptTokenException extends Throwable {
         return "Failed to generate token";
     }
 }
-

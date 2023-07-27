@@ -1,12 +1,8 @@
 package org.kainos.ea.dao;
-
 import org.apache.commons.lang3.time.DateUtils;
-import org.kainos.ea.encryption.TokenEncryption;
-import org.kainos.ea.exception.FailedToEncryptTokenException;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.TokenExpiredException;
-
 import java.sql.*;
 import java.util.Date;
 import java.util.UUID;
@@ -14,7 +10,7 @@ import java.util.UUID;
 public class AuthDao {
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public boolean validLogin(Login login) {
+    public boolean validLogin(Login login) throws DatabaseConnectionException {
         try (Connection c = databaseConnector.getConnection()) {
             Statement st = c.createStatement();
 
@@ -26,21 +22,15 @@ public class AuthDao {
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+        } catch (DatabaseConnectionException e) {
+            throw new DatabaseConnectionException();
         }
         return false;
     }
 
-    public String generateToken(String email) throws SQLException, FailedToEncryptTokenException {
+    public String generateToken(String email) throws SQLException, DatabaseConnectionException {
         String token = UUID.randomUUID().toString();
-        String encryptedToken;
         Date expiry = DateUtils.addHours(new Date(), 8);
-
-
-        try {
-            encryptedToken = TokenEncryption.encryptToken(token);
-        } catch (FailedToEncryptTokenException e) {
-            throw new FailedToEncryptTokenException();
-        }
 
         Connection c = databaseConnector.getConnection();
 
@@ -61,7 +51,7 @@ public class AuthDao {
         }
     }
 
-    public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException {
+    public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
         Connection c = databaseConnector.getConnection();
 
         Statement st = c.createStatement();
@@ -80,7 +70,7 @@ public class AuthDao {
         return false;
     }
 
-    public boolean getIsUserFromToken(String token) throws SQLException, TokenExpiredException {
+    public boolean getIsUserFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
         Connection c = databaseConnector.getConnection();
 
         boolean isRegistered = false;
