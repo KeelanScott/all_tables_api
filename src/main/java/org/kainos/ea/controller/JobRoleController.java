@@ -53,7 +53,8 @@ public class JobRoleController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createJobRole(JobRoleRequest jobRoleRequest) {
         try {
-            return Response.ok(jobRoleService.createJobRole(jobRoleRequest)).build();
+            jobRoleService.createJobRole(jobRoleRequest);
+            return Response.status(Response.Status.CREATED).build();
         } catch (DatabaseConnectionException | FailedToCreateJobRoleException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();

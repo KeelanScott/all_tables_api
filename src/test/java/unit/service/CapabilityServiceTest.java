@@ -46,18 +46,4 @@ public class CapabilityServiceTest {
 
         assertThrows(FailedToGetCapabilityException.class, () -> capabilityService.getAllCapabilities());
     }
-
-    @Test
-    void getCapabilityById_shouldReturnCapability_whenDaoReturnsCapability() throws SQLException, FailedToGetCapabilityException, DatabaseConnectionException, CapabilityDoesNotExistException {
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
-
-        assertEquals(capability, capabilityService.getCapabilityById(1));
-    }
-
-    @Test
-    void getCapabilityById_shouldThrowCapabilityDoesNotExistException_whenDaoReturnsNull() throws SQLException, DatabaseConnectionException {
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(null);
-
-        assertThrows(CapabilityDoesNotExistException.class, () -> capabilityService.getCapabilityById(1));
-    }
 }

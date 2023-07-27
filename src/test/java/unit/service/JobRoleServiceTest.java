@@ -10,6 +10,7 @@ import org.kainos.ea.model.JobRole;
 import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.service.JobRoleService;
+import org.kainos.ea.validator.JobRoleValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
@@ -23,6 +24,7 @@ public class JobRoleServiceTest {
     BandDao bandDao = Mockito.mock(BandDao.class);
     CapabilityDao capabilityDao = Mockito.mock(CapabilityDao.class);
 
+    JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
     JobRoleService jobRoleService = new JobRoleService(jobRoleDao, bandDao, capabilityDao);
 
     Band band = new Band(
@@ -91,7 +93,9 @@ public class JobRoleServiceTest {
     void createJobRole_shouldReturnId_whenDaoReturnsId() throws SQLException, DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
         Mockito.when(bandDao.getBandById(1)).thenReturn(band);
         Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
+//
         Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
+//        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest)).thenReturn(true);
         assertEquals(1, jobRoleService.createJobRole(jobRoleRequest));
     }
 }
