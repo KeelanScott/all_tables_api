@@ -29,34 +29,4 @@ public class CompetencyController {
             return Response.serverError().build();
         }
     }
-
-    @GET
-    @Path("/competencies/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCompetency(@PathParam("id") int id) {
-        try {
-            return Response.ok(competencyService.getCompetencyById(id)).build();
-        } catch (FailedToGetCompetencyException e) {
-            System.err.println(e.getMessage());
-            return Response.serverError().build();
-        } catch (CompetencyDoesNotExistException e) {
-            System.err.println((e.getMessage()));
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-    }
-
-    @POST
-    @Path("/band-competencies")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createBandCompetency(BandCompetency bandCompetency) {
-        try {
-            return Response.status(Response.Status.CREATED).entity(competencyService.createBandCompetency(bandCompetency)).build();
-        } catch (FailedToCreateBandCompetencyException e) {
-            System.err.println(e.getMessage());
-            return Response.serverError().build();
-        } catch (InvalidBandCompetencyException e) {
-            System.err.println(e.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        }
-    }
 }

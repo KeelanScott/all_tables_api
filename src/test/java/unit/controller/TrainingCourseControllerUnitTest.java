@@ -23,8 +23,6 @@ public class TrainingCourseControllerUnitTest {
             "description"
     );
 
-
-
     @Test
     void getAllTrainingCourses_shouldReturnOK_whenServiceReturnsList() throws FailedToGetTrainingCoursesException {
 
@@ -46,5 +44,4 @@ public class TrainingCourseControllerUnitTest {
         Response response = trainingCourseController.getAllTrainingCourses();
         assert(response.getStatus() == 500);
     }
-
 }

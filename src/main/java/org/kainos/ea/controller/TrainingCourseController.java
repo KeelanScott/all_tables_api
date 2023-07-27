@@ -32,16 +32,4 @@ public class TrainingCourseController {
             return Response.serverError().build();
         }
     }
-
-    @POST
-    @Path("/band-training-courses")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createBand(BandTrainingCourse bandTrainingCourse) {
-        try {
-            return Response.status(Response.Status.CREATED).entity(trainingCourseService.createBandTrainingCourse(bandTrainingCourse)).build();
-        } catch (FailedToCreateBandTrainingCourseException e) {
-            System.err.println(e.getMessage());
-            return Response.serverError().build();
-        }
-    }
 }

@@ -41,14 +41,14 @@ public class CompetencyDao {
         return null;
     }
 
-    public int createBandCompetency(BandCompetency bandCompetency) throws SQLException, DatabaseConnectionException {
+    public int createBandCompetency(BandCompetencyRequest bandCompetency, int bandId) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
         String insertStatement = "INSERT INTO bands_competencies(band_id, competency_id, description)" +
                 " VALUES(?,?,?);";
 
         PreparedStatement st = c.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
-        st.setInt(1, bandCompetency.getBandID());
+        st.setInt(1, bandId);
         st.setInt(2, bandCompetency.getCompetencyID());
         st.setString(3, bandCompetency.getDescription());
 

@@ -43,19 +43,4 @@ public class CompetencyService {
             throw new FailedToGetCompetencyException();
         }
     }
-
-    public int createBandCompetency(BandCompetency bandCompetency) throws FailedToCreateBandCompetencyException, InvalidBandCompetencyException {
-        try {
-            bandCompetencyValidator.isValidBandCompetency(bandCompetency);
-
-            int id = competencyDao.createBandCompetency(bandCompetency);
-
-            if (id == -1) throw new FailedToCreateBandCompetencyException();
-
-            return id;
-        } catch (SQLException | DatabaseConnectionException e) {
-            System.err.println(e);
-            throw new FailedToCreateBandCompetencyException();
-        }
-    }
 }

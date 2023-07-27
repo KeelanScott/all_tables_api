@@ -26,17 +26,4 @@ public class TrainingCourseService {
         }
         return trainingCourseListList;
     }
-
-    public int createBandTrainingCourse(BandTrainingCourse bandTrainingCourse) throws FailedToCreateBandTrainingCourseException {
-        try {
-            int id = trainingCourseDao.createBandTrainingCourse(bandTrainingCourse);
-
-            if (id == -1) throw new FailedToCreateBandTrainingCourseException();
-
-            return id;
-        } catch (SQLException | DatabaseConnectionException e) {
-            System.err.println(e.getMessage());
-            throw new FailedToCreateBandTrainingCourseException();
-        }
-    }
 }

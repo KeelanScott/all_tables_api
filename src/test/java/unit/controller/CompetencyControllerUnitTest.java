@@ -42,25 +42,4 @@ public class CompetencyControllerUnitTest {
         Response response = competencyController.getAllCompetencies();
         assert(response.getStatus() == 500);
     }
-
-    @Test
-    void getCompetency_shouldReturnBadRequest_whenServiceThrowCompetencyDoesNotExistException() throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
-        Mockito.when(competencyService.getCompetencyById(0)).thenThrow(CompetencyDoesNotExistException.class);
-        assert(400 == competencyController.getCompetency(0).getStatus());
-    }
-
-    @Test
-    void getCompetency_shouldReturnServerError_whenServiceThrowFailedToGetCompetencyException() throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
-        Mockito.when(competencyService.getCompetencyById(1)).thenThrow(FailedToGetCompetencyException.class);
-        Response response = competencyController.getCompetency(1);
-        System.out.println(response.getStatus());
-        assert(500 == response.getStatus());
-    }
-
-    @Test
-    void getCompetency_shouldReturnJobRole_whenServiceReturnsJobRole() throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
-        Mockito.when(competencyService.getCompetencyById(1)).thenReturn(competency);
-        Response response= competencyController.getCompetency(1);
-        assert(200 == response.getStatus());
-    }
 }

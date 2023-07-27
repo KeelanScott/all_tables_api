@@ -28,22 +28,4 @@ public class CompetencyControllerIntegrationTest {
 
         Assertions.assertTrue(response.size() > 0);
     }
-
-    @Test
-    void getCompetencyById_shouldReturnCompetency() {
-        Competency competency = APP.client().target("http://localhost:8080/api/competencies/1")
-                .request()
-                .get(Competency.class);
-
-        Assertions.assertEquals(1, competency.getCompetencyId());
-    }
-
-    @Test
-    void getCompetencyById_shouldReturn400_whenIDNotFound() {
-        Response competency = APP.client().target("http://localhost:8080/api/competencies/0")
-                .request()
-                .get(Response.class);
-
-        Assertions.assertEquals(400, competency.getStatus());
-    }
 }

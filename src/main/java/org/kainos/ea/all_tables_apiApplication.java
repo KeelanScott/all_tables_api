@@ -44,7 +44,7 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
     @Override
     public void run(final all_tables_apiConfiguration configuration,
                     final Environment environment) {
-        environment.jersey().register(new BandController(new BandService(new BandDao(), new BandValidator())));
+        environment.jersey().register(new BandController(new BandService(new BandDao(), new CompetencyDao(), new TrainingCourseDao(), new BandValidator(), new BandCompetencyValidator())));
         environment.jersey().register(new CompetencyController(new CompetencyService(new CompetencyDao(), new BandCompetencyValidator())));
         environment.jersey().register(new TrainingCourseController(new TrainingCourseService(new TrainingCourseDao())));
         environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao())));
