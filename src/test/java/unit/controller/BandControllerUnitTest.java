@@ -48,8 +48,29 @@ public class BandControllerUnitTest {
     }
 
     @Test
+    void createBand_shouldReturnServerError_whenServiceThrowsFailedToCreateBandCompetencyException() throws InvalidBandException, FailedToCreateBandException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
+        Mockito.when(bandService.createBand(bandWithDetailsRequest)).thenThrow(FailedToCreateBandCompetencyException.class);
+        Response response = bandController.createBand(bandWithDetailsRequest);
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
+    void createBand_shouldReturnServerError_whenServiceThrowsFailedToCreateBandTrainingCourseException() throws InvalidBandException, FailedToCreateBandException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
+        Mockito.when(bandService.createBand(bandWithDetailsRequest)).thenThrow(FailedToCreateBandTrainingCourseException.class);
+        Response response = bandController.createBand(bandWithDetailsRequest);
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
     void createBand_shouldReturnBadRequest_whenServiceThrowsInvalidBandException() throws InvalidBandException, FailedToCreateBandException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
         Mockito.when(bandService.createBand(bandWithDetailsRequest)).thenThrow(InvalidBandException.class);
+        Response response = bandController.createBand(bandWithDetailsRequest);
+        assert(response.getStatus() == 400);
+    }
+
+    @Test
+    void createBand_shouldReturnBadRequest_whenServiceThrowsInvalidBandCompetencyException() throws InvalidBandException, FailedToCreateBandException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
+        Mockito.when(bandService.createBand(bandWithDetailsRequest)).thenThrow(InvalidBandCompetencyException.class);
         Response response = bandController.createBand(bandWithDetailsRequest);
         assert(response.getStatus() == 400);
     }

@@ -11,7 +11,7 @@ public class BandWithDetailsRequest {
     @JsonCreator
     public BandWithDetailsRequest(@JsonProperty("band") BandRequest band,
                                   @JsonProperty("bandCompetencies") BandCompetencyRequest[] bandCompetencies,
-                                  @JsonProperty("trainingCourses") int[] trainingCourses) {
+                                  @JsonProperty("trainingCourseIds") int[] trainingCourses) {
         this.band = band;
         this.bandCompetencies = bandCompetencies;
         this.trainingCourses = trainingCourses;
