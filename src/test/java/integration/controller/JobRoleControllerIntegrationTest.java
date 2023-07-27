@@ -20,7 +20,7 @@ public class JobRoleControllerIntegrationTest {
 
     JobRoleRequest jobRoleRequest = new JobRoleRequest(
             "Job Role",
-            1,
+            2,
             1,
             "spec"
     );
@@ -40,7 +40,7 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void getJobRoleById_shouldReturnJobRole() {
-        JobRole response = APP.client().target("http://localhost:8080/api/job-roles/1")
+        JobRole response = APP.client().target("http://localhost:8080/api/job-roles/2")
                 .request()
                 .get(JobRole.class);
 
@@ -77,7 +77,7 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void updateJobRole_shouldReturn200_whenUpdated() {
-        Response response = APP.client().target("http://localhost:8080/api/job-roles/1")
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/2")
                 .request()
                 .put(javax.ws.rs.client.Entity.json(jobRoleRequest));
 
@@ -95,7 +95,7 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void updateJobRole_shouldReturn400_whenInvalidRequest() {
-        Response response = APP.client().target("http://localhost:8080/api/job-roles/1")
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/2")
                 .request()
                 .put(javax.ws.rs.client.Entity.json(new JobRoleRequest(
                         "",
