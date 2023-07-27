@@ -34,10 +34,8 @@ BEGIN
     CREATE TABLE IF NOT EXISTS users (
 		email VARCHAR(64) NOT NULL,
         password VARCHAR(64) NOT NULL,
-        job_role_id SMALLINT UNSIGNED NOT NULL,
         is_admin BOOLEAN NOT NULL,
-        PRIMARY KEY (email),
-        FOREIGN KEY (job_role_id) REFERENCES job_roles(id)
+        PRIMARY KEY (email)
     );
     
     CREATE TABLE IF NOT EXISTS tokens (
