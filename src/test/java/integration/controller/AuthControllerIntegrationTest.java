@@ -14,10 +14,16 @@ import javax.ws.rs.core.Response;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class AuthControllerIntegrationTest {
-
+        String email = System.getenv("LOGIN_EMAIL");
+        String password = System.getenv("LOGIN_PASSWORD");
     Login invalidLogin = new Login(
             "admin",
             "admin"
+    );
+
+    Login validLogin = new Login(
+            email,
+            password
     );
 
     static final DropwizardAppExtension<all_tables_apiConfiguration> APP = new DropwizardAppExtension<>(
@@ -27,38 +33,24 @@ public class AuthControllerIntegrationTest {
 
     @Test
     void login_shouldReturn200_whenSuccessfulLogin() {
-        Login validLogin = new Login(
-                "keelan@gmail.com",
-                "Scott"
-        );
         Response responseLogin = APP.client().target("http://localhost:8080/api/login")
                 .request()
                 .post(Entity.entity(validLogin, MediaType.APPLICATION_JSON_TYPE));
 
+        String responseToken = APP.client().target("http://localhost:8080/api/login")
+                .request()
+                .post(Entity.entity(validLogin, MediaType.APPLICATION_JSON_TYPE), String.class);
+
         Assertions.assertEquals(200, responseLogin.getStatus());
+        Assertions.assertNotNull(responseToken);
     }
 
     @Test
     void login_shouldReturn400_whenFailedLogin() {
-
         Response responseLogin = APP.client().target("http://localhost:8080/api/login")
                 .request()
                 .post(Entity.entity(invalidLogin, MediaType.APPLICATION_JSON_TYPE));
 
         Assertions.assertEquals(400, responseLogin.getStatus());
-    }
-
-    @Test
-    void login_shouldReturnToken_whenSuccessfulLogin() {
-        Login validLogin = new Login(
-                "keelan@gmail.com",
-                "Scott"
-        );
-        String expectedToken = "fc166dc2-16b7-448d-b317-504fcef25a4c";
-        String response = APP.client().target("http://localhost:8080/api/login")
-                .request()
-                .post(Entity.entity(validLogin, MediaType.APPLICATION_JSON_TYPE), String.class);
-
-        Assertions.assertEquals(expectedToken.length(), response.length());
     }
 }

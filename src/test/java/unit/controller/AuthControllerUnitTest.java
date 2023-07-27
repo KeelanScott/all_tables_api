@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerUnitTest {
     AuthService authService = Mockito.mock(AuthService.class);
-    AuthDao authDao = Mockito.mock(AuthDao.class);
     AuthController authController = new AuthController(authService);
 
     Login login = new Login(

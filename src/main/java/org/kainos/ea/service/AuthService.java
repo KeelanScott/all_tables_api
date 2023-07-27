@@ -23,26 +23,17 @@ public class AuthService {
 
     public boolean isAdmin(String token) throws TokenExpiredException, FailedToVerifyTokenException, DatabaseConnectionException {
         try {
-            boolean is_admin = authDao.getIsAdminFromToken(token);
-            if (is_admin == true) {
-                return true;
-            }
+            return authDao.getIsAdminFromToken(token);
         } catch (SQLException e) {
             throw new FailedToVerifyTokenException();
-        } catch (DatabaseConnectionException e) {
-            throw new DatabaseConnectionException();
         }
-        return false;
     }
 
     public boolean isRegistered(String token) throws TokenExpiredException, FailedToVerifyTokenException, DatabaseConnectionException {
         try {
-          boolean isRegistered = authDao.getIsUserFromToken(token);
-          return isRegistered;
+          return authDao.getIsUserFromToken(token);
         } catch (SQLException e) {
             throw new FailedToVerifyTokenException();
-        } catch (DatabaseConnectionException e) {
-            throw new DatabaseConnectionException();
         }
     }
 }
