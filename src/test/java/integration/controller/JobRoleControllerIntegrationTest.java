@@ -44,7 +44,7 @@ public class JobRoleControllerIntegrationTest {
                 .request()
                 .get(JobRole.class);
 
-        Assertions.assertEquals(1, response.getId());
+        Assertions.assertEquals(2, response.getId());
     }
 
     @Test
