@@ -24,7 +24,7 @@ public class JobRoleServiceTest {
     JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
     BandDao bandDao = Mockito.mock(BandDao.class);
     CapabilityDao capabilityDao = Mockito.mock(CapabilityDao.class);
-    JobRoleService jobRoleService = new JobRoleService(jobRoleDao, bandDao, capabilityDao, jobRoleValidator);
+    JobRoleService jobRoleService = new JobRoleService(jobRoleDao, jobRoleValidator);
 
     Band band = new Band(
             1,
