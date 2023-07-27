@@ -21,11 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class JobRoleServiceTest {
     JobRoleDao jobRoleDao = Mockito.mock(JobRoleDao.class);
+    JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
     BandDao bandDao = Mockito.mock(BandDao.class);
     CapabilityDao capabilityDao = Mockito.mock(CapabilityDao.class);
-
-    JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
-    JobRoleService jobRoleService = new JobRoleService(jobRoleDao, bandDao, capabilityDao);
+    JobRoleService jobRoleService = new JobRoleService(jobRoleDao, bandDao, capabilityDao, jobRoleValidator);
 
     Band band = new Band(
             1,
@@ -91,11 +90,8 @@ public class JobRoleServiceTest {
 
     @Test
     void createJobRole_shouldReturnId_whenDaoReturnsId() throws SQLException, DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
-        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
-        Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
-//
         Mockito.when(jobRoleDao.createJobRole(jobRoleRequest)).thenReturn(1);
-//        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest)).thenReturn(true);
+        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest)).thenReturn(true);
         assertEquals(1, jobRoleService.createJobRole(jobRoleRequest));
     }
 }

@@ -47,7 +47,7 @@ public class BandDao {
 
         if (rs.next()) {
             return new Band(
-                    rs.getInt("id"),
+                    id,
                     rs.getString("name"),
                     rs.getString("level"),
                     rs.getString("responsibilities")

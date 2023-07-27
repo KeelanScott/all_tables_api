@@ -63,5 +63,4 @@ public class JobRoleController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-
 }

@@ -11,14 +11,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class JobRoleService {
-    private JobRoleDao jobRoleDao;
-    private BandDao bandDao;
-    private CapabilityDao capabilityDao;
+    private final JobRoleDao jobRoleDao;
 
-    public JobRoleService(JobRoleDao jobRoleDao, BandDao bandDao, CapabilityDao capabilityDao){
+    private final JobRoleValidator jobRoleValidator;
+
+    public JobRoleService(JobRoleDao jobRoleDao, JobRoleValidator jobRoleValidator){
         this.jobRoleDao = jobRoleDao;
-        this.bandDao = bandDao;
-        this.capabilityDao = capabilityDao;
+        this.jobRoleValidator = jobRoleValidator;
     }
 
     public List<JobRole> getAllJobRoles() throws FailedToGetJobRoleException, DatabaseConnectionException {
@@ -47,7 +46,7 @@ public class JobRoleService {
 
     public int createJobRole(JobRoleRequest jobRoleRequest) throws FailedToCreateJobRoleException, DatabaseConnectionException, InvalidJobRoleException {
         try {
-            JobRoleValidator.isValidJobRole(jobRoleRequest, bandDao, capabilityDao);
+            jobRoleValidator.isValidJobRole(jobRoleRequest);
             return jobRoleDao.createJobRole(jobRoleRequest);
         } catch (SQLException e) {
             System.err.println(e.getMessage());

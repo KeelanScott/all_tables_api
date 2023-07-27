@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CapabilityService {
-    private CapabilityDao jobRoleDao;
+    private final CapabilityDao jobRoleDao;
 
     public CapabilityService(CapabilityDao jobRoleDao){
         this.jobRoleDao = jobRoleDao;
