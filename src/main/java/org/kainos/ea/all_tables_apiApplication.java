@@ -11,6 +11,7 @@ import org.kainos.ea.controller.TrainingCourseController;
 import org.kainos.ea.dao.BandDao;
 import org.kainos.ea.dao.CompetencyDao;
 import org.kainos.ea.dao.TrainingCourseDao;
+import org.kainos.ea.model.Competency;
 import org.kainos.ea.service.BandService;
 import org.kainos.ea.service.CompetencyService;
 import org.kainos.ea.service.TrainingCourseService;
@@ -44,9 +45,14 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
     @Override
     public void run(final all_tables_apiConfiguration configuration,
                     final Environment environment) {
-        environment.jersey().register(new BandController(new BandService(new BandDao(), new CompetencyDao(), new TrainingCourseDao(), new BandValidator(), new BandCompetencyValidator())));
-        environment.jersey().register(new CompetencyController(new CompetencyService(new CompetencyDao(), new BandCompetencyValidator())));
-        environment.jersey().register(new TrainingCourseController(new TrainingCourseService(new TrainingCourseDao())));
+        CompetencyDao competencyDao = new CompetencyDao();
+        TrainingCourseDao trainingCourseDao = new TrainingCourseDao();
+
+        BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator();
+
+        environment.jersey().register(new BandController(new BandService(new BandDao(), competencyDao, trainingCourseDao, new BandValidator(), bandCompetencyValidator)));
+        environment.jersey().register(new CompetencyController(new CompetencyService(competencyDao, bandCompetencyValidator)));
+        environment.jersey().register(new TrainingCourseController(new TrainingCourseService(trainingCourseDao)));
         environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao())));
     }
 }

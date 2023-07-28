@@ -17,13 +17,11 @@ public class TrainingCourseService {
         this.trainingCourseDao = trainingCourseDao;
     }
     public List<TrainingCourse> getAllTrainingCourses() throws FailedToGetTrainingCoursesException {
-        List<TrainingCourse> trainingCourseListList = null;
         try {
-            trainingCourseListList = trainingCourseDao.getAllTrainingCourses();
+            return trainingCourseDao.getAllTrainingCourses();
         } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToGetTrainingCoursesException();
         }
-        return trainingCourseListList;
     }
 }
