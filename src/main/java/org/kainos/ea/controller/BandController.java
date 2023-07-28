@@ -33,4 +33,16 @@ public class BandController {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
+
+    @GET
+    @Path("/bands")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllBands() {
+        try {
+            return Response.ok(bandService.getAllBands()).build();
+        } catch (FailedToGetBandsException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        }
+    }
 }
