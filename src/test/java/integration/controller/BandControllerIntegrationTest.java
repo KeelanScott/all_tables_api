@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
-import org.kainos.ea.model.BandCompetencyRequest;
-import org.kainos.ea.model.BandRequest;
-import org.kainos.ea.model.BandWithDetailsRequest;
-import org.kainos.ea.model.JobRole;
+import org.kainos.ea.model.*;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -55,5 +53,26 @@ public class BandControllerIntegrationTest {
                 .get(List.class);
 
         Assertions.assertTrue(response.size() > 0);
+    }
+
+    @Test
+    void getBandById_shouldReturnBand() {
+        Band response = APP.client().target("http://localhost:8080/api/bands/1")
+                .request()
+                .get(Band.class);
+
+        Assertions.assertEquals(1, response.getId());
+    }
+
+    @Test
+    void getBand_shouldReturn400_whenIDNotFound() {
+        Response responseBand = APP.client().target("http://localhost:8080/api/bands/" + 0)
+                .request()
+                .get(Response.class);
+
+        int response = responseBand.getStatus();
+        System.out.println(response);
+
+        Assertions.assertEquals(400, response);
     }
 }

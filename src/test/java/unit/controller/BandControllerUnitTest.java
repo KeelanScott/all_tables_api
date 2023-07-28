@@ -105,4 +105,28 @@ public class BandControllerUnitTest {
         Response response = bandController.getAllBands();
         assert(response.getStatus() == 500);
     }
+
+    @Test
+    void getBandById_shouldReturnBand_whenBandExists() throws FailedToGetBandException, BandDoesNotExistException {
+        Mockito.when(bandService.getBandById(1)).thenReturn(band);
+
+        Response response = bandController.getBandById(1);
+        assert(response.getStatus() == 200);
+    }
+
+    @Test
+    void getBandById_shouldReturnInternalServerError_whenServiceThrowsFailedToGetBandsException() throws FailedToGetBandException, BandDoesNotExistException {
+        Mockito.when(bandService.getBandById(1)).thenThrow(FailedToGetBandException.class);
+
+        Response response = bandController.getBandById(1);
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
+    void getBandById_shouldReturnBadRequest_whenServiceThrowsBandDoesNotExistException() throws FailedToGetBandException, BandDoesNotExistException {
+        Mockito.when(bandService.getBandById(1)).thenThrow(BandDoesNotExistException.class);
+
+        Response response = bandController.getBandById(1);
+        assert(response.getStatus() == 400);
+    }
 }

@@ -61,4 +61,14 @@ public class BandService {
             throw new FailedToGetBandsException();
         }
     }
+
+    public Band getBandById(int id) throws FailedToGetBandException, BandDoesNotExistException {
+        try {
+            Band band =  bandDao.getBandById(id);
+            if (band != null) return band;
+            else throw new BandDoesNotExistException();
+        } catch (SQLException | DatabaseConnectionException e) {
+            throw new FailedToGetBandException();
+        }
+    }
 }

@@ -135,8 +135,26 @@ public class BandServiceUnitTest {
     }
 
     @Test
-    void getAllBands_shouldThrowFailedToGetBandException_whenDaoThrowsDatabaseExceptionConnection() throws SQLException, DatabaseConnectionException {
+    void getAllBands_shouldThrowFailedToGetBandException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
         Mockito.when(bandDao.getAllBands()).thenThrow(DatabaseConnectionException.class);
         assertThrows(FailedToGetBandsException.class, () -> bandService.getAllBands());
+    }
+
+    @Test
+    void getBandById_shouldReturnBand_whenDaoReturnsBand() throws SQLException, FailedToGetBandException, DatabaseConnectionException, BandDoesNotExistException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        assertEquals(band, bandService.getBandById(1));
+    }
+
+    @Test
+    void getBandById_shouldThrowFailedToGetBandException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(bandDao.getBandById(1)).thenThrow(SQLException.class);
+        assertThrows(FailedToGetBandException.class, () -> bandService.getBandById(1));
+    }
+
+    @Test
+    void getBandById_shouldThrowFailedToGetBandException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(bandDao.getBandById(1)).thenThrow(DatabaseConnectionException.class);
+        assertThrows(FailedToGetBandException.class, () -> bandService.getBandById(1));
     }
 }
