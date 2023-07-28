@@ -8,6 +8,8 @@ How to set environment variables
     2. `export DB_NAME="allTables_JamesE"`
     3. `export DB_USERNAME="YOUR USERNAME"`
     4. `export DB_PASSWORD="YOUR PASSWORD"`
+    5. `export LOGIN_EMAIL="YOUR EMAIL"`
+    6. `export LOGIN_PASSWORD="YOUR PASSWORD"`
 2. Run `mvn clean intall -DskipTests` to build your application and reset environment variables.
 
 How to start the all_tables_api application
