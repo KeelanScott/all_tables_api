@@ -9,8 +9,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
+import org.kainos.ea.dao.BandDao;
+import org.kainos.ea.dao.CapabilityDao;
+import org.kainos.ea.dao.JobRoleDao;
+import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.FailedToCreateJobRoleException;
+import org.kainos.ea.exception.InvalidJobRoleException;
 import org.kainos.ea.model.JobRole;
 import org.kainos.ea.model.JobRoleRequest;
+import org.kainos.ea.service.JobRoleService;
+import org.kainos.ea.validator.JobRoleValidator;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -108,8 +116,9 @@ public class JobRoleControllerIntegrationTest {
     }
 
     @Test
-    void deleteJobRole_shouldReturn200_whenDeleted() {
-        Response response = APP.client().target("http://localhost:8080/api/job-roles/1")
+    void deleteJobRole_shouldReturn200_whenDeleted() throws DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        int id = (new JobRoleService(new JobRoleDao(), new JobRoleValidator(new JobRoleDao(), new BandDao(), new CapabilityDao()))).createJobRole(jobRoleRequest);
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/"+id)
                 .request()
                 .delete();
 
