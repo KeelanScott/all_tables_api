@@ -1,12 +1,9 @@
 package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.exception.FailedToCreateBandTrainingCourseException;
 import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
-import org.kainos.ea.model.BandTrainingCourse;
 import org.kainos.ea.service.TrainingCourseService;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
