@@ -9,11 +9,9 @@ import java.util.List;
 
 public class CompetencyService {
     private final CompetencyDao competencyDao;
-    private final BandCompetencyValidator bandCompetencyValidator;
 
-    public CompetencyService(CompetencyDao competencyDao, BandCompetencyValidator bandCompetencyValidator) {
+    public CompetencyService(CompetencyDao competencyDao) {
         this.competencyDao = competencyDao;
-        this.bandCompetencyValidator = bandCompetencyValidator;
     }
 
     public List<Competency> getAllCompetencies() throws FailedToGetCompetenciesException {
@@ -26,20 +24,5 @@ public class CompetencyService {
         }
 
         return competencyList;
-    }
-
-    public Competency getCompetencyById(int id) throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
-        try {
-            Competency competency = competencyDao.getCompetencyById(id);
-
-            if (competency != null) {
-                return competency;
-            } else {
-                throw new CompetencyDoesNotExistException();
-            }
-        } catch (SQLException | DatabaseConnectionException e) {
-            System.err.println(e.getMessage());
-            throw new FailedToGetCompetencyException();
-        }
     }
 }

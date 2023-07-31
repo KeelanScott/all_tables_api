@@ -48,10 +48,8 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
         CompetencyDao competencyDao = new CompetencyDao();
         TrainingCourseDao trainingCourseDao = new TrainingCourseDao();
 
-        BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator();
-
-        environment.jersey().register(new BandController(new BandService(new BandDao(), competencyDao, trainingCourseDao, new BandValidator(), bandCompetencyValidator)));
-        environment.jersey().register(new CompetencyController(new CompetencyService(competencyDao, bandCompetencyValidator)));
+        environment.jersey().register(new BandController(new BandService(new BandDao(), competencyDao, trainingCourseDao, new BandValidator(), new BandCompetencyValidator())));
+        environment.jersey().register(new CompetencyController(new CompetencyService(competencyDao)));
         environment.jersey().register(new TrainingCourseController(new TrainingCourseService(trainingCourseDao)));
         environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao())));
     }

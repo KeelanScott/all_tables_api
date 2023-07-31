@@ -17,9 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class CompetencyServiceUnitTest {
     CompetencyDao competencyDao = Mockito.mock(CompetencyDao.class);
-    BandCompetencyValidator bandCompetencyValidator = Mockito.mock(BandCompetencyValidator.class);
 
-    CompetencyService competencyService = new CompetencyService(competencyDao, bandCompetencyValidator);
+    CompetencyService competencyService = new CompetencyService(competencyDao);
 
     Competency competency = new Competency(
             1,
