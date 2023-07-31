@@ -1,5 +1,6 @@
 package validator;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kainos.ea.dao.BandDao;
 import org.kainos.ea.dao.CapabilityDao;
@@ -45,6 +46,26 @@ public class JobRoleValidatorTest {
     );
 
 
+    @BeforeEach
+    void resetRequests(){
+        jobRoleRequest = new JobRoleRequest(
+                "Software Engineer",
+                1,
+                1,
+                "Software Engineer"
+        );
+         band = new Band(
+                1,
+                "Band 1",
+                "Executive",
+                "spec"
+        );
+
+         capability = new Capability(
+                1,
+                "Engineering"
+        );
+    }
     @Test
     public void isValidJobRole_shouldReturnTrue_whenValidJobRole() throws InvalidJobRoleException, DatabaseConnectionException, SQLException {
         Mockito.when(bandDao.getBandById(1)).thenReturn(band);

@@ -5,6 +5,7 @@ import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
@@ -26,16 +27,21 @@ import java.util.List;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobRoleControllerIntegrationTest {
 
-    JobRoleRequest jobRoleRequest = new JobRoleRequest(
-            "Job Role",
-            2,
-            1,
-            "spec"
-    );
+    JobRoleRequest jobRoleRequest;
     static final DropwizardAppExtension<all_tables_apiConfiguration> APP = new DropwizardAppExtension<>(
             all_tables_apiApplication.class, null,
             new ResourceConfigurationSourceProvider()
     );
+
+    @BeforeEach
+    void resetRequest(){
+        jobRoleRequest = new JobRoleRequest(
+                "Job Role",
+                2,
+                1,
+                "spec"
+        );
+    }
 
     @Test
     void getJobRoles_shouldReturnList() {
@@ -84,8 +90,9 @@ public class JobRoleControllerIntegrationTest {
     }
 
     @Test
-    void updateJobRole_shouldReturn200_whenUpdated() {
-        Response response = APP.client().target("http://localhost:8080/api/job-roles/2")
+    void updateJobRole_shouldReturn200_whenUpdated() throws DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        int id = (new JobRoleService(new JobRoleDao(), new JobRoleValidator(new JobRoleDao(), new BandDao(), new CapabilityDao()))).createJobRole(jobRoleRequest);
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/"+id)
                 .request()
                 .put(javax.ws.rs.client.Entity.json(jobRoleRequest));
 
@@ -102,8 +109,9 @@ public class JobRoleControllerIntegrationTest {
     }
 
     @Test
-    void updateJobRole_shouldReturn400_whenInvalidRequest() {
-        Response response = APP.client().target("http://localhost:8080/api/job-roles/2")
+    void updateJobRole_shouldReturn400_whenInvalidRequest() throws DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
+        int id = (new JobRoleService(new JobRoleDao(), new JobRoleValidator(new JobRoleDao(), new BandDao(), new CapabilityDao()))).createJobRole(jobRoleRequest);
+        Response response = APP.client().target("http://localhost:8080/api/job-roles/"+id)
                 .request()
                 .put(javax.ws.rs.client.Entity.json(new JobRoleRequest(
                         "",

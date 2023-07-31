@@ -7,15 +7,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CapabilityService {
-    private final CapabilityDao jobRoleDao;
+    private final CapabilityDao capabilityDao;
 
-    public CapabilityService(CapabilityDao jobRoleDao){
-        this.jobRoleDao = jobRoleDao;
+    public CapabilityService(CapabilityDao capabilityDao){
+        this.capabilityDao = capabilityDao;
     }
 
     public List<Capability> getAllCapabilities() throws FailedToGetCapabilityException, DatabaseConnectionException {
         try {
-            return this.jobRoleDao.getAllCapabilities();
+            return this.capabilityDao.getAllCapabilities();
         } catch (SQLException e) {
             throw new FailedToGetCapabilityException();
         }

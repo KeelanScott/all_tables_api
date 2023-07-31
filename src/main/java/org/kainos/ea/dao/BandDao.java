@@ -13,7 +13,7 @@ public class BandDao {
     public List<Band> getAllBands() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
-        String selectStatement = "SELECT * FROM bands;";
+        String selectStatement = "SELECT name, level, responsibilities FROM bands;";
 
         PreparedStatement st = c.prepareStatement(selectStatement);
 
