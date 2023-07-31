@@ -11,10 +11,8 @@ import org.kainos.ea.all_tables_apiConfiguration;
 import org.kainos.ea.model.BandCompetencyRequest;
 import org.kainos.ea.model.BandRequest;
 import org.kainos.ea.model.BandWithDetailsRequest;
-import org.kainos.ea.model.JobRole;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class BandControllerIntegrationTest {
@@ -46,14 +44,5 @@ public class BandControllerIntegrationTest {
                 .post(Entity.json(bandWithDetailsRequest), Response.class)
                 .readEntity(Integer.class);
         Assertions.assertNotNull(response);
-    }
-
-    @Test
-    void getBands_shouldReturnList() {
-        List<JobRole> response = APP.client().target("http://localhost:8080/api/bands")
-                .request()
-                .get(List.class);
-
-        Assertions.assertTrue(response.size() > 0);
     }
 }

@@ -13,8 +13,6 @@ import org.kainos.ea.validator.BandValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -43,13 +41,6 @@ public class BandServiceUnitTest {
     int[] trainingCourses = { 1, 1 };
 
     BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
-
-    Band band = new Band(
-            1,
-            "Band 1",
-            "Executive",
-            "These are the responsibilities"
-    );
 
     @Test
     void createBand_shouldReturnId_whenDaoReturnsId() throws SQLException, InvalidBandException, FailedToCreateBandException, DatabaseConnectionException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
@@ -114,29 +105,5 @@ public class BandServiceUnitTest {
         Mockito.when(trainingCourseDao.createBandTrainingCourse(1, 1)).thenReturn(-1);
 
         assertThrows(FailedToCreateBandTrainingCourseException.class, () -> bandService.createBand(bandWithDetailsRequest));
-    }
-
-    @Test
-    void getAllBands_shouldReturnBandList_whenDaoReturnsBandList() throws FailedToGetBandsException, SQLException, DatabaseConnectionException {
-        ArrayList<Band> list = new ArrayList<>();
-        list.add(band);
-        list.add(band);
-        list.add(band);
-
-        Mockito.when(bandDao.getAllBands()).thenReturn(list);
-
-        assertEquals(list, bandService.getAllBands());
-    }
-
-    @Test
-    void getAllBands_shouldThrowFailedToGetBandException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(bandDao.getAllBands()).thenThrow(SQLException.class);
-        assertThrows(FailedToGetBandsException.class, () -> bandService.getAllBands());
-    }
-
-    @Test
-    void getAllBands_shouldThrowFailedToGetBandException_whenDaoThrowsDatabaseExceptionConnection() throws SQLException, DatabaseConnectionException {
-        Mockito.when(bandDao.getAllBands()).thenThrow(DatabaseConnectionException.class);
-        assertThrows(FailedToGetBandsException.class, () -> bandService.getAllBands());
     }
 }
