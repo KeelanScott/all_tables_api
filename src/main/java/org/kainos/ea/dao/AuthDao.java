@@ -22,8 +22,6 @@ public class AuthDao {
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
-        } catch (DatabaseConnectionException e) {
-            throw new DatabaseConnectionException();
         }
         return false;
     }
