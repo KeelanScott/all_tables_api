@@ -26,6 +26,24 @@ public class CompetencyDao {
         return competencyList;
     }
 
+    public Competency getCompetencyById(int id) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT id, name " +
+                "FROM competencies " +
+                "WHERE id = " + id + ";");
+
+        if (rs.next()) {
+            Competency competency = new Competency(
+                    rs.getInt("competencies.id"),
+                    rs.getString("competencies.name"));
+            return competency;
+        }
+
+        return null;
+    }
+
     public int createBandCompetency(BandCompetencyRequest bandCompetency, int bandId) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 

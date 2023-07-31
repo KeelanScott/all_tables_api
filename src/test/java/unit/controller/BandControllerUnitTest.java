@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.controller.BandController;
 import org.kainos.ea.exception.*;
-import org.kainos.ea.model.Band;
 import org.kainos.ea.model.BandCompetencyRequest;
 import org.kainos.ea.model.BandRequest;
 import org.kainos.ea.model.BandWithDetailsRequest;
 import org.kainos.ea.service.BandService;
 import org.mockito.Mockito;
 import javax.ws.rs.core.Response;
+
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class BandControllerUnitTest {
     BandService bandService = Mockito.mock(BandService.class);

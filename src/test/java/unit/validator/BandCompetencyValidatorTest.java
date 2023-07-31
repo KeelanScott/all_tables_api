@@ -1,16 +1,29 @@
 package unit.validator;
 
 import org.junit.jupiter.api.Test;
+import org.kainos.ea.exception.CompetencyDoesNotExistException;
+import org.kainos.ea.exception.FailedToGetCompetencyException;
 import org.kainos.ea.exception.InvalidBandCompetencyException;
 import org.kainos.ea.model.BandCompetencyRequest;
+import org.kainos.ea.model.Competency;
+import org.kainos.ea.service.CompetencyService;
 import org.kainos.ea.validator.BandCompetencyValidator;
+import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BandCompetencyValidatorTest {
-    BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator();
+    CompetencyService competencyService = Mockito.mock(CompetencyService.class);
+    BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator(competencyService);
+
+    Competency competency = new Competency(
+            1,
+            "Competency 1"
+    );
 
     @Test
-    public void isValidBandCompetency_shouldReturnTrue_whenValidBandCompetency() throws InvalidBandCompetencyException {
+    public void isValidBandCompetency_shouldReturnTrue_whenValidBandCompetency() throws InvalidBandCompetencyException, CompetencyDoesNotExistException, FailedToGetCompetencyException {
+        Mockito.when(competencyService.getCompetencyById(1)).thenReturn(competency);
         BandCompetencyRequest bandCompetencyRequest = new BandCompetencyRequest(
                 1,
                 "Responsibilities"
@@ -34,6 +47,30 @@ public class BandCompetencyValidatorTest {
         BandCompetencyRequest bandCompetencyRequest = new BandCompetencyRequest(
                 1,
                 "X".repeat(4)
+        );
+        assertThrows(InvalidBandCompetencyException.class, () -> {
+            bandCompetencyValidator.isValidBandCompetency(bandCompetencyRequest);
+        });
+    }
+
+    @Test
+    public void isValidBandCompetency_shouldThrowInvalidBandCompetencyException_whenCompetencyDoesNotExist() throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
+        Mockito.when(competencyService.getCompetencyById(1)).thenThrow(CompetencyDoesNotExistException.class);
+        BandCompetencyRequest bandCompetencyRequest = new BandCompetencyRequest(
+                1,
+                "Responsibilities"
+        );
+        assertThrows(InvalidBandCompetencyException.class, () -> {
+            bandCompetencyValidator.isValidBandCompetency(bandCompetencyRequest);
+        });
+    }
+
+    @Test
+    public void isValidBandCompetency_shouldThrowInvalidBandCompetencyException_whenFailedToGetCompetency() throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
+        Mockito.when(competencyService.getCompetencyById(1)).thenThrow(FailedToGetCompetencyException.class);
+        BandCompetencyRequest bandCompetencyRequest = new BandCompetencyRequest(
+                1,
+                "Responsibilities"
         );
         assertThrows(InvalidBandCompetencyException.class, () -> {
             bandCompetencyValidator.isValidBandCompetency(bandCompetencyRequest);

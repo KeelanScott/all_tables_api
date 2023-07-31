@@ -25,4 +25,18 @@ public class CompetencyService {
 
         return competencyList;
     }
+
+    public Competency getCompetencyById(int id) throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
+        Competency competency = null;
+        try {
+            competency = competencyDao.getCompetencyById(id);
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetCompetencyException();
+        }
+
+        if (competency == null) throw new CompetencyDoesNotExistException();
+
+        return competency;
+    }
 }
