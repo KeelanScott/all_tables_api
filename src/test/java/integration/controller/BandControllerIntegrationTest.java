@@ -30,7 +30,7 @@ public class BandControllerIntegrationTest {
     BandCompetencyRequest[] competencies = { competency };
     int[] trainingCourses = { 1, 2 };
 
-    BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
+
 
     static final DropwizardAppExtension<all_tables_apiConfiguration> APP = new DropwizardAppExtension<>(
             all_tables_apiApplication.class, null,
@@ -38,11 +38,23 @@ public class BandControllerIntegrationTest {
     );
 
     @Test
-    void createBand_shouldReturnId(){
+    void createBand_shouldReturnId() {
+        BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
         int response = APP.client().target("http://localhost:8080/api/bands")
                 .request()
                 .post(Entity.json(bandWithDetailsRequest), Response.class)
                 .readEntity(Integer.class);
         Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void createBand_shouldReturn400_whenInvalid() {
+        bandRequest.setResponsibilities("");
+        BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
+
+        Response response = APP.client().target("http://localhost:8080/api/bands")
+                .request()
+                .post(Entity.json(bandWithDetailsRequest), Response.class);
+        Assertions.assertEquals(400, response.getStatus());
     }
 }
