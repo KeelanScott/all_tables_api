@@ -16,7 +16,7 @@ RUN mvn clean install -DskipTests=true
 
 EXPOSE 8080
 
-CMD ["java","-jar","/code/target/JavaWebService-1.0-SNAPSHOT.jar","server","/code/config.yml"]
+CMD ["java","-jar","target/all_tables_api-1.0-SNAPSHOT.jar","server","config.yml"]
 
 
 
