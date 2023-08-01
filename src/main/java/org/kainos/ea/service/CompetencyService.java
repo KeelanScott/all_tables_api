@@ -43,4 +43,13 @@ public class CompetencyService {
             throw new FailedToGetCompetencyException();
         }
     }
+
+    public List<BandCompetency> getBandCompetencies(int id) throws FailedToGetBandCompetenciesException {
+        try {
+            return competencyDao.getBandCompetencies(id);
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetBandCompetenciesException();
+        }
+    }
 }

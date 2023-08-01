@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.dao.CompetencyDao;
 import org.kainos.ea.exception.*;
+import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.service.CompetencyService;
 import org.kainos.ea.validator.BandCompetencyValidator;
@@ -24,6 +25,12 @@ public class CompetencyServiceUnitTest {
     Competency competency = new Competency(
             1,
             "Competency 1"
+    );
+
+    BandCompetency bandCompetency = new BandCompetency(
+            1,
+            1,
+            "description"
     );
 
     @Test
@@ -50,5 +57,31 @@ public class CompetencyServiceUnitTest {
         Mockito.when(competencyDao.getAllCompetencies()).thenThrow(DatabaseConnectionException.class);
 
         assertThrows(FailedToGetCompetenciesException.class, () -> competencyService.getAllCompetencies());
+    }
+
+    @Test
+    void getBandCompetencies_shouldReturnBandCompetencyList_whenDaoReturnsBandCompetencyList() throws FailedToGetBandCompetenciesException, SQLException, DatabaseConnectionException {
+        ArrayList<BandCompetency> list = new ArrayList<>();
+        list.add(bandCompetency);
+        list.add(bandCompetency);
+        list.add(bandCompetency);
+
+        Mockito.when(competencyDao.getBandCompetencies(1)).thenReturn(list);
+
+        assertEquals(list, competencyService.getBandCompetencies(1));
+    }
+
+    @Test
+    void getBandCompetencies_shouldThrowFailedToGetBandCompetenciesException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(competencyDao.getBandCompetencies(1)).thenThrow(SQLException.class);
+
+        assertThrows(FailedToGetBandCompetenciesException.class, () -> competencyService.getBandCompetencies(1));
+    }
+
+    @Test
+    void getBandCompetencies_shouldThrowFailedToGetBandCompetenciesException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(competencyDao.getBandCompetencies(1)).thenThrow(DatabaseConnectionException.class);
+
+        assertThrows(FailedToGetBandCompetenciesException.class, () -> competencyService.getBandCompetencies(1));
     }
 }

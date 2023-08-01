@@ -28,4 +28,13 @@ public class CompetencyControllerIntegrationTest {
 
         Assertions.assertTrue(response.size() > 0);
     }
+
+    @Test
+    void getBandCompetencies_shouldReturnList() {
+        List<Competency> response = APP.client().target("http://localhost:8080/api/competencies/band/1")
+                .request()
+                .get(List.class);
+
+        Assertions.assertTrue(response.size() > 0);
+    }
 }

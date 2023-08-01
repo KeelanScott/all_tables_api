@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.controller.CompetencyController;
 import org.kainos.ea.exception.*;
+import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.service.CompetencyService;
 import org.mockito.Mockito;
@@ -20,6 +21,12 @@ public class CompetencyControllerUnitTest {
     Competency competency = new Competency(
             1,
             "Competency 1"
+    );
+
+    BandCompetency bandCompetency = new BandCompetency(
+            1,
+            1,
+            "description"
     );
 
     @Test
@@ -40,6 +47,27 @@ public class CompetencyControllerUnitTest {
         Mockito.when(competencyService.getAllCompetencies()).thenThrow(FailedToGetCompetenciesException.class);
 
         Response response = competencyController.getAllCompetencies();
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
+    void getBandCompetencies_shouldReturnOK_whenServiceReturnsList() throws FailedToGetBandCompetenciesException {
+        List<BandCompetency> sampleBandCompetencies = new ArrayList<>();
+        sampleBandCompetencies.add(bandCompetency);
+        sampleBandCompetencies.add(bandCompetency);
+        sampleBandCompetencies.add(bandCompetency);
+
+        Mockito.when(competencyService.getBandCompetencies(1)).thenReturn(sampleBandCompetencies);
+
+        Response response = competencyController.getBandCompetencies(1);
+        assert(response.getStatus() == 200);
+    }
+
+    @Test
+    void getBandCompetencies_shouldReturnInternalServerError_whenServiceThrowsException() throws FailedToGetBandCompetenciesException {
+        Mockito.when(competencyService.getBandCompetencies(1)).thenThrow(FailedToGetBandCompetenciesException.class);
+
+        Response response = competencyController.getBandCompetencies(1);
         assert(response.getStatus() == 500);
     }
 }
