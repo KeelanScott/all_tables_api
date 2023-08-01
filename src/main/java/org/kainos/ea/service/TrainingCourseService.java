@@ -24,4 +24,13 @@ public class TrainingCourseService {
             throw new FailedToGetTrainingCoursesException();
         }
     }
+
+    public List<TrainingCourse> getTrainingForBand(int id) throws FailedToGetTrainingCoursesException {
+        try {
+            return trainingCourseDao.getTrainingForBand(id);
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToGetTrainingCoursesException();
+        }
+    }
 }

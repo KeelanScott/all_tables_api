@@ -44,4 +44,25 @@ public class TrainingCourseControllerUnitTest {
         Response response = trainingCourseController.getAllTrainingCourses();
         assert(response.getStatus() == 500);
     }
+
+    @Test
+    void getTrainingForBand_shouldReturnOK_whenServiceReturnsList() throws FailedToGetTrainingCoursesException {
+        List<TrainingCourse> sampleTrainingCourses = new ArrayList<>();
+        sampleTrainingCourses.add(trainingCourse);
+        sampleTrainingCourses.add(trainingCourse);
+        sampleTrainingCourses.add(trainingCourse);
+
+        Mockito.when(trainingCourseService.getTrainingForBand(1)).thenReturn(sampleTrainingCourses);
+
+        Response response = trainingCourseController.getTrainingForBand(1);
+        assert(response.getStatus() == 200);
+    }
+
+    @Test
+    void getTrainingForBand_shouldReturnInternalServerError_whenServiceThrowsException() throws FailedToGetTrainingCoursesException {
+        Mockito.when(trainingCourseService.getTrainingForBand(1)).thenThrow(FailedToGetTrainingCoursesException.class);
+
+        Response response = trainingCourseController.getTrainingForBand(1);
+        assert(response.getStatus() == 500);
+    }
 }

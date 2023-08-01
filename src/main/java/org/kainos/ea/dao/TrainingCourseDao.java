@@ -42,4 +42,24 @@ public class TrainingCourseDao {
         if (result == 0) return -1;
         else return result;
     }
+
+    public List<TrainingCourse> getTrainingForBand(int id) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT training_courses.id, training_courses.name, training_courses.description FROM training_courses " +
+                "INNER JOIN band_training_courses ON training_courses.id = band_training_courses.training_course_id " +
+                "WHERE band_training_courses.band_id = " + id + ";");
+
+        List<TrainingCourse> trainingCourseList = new ArrayList<>();
+
+        while (rs.next()) {
+            TrainingCourse trainingCourse = new TrainingCourse(
+                    rs.getInt("training_courses.id"),
+                    rs.getString("training_courses.name"),
+                    rs.getString("training_courses.description"));
+            trainingCourseList.add(trainingCourse);
+        }
+        return trainingCourseList;
+    }
 }

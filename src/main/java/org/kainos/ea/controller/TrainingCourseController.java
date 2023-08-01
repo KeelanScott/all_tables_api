@@ -1,14 +1,9 @@
 package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
-import org.kainos.ea.exception.FailedToCreateBandTrainingCourseException;
 import org.kainos.ea.exception.FailedToGetTrainingCoursesException;
-import org.kainos.ea.model.BandTrainingCourse;
 import org.kainos.ea.service.TrainingCourseService;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -27,6 +22,18 @@ public class TrainingCourseController {
     public Response getAllTrainingCourses() {
         try {
             return Response.ok(trainingCourseService.getAllTrainingCourses()).build();
+        } catch (FailedToGetTrainingCoursesException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/training-courses/band/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTrainingForBand(@PathParam("id") int id) {
+        try {
+            return Response.ok(trainingCourseService.getTrainingForBand(id)).build();
         } catch (FailedToGetTrainingCoursesException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
