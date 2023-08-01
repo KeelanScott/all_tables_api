@@ -16,10 +16,10 @@ public class BandService {
         this.bandDao = bandDao;
     }
 
-    public List<Band> getAllBands() throws FailedToGetBandException, DatabaseConnectionException {
+    public List<Band> getAllBands() throws FailedToGetBandException {
         try {
             return bandDao.getAllBands();
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             throw new FailedToGetBandException();
         }
     }

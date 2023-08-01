@@ -23,7 +23,7 @@ public class CapabilityController {
     public Response getCapabilities() {
         try {
             return Response.ok(capabilityService.getAllCapabilities()).build();
-        } catch (DatabaseConnectionException | FailedToGetCapabilityException e) {
+        } catch (FailedToGetCapabilityException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
         }

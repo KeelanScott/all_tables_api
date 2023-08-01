@@ -70,7 +70,7 @@ public class JobRoleController {
     public Response updateJobRole(@PathParam("id") int id, JobRoleRequest jobRoleRequest) {
         try {
             return Response.ok(jobRoleService.updateJobRole(id, jobRoleRequest)).build();
-        } catch (DatabaseConnectionException | FailedToUpdateJobRoleException e) {
+        } catch (FailedToUpdateJobRoleException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
         } catch (InvalidJobRoleException | JobRoleDoesNotExistException e) {
@@ -85,7 +85,7 @@ public class JobRoleController {
     public Response deleteJobRole(@PathParam("id") int id) {
         try {
             return Response.ok(jobRoleService.deleteJobRole(id)).build();
-        } catch (DatabaseConnectionException | FailedToDeleteJobRoleException e) {
+        } catch (FailedToDeleteJobRoleException e) {
             System.err.println((e.getMessage()));
             return Response.serverError().build();
         } catch (JobRoleDoesNotExistException e) {

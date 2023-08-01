@@ -52,26 +52,26 @@ public class JobRoleService {
         }
     }
 
-    public boolean updateJobRole(int id, JobRoleRequest jobRoleRequest) throws FailedToUpdateJobRoleException, DatabaseConnectionException, InvalidJobRoleException, JobRoleDoesNotExistException {
+    public boolean updateJobRole(int id, JobRoleRequest jobRoleRequest) throws FailedToUpdateJobRoleException, InvalidJobRoleException, JobRoleDoesNotExistException {
         try {
             if(jobRoleDao.getJobRoleById(id) == null){
                 throw new JobRoleDoesNotExistException();
             }
             jobRoleValidator.isValidJobRole(jobRoleRequest);
             return jobRoleDao.updateJobRole(id, jobRoleRequest);
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToUpdateJobRoleException();
         }
     }
 
-    public boolean deleteJobRole(int id) throws FailedToDeleteJobRoleException, DatabaseConnectionException, JobRoleDoesNotExistException {
+    public boolean deleteJobRole(int id) throws FailedToDeleteJobRoleException, JobRoleDoesNotExistException {
         try {
             if(jobRoleDao.getJobRoleById(id) == null){
                 throw new JobRoleDoesNotExistException();
             }
             return jobRoleDao.deleteJobRole(id);
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToDeleteJobRoleException();
         }

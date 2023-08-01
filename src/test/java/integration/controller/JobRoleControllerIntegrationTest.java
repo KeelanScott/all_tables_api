@@ -33,6 +33,17 @@ public class JobRoleControllerIntegrationTest {
             new ResourceConfigurationSourceProvider()
     );
 
+    private int getNewId(){
+        return APP.client().target("http://localhost:8080/api/job-roles")
+                .request()
+                .post(javax.ws.rs.client.Entity.json(jobRoleRequest)).readEntity(Integer.class);
+    }
+    private void deleteJobRole(int id){
+        APP.client().target("http://localhost:8080/api/job-roles/"+id)
+                .request()
+                .delete();
+    }
+
     @BeforeEach
     void resetRequest(){
         jobRoleRequest = new JobRoleRequest(
@@ -54,11 +65,12 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void getJobRoleById_shouldReturnJobRole() {
-        JobRole response = APP.client().target("http://localhost:8080/api/job-roles/2")
+        int id = this.getNewId();
+        JobRole response = APP.client().target("http://localhost:8080/api/job-roles/"+id)
                 .request()
                 .get(JobRole.class);
-
-        Assertions.assertEquals(2, response.getId());
+        this.deleteJobRole(id);
+        Assertions.assertEquals(id, response.getId());
     }
 
     @Test
@@ -91,11 +103,11 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void updateJobRole_shouldReturn200_whenUpdated() throws DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
-        int id = (new JobRoleService(new JobRoleDao(), new JobRoleValidator(new JobRoleDao(), new BandDao(), new CapabilityDao()))).createJobRole(jobRoleRequest);
+        int id = this.getNewId();
         Response response = APP.client().target("http://localhost:8080/api/job-roles/"+id)
                 .request()
                 .put(javax.ws.rs.client.Entity.json(jobRoleRequest));
-
+        this.deleteJobRole(id);
         Assertions.assertEquals(200, response.getStatus());
     }
 
@@ -110,7 +122,7 @@ public class JobRoleControllerIntegrationTest {
 
     @Test
     void updateJobRole_shouldReturn400_whenInvalidRequest() throws DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
-        int id = (new JobRoleService(new JobRoleDao(), new JobRoleValidator(new JobRoleDao(), new BandDao(), new CapabilityDao()))).createJobRole(jobRoleRequest);
+        int id = this.getNewId();
         Response response = APP.client().target("http://localhost:8080/api/job-roles/"+id)
                 .request()
                 .put(javax.ws.rs.client.Entity.json(new JobRoleRequest(
@@ -119,17 +131,17 @@ public class JobRoleControllerIntegrationTest {
                         1,
                         "spec"
                 )));
+        this.deleteJobRole(id);
 
         Assertions.assertEquals(400, response.getStatus());
     }
 
     @Test
     void deleteJobRole_shouldReturn200_whenDeleted() throws DatabaseConnectionException, InvalidJobRoleException, FailedToCreateJobRoleException {
-        int id = (new JobRoleService(new JobRoleDao(), new JobRoleValidator(new JobRoleDao(), new BandDao(), new CapabilityDao()))).createJobRole(jobRoleRequest);
+        int id = this.getNewId();
         Response response = APP.client().target("http://localhost:8080/api/job-roles/"+id)
                 .request()
                 .delete();
-
         Assertions.assertEquals(200, response.getStatus());
     }
 }

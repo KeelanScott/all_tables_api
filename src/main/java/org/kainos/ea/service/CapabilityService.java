@@ -13,10 +13,10 @@ public class CapabilityService {
         this.capabilityDao = capabilityDao;
     }
 
-    public List<Capability> getAllCapabilities() throws FailedToGetCapabilityException, DatabaseConnectionException {
+    public List<Capability> getAllCapabilities() throws FailedToGetCapabilityException {
         try {
             return this.capabilityDao.getAllCapabilities();
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             throw new FailedToGetCapabilityException();
         }
     }

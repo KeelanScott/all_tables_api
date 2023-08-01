@@ -24,7 +24,7 @@ public class BandController {
     public Response getAllBands() {
         try {
             return Response.ok(bandService.getAllBands()).build();
-        } catch (FailedToGetBandException | DatabaseConnectionException e) {
+        } catch (FailedToGetBandException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
         }

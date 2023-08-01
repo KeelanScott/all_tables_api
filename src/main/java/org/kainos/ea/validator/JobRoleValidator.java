@@ -45,7 +45,7 @@ public class JobRoleValidator {
             }
             return true;
         } catch (SQLException | DatabaseConnectionException e) {
-            throw new InvalidJobRoleException(e.getMessage());
+            throw new RuntimeException("failed to validate job role");
         }
     }
 }
