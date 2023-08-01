@@ -1,8 +1,6 @@
 package unit.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.dao.BandDao;
-import org.kainos.ea.dao.CapabilityDao;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
@@ -101,12 +99,6 @@ public class JobRoleServiceTest {
     }
 
     @Test
-    void updateJobRole_shouldThrowJobRoleDoesNotExistException_whenDaoReturnsNull() throws SQLException, DatabaseConnectionException {
-        Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(null);
-        assertThrows(JobRoleDoesNotExistException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
-    }
-
-    @Test
     void updateJobRole_shouldThrowFailedToUpdateJobRoleException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException, InvalidJobRoleException {
         Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest, 1)).thenReturn(true);
         Mockito.when(jobRoleDao.updateJobRole(1, jobRoleRequest)).thenThrow(SQLException.class);
@@ -115,7 +107,7 @@ public class JobRoleServiceTest {
 
     @Test
     void updateJobRole_shouldThrowInvalidJobRoleException_whenInvalidJobRole() throws InvalidJobRoleException, DatabaseConnectionException, SQLException {
-        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest)).thenThrow(InvalidJobRoleException.class);
+        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest, 1)).thenThrow(InvalidJobRoleException.class);
         Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
         assertThrows(InvalidJobRoleException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
     }
