@@ -48,4 +48,16 @@ public class JobRoleValidator {
             throw new RuntimeException("failed to validate job role");
         }
     }
+
+    public boolean isValidJobRole(JobRoleRequest jobRoleRequest, int id) throws InvalidJobRoleException {
+        this.isValidJobRole(jobRoleRequest);
+        try {
+            if (jobRoleDao.getJobRoleById(id) == null) {
+                throw new InvalidJobRoleException("Job role ID does not exist");
+            }
+            return true;
+        } catch (SQLException | DatabaseConnectionException e) {
+            throw new RuntimeException("failed to validate job role");
+        }
+    }
 }

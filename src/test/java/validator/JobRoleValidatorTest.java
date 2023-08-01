@@ -136,4 +136,12 @@ public class JobRoleValidatorTest {
             jobRoleValidator.isValidJobRole(jobRoleRequest);
         });
     }
+
+    @Test
+    public void isValidJobRole_shouldThrowInvalidJobRoleException_whenJobRoleNotFound() throws DatabaseConnectionException, SQLException {
+        Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(null);
+        assertThrows(InvalidJobRoleException.class, () -> {
+            jobRoleValidator.isValidJobRole(jobRoleRequest);
+        });
+    }
 }

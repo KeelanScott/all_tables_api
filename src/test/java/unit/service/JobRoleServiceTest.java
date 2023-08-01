@@ -107,8 +107,8 @@ public class JobRoleServiceTest {
     }
 
     @Test
-    void updateJobRole_shouldThrowFailedToUpdateJobRoleException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(jobRoleDao.getJobRoleById(1)).thenReturn(jobRole);
+    void updateJobRole_shouldThrowFailedToUpdateJobRoleException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException, InvalidJobRoleException {
+        Mockito.when(jobRoleValidator.isValidJobRole(jobRoleRequest, 1)).thenReturn(true);
         Mockito.when(jobRoleDao.updateJobRole(1, jobRoleRequest)).thenThrow(SQLException.class);
         assertThrows(FailedToUpdateJobRoleException.class, () -> jobRoleService.updateJobRole(1, jobRoleRequest));
     }
