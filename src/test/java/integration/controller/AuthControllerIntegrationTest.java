@@ -64,7 +64,7 @@ public class AuthControllerIntegrationTest {
     void register_shouldReturn200_whenSuccessfulRegister() throws DatabaseConnectionException, SQLException {
         Login login = new Login(
                 "nhdiabeynuansac@ebnnanjkmascwe.com",
-                "password"
+                "Password!"
         );
 
         Response response = APP.client().target("http://localhost:8080/api/register")

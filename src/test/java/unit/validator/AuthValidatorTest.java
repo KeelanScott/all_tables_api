@@ -27,7 +27,7 @@ public class AuthValidatorTest {
     void resetRequests(){
         login = new Login(
                 "email@email.com",
-                "password"
+                "Password!"
         );
     }
     @Test
@@ -103,6 +103,70 @@ public class AuthValidatorTest {
     @Test
     public void isValidLogin_shouldThrowInvalidLoginException_whenEmailTaken() throws DatabaseConnectionException, SQLException {
         Mockito.when(authDao.isEmailTaken(login.getEmail())).thenReturn(true);
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+    }
+
+    @Test
+    public void isValidLogin_shouldThrowInvalidLoginException_whenEmailNull() {
+        login.setEmail(null);
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+    }
+
+    @Test
+    public void isValidLogin_shouldThrowInvalidLoginException_whenPasswordNull() {
+        login.setPassword(null);
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+    }
+
+    @Test
+    public void isValidLogin_shouldThrowInvalidLoginException_whenEmailEmpty() {
+        login.setEmail("");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+    }
+
+    @Test
+    public void isValidLogin_shouldThrowInvalidLoginException_whenPasswordEmpty() {
+        login.setPassword("");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+    }
+
+    @Test
+    public void isValidLogin_shouldThrowInvalidLoginException_whenPasswordInvalid() {
+        login.setPassword("xxxxxxxx");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+        login.setPassword("XXXXXXXX");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+        login.setPassword("xxxxxxx!");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+        login.setPassword("!!!!!!!!");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+        login.setPassword("!!!!!X!!");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+        login.setPassword("!!!!x!!!");
+        assertThrows(InvalidLoginException.class, () -> {
+            authValidator.isValidLogin(login);
+        });
+        login.setPassword("XXXXxxxx");
         assertThrows(InvalidLoginException.class, () -> {
             authValidator.isValidLogin(login);
         });

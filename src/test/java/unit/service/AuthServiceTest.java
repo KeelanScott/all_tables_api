@@ -20,7 +20,7 @@ public class AuthServiceTest {
 
     Login login = new Login(
             "admin@email.com",
-            "adminxxx"
+            "Adminxx!"
     );
     String token = "73768rr37734r87678368";
 

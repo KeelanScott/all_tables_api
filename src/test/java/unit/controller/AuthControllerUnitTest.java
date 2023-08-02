@@ -19,7 +19,7 @@ public class AuthControllerUnitTest {
 
     Login login = new Login(
             "admin@email.com",
-            "adminxxx"
+            "Adminxx!"
     );
     String token = "4677678787878";
 

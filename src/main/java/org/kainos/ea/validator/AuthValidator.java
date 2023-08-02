@@ -17,9 +17,6 @@ public class AuthValidator {
     }
 
     public boolean isValidLogin(Login login) throws InvalidLoginException, DatabaseConnectionException, SQLException {
-        if (!isValidEmail(login.getEmail())) {
-            throw new InvalidLoginException("Invalid email format");
-        }
         if (login.getEmail() == null || login.getEmail().isEmpty()) {
             throw new InvalidLoginException("Email cannot be empty");
         }
@@ -38,6 +35,12 @@ public class AuthValidator {
         if (authDao.isEmailTaken(login.getEmail())) {
             throw new InvalidLoginException("Email already taken");
         }
+        if (!isValidPassword(login.getPassword())) {
+            throw new InvalidLoginException("Password must contain at least one uppercase letter, one lowercase letter, and one special character");
+        }
+        if (!isValidEmail(login.getEmail())) {
+            throw new InvalidLoginException("Invalid email format");
+        }
         return true;
     }
 
@@ -45,6 +48,12 @@ public class AuthValidator {
         String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+    private boolean isValidPassword(String password) {
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\p{Punct}).+$";
+        Pattern pattern = Pattern.compile(passwordRegex);
+        Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
 }
