@@ -31,20 +31,4 @@ public class AuthController {
         }
         return Response.status(Response.Status.OK).entity(token).build();
     }
-
-
-    @POST
-    @Path("/register")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response register(Login login) {
-        try {
-            return Response.ok(authService.register(login)).build();
-        } catch (FailedToGenerateTokenException | FailedToRegisterException e) {
-            System.err.println(e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-        } catch (UsernameAlreadyExistsException e) {
-            System.err.println(e.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        }
-    }
 }
