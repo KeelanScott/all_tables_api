@@ -15,8 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BandServiceUnitTest {
@@ -175,6 +174,66 @@ public class BandServiceUnitTest {
         Mockito.when(trainingCourseDao.deleteBandTrainingCourses(1)).thenReturn(1);
         Mockito.when(trainingCourseDao.createBandTrainingCourse(1, 1)).thenReturn(1);
 
-        assertEquals(1, bandService.updateBand(1, bandWithDetailsRequest));
+        assertDoesNotThrow(() -> bandService.updateBand(1, bandWithDetailsRequest));
+    }
+
+    @Test
+    void updateBand_shouldThrowBandDoesNotExistException_whenBandDoesNotExist() throws SQLException, DatabaseConnectionException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(null);
+        
+        assertThrows(BandDoesNotExistException.class, () -> bandService.updateBand(1, bandWithDetailsRequest));
+    }
+
+    @Test
+    void updateBand_shouldThrowInvalidBandException_whenBandValidatorThrowsInvalidBandException() throws InvalidBandException, InvalidBandCompetencyException, FailedToUpdateBandException, SQLException, DatabaseConnectionException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        Mockito.when(bandValidator.isValidBand(bandRequest)).thenThrow(InvalidBandException.class);
+
+        assertThrows(InvalidBandException.class, () -> bandService.updateBand(1, bandWithDetailsRequest));
+    }
+
+    @Test
+    void updateBand_shouldThrowInvalidBandCompetencyException_whenBandCompetencyValidatorThrowsInvalidBandCompetencyException() throws InvalidBandException, InvalidBandCompetencyException, FailedToUpdateBandException, SQLException, DatabaseConnectionException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenThrow(InvalidBandCompetencyException.class);
+
+        assertThrows(InvalidBandCompetencyException.class, () -> bandService.updateBand(1, bandWithDetailsRequest));
+    }
+
+    @Test
+    void updateBand_shouldThrowFailedToUpdateBandException_whenBandIsNotUpdated() throws SQLException, DatabaseConnectionException, InvalidBandException, InvalidBandCompetencyException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandDao.updateBand(1, bandRequest)).thenReturn(-1);
+
+        assertThrows(FailedToUpdateBandException.class, () -> bandService.updateBand(1, bandWithDetailsRequest));
+    }
+
+    @Test
+    void updateBand_shouldThrowFailedToUpdateBandCompetencyException_whenBandCompetencyIsNotUpdated() throws SQLException, DatabaseConnectionException, InvalidBandException, InvalidBandCompetencyException, FailedToUpdateBandException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandDao.updateBand(1, bandRequest)).thenReturn(1);
+        Mockito.when(competencyDao.deleteBandCompetencies(1)).thenReturn(1);
+        Mockito.when(competencyDao.createBandCompetency(competency, 1)).thenReturn(-1);
+
+        assertThrows(FailedToUpdateBandCompetencyException.class, () -> bandService.updateBand(1, bandWithDetailsRequest));
+    }
+
+    @Test
+    void updateBand_shouldThrowFailedToUpdateBandTrainingCourseException_whenBandTrainingCourseIsNotUpdated() throws SQLException, DatabaseConnectionException, InvalidBandException, InvalidBandCompetencyException, FailedToUpdateBandException, FailedToUpdateBandCompetencyException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandDao.updateBand(1, bandRequest)).thenReturn(1);
+        Mockito.when(competencyDao.deleteBandCompetencies(1)).thenReturn(1);
+        Mockito.when(competencyDao.createBandCompetency(competency, 1)).thenReturn(1);
+        Mockito.when(trainingCourseDao.deleteBandTrainingCourses(1)).thenReturn(1);
+        Mockito.when(trainingCourseDao.createBandTrainingCourse(1, 1)).thenReturn(-1);
+
+        assertThrows(FailedToUpdateBandTrainingCourseException.class, () -> bandService.updateBand(1, bandWithDetailsRequest));
     }
 }
