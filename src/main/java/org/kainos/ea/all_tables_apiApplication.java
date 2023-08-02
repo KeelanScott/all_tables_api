@@ -11,6 +11,7 @@ import org.kainos.ea.service.AuthService;
 import org.kainos.ea.controller.JobRoleController;
 import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.service.JobRoleService;
+import org.kainos.ea.validator.AuthValidator;
 
 public class all_tables_apiApplication extends Application<all_tables_apiConfiguration> {
 
@@ -37,7 +38,7 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
     public void run(final all_tables_apiConfiguration configuration,
                     final Environment environment) {
         environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao())));
-        environment.jersey().register(new AuthController(new AuthService(new AuthDao())));
+        environment.jersey().register(new AuthController(new AuthService(new AuthDao(), new AuthValidator())));
     }
 
 }

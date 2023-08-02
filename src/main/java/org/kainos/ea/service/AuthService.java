@@ -2,13 +2,18 @@ package org.kainos.ea.service;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.dao.AuthDao;
+import org.kainos.ea.validator.AuthValidator;
+
 import java.sql.SQLException;
 
 public class AuthService {
-    public AuthService(AuthDao authDao){
-        this.authDao= authDao;
-    }
     private AuthDao authDao;
+    private final AuthValidator authValidator;
+
+    public AuthService(AuthDao authDao, AuthValidator authValidator){
+        this.authDao= authDao;
+        this.authValidator = authValidator;
+    }
 
     public String login(Login login) throws FailedToLoginException, FailedToGenerateTokenException, DatabaseConnectionException {
         if (authDao.validLogin(login)) {
@@ -37,8 +42,9 @@ public class AuthService {
         }
     }
 
-    public String register(Login login) throws FailedToGenerateTokenException, UsernameAlreadyExistsException, FailedToRegisterException {
+    public String register(Login login) throws FailedToGenerateTokenException, EmailTakenException, FailedToRegisterException, InvalidLoginException {
         try{
+            authValidator.isValidLogin(login);
             if(authDao.register(login)){
                 return authDao.generateToken(login.getEmail());
             }
