@@ -18,10 +18,39 @@ public class AuthService {
             if (authDao.validLogin(login)) {
                 return authDao.generateToken(login.getEmail());
             }
+
             throw new FailedToLoginException();
         }
         catch (SQLException | DatabaseConnectionException e) {
             throw new FailedToGenerateTokenException();
+        }
+    }
+
+    public boolean isAdmin(String token) throws TokenExpiredException, FailedToVerifyTokenException, SQLException, DatabaseConnectionException {
+        ResultSet user = authDao.getUserFromToken(token);
+
+        return user.getBoolean("is_admin");
+    }
+
+    public boolean isRegistered(ResultSet user) throws TokenExpiredException, FailedToVerifyTokenException, DatabaseConnectionException, SQLException {
+        String email = user.getString("email");
+        if (email != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isTokenExpired(String token) throws TokenExpiredException, FailedToVerifyTokenException, DatabaseConnectionException, SQLException {
+        //boolean isExpired = false;
+        ResultSet user = authDao.getUserFromToken(token);
+
+        Timestamp expiry = user.getTimestamp("expiry");
+
+        if (expiry.after(new Date())) {
+            return true;
+        } else {
+            throw new TokenExpiredException();
         }
     }
 }

@@ -43,5 +43,47 @@ public class AuthServiceTest {
 
         assertThrows(FailedToLoginException.class, () -> authService.login(login));
     }
+
+//    @Test
+//    void isAdmin_shouldReturnTrue_whenUserIsAdmin() throws DatabaseConnectionException, TokenExpiredException, SQLException, FailedToVerifyTokenException {
+//        Mockito.when(authDao.getIsAdminFromToken(token)).thenReturn(true);
+//
+//        assertTrue(authService.isAdmin(token));
+//    }
+//
+//    @Test
+//    void isAdmin_shouldThrowFailedToVerifyTokenException_whenDaoGetIsAdminFromTokenThrowsSqlException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
+//        Mockito.when(authDao.getIsAdminFromToken(token)).thenThrow(SQLException.class);
+//
+//        assertThrows(FailedToVerifyTokenException.class, () -> authService.isAdmin(token));
+//    }
+//
+//    @Test
+//    void isAdmin_shouldThrowDatabaseConnectionException_whenDaoGetIsAdminFromTokenThrowsDatabaseConnectionException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
+//        Mockito.when(authDao.getIsAdminFromToken(token)).thenThrow(DatabaseConnectionException.class);
+//
+//        assertThrows(DatabaseConnectionException.class, () -> authService.isAdmin(token));
+//    }
+//
+//    @Test
+//    void isRegistered_shouldReturnTrue_whenUserIsRegistered() throws DatabaseConnectionException, TokenExpiredException, SQLException, FailedToVerifyTokenException {
+//        Mockito.when(authDao.getIsUserFromToken(token)).thenReturn(true);
+//
+//        assertTrue(authService.isRegistered(token));
+//    }
+//
+//    @Test
+//    void isRegistered_shouldThrowFailedToVerifyTokenException_whenDaoGetIsUserFromTokenThrowsFailedToVerifyTokenException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
+//        Mockito.when(authDao.getIsUserFromToken(token)).thenThrow(SQLException.class);
+//
+//        assertThrows(FailedToVerifyTokenException.class, () -> authService.isRegistered(token));
+//    }
+//
+//    @Test
+//    void isRegistered_shouldThrowDatabaseConnectionException_whenDaoGetIsUserFromTokenThrowsDatabaseConnectionException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
+//        Mockito.when(authDao.getIsUserFromToken(token)).thenThrow(DatabaseConnectionException.class);
+//
+//        assertThrows(DatabaseConnectionException.class, () -> authService.isRegistered(token));
+//    }
 }
 
