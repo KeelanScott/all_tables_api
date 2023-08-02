@@ -15,13 +15,13 @@ public class AuthController {
         this.authService= authService;
     }
     private final AuthService authService;
-
+    private String token = "";
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(Login login) {
         try {
-            return Response.status(Response.Status.OK).entity(authService.login(login)).build();
+            token = authService.login(login);
         } catch (FailedToLoginException e) {
             System.err.println(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -29,6 +29,7 @@ public class AuthController {
             System.err.println(e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
+        return Response.status(Response.Status.OK).entity(token).build();
     }
 
 

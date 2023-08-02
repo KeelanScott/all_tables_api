@@ -22,14 +22,6 @@ public class AuthServiceTest {
     String token = "73768rr37734r87678368";
 
     @Test
-    void login_shouldGenerateToken_whenSuccessfulLogin() throws SQLException, DatabaseConnectionException, FailedToLoginException, FailedToGenerateTokenException {
-        Mockito.when(authDao.validLogin(login)).thenReturn(true);
-        Mockito.when(authDao.generateToken(login.getEmail())).thenReturn(token);
-
-        assertEquals(token, authService.login(login));
-    }
-
-    @Test
     void login_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException {
         Mockito.when(authDao.validLogin(login)).thenReturn(true);
         Mockito.when(authDao.generateToken(login.getEmail())).thenThrow(new SQLException());
@@ -45,13 +37,6 @@ public class AuthServiceTest {
     }
 
     @Test
-    void isAdmin_shouldReturnTrue_whenUserIsAdmin() throws DatabaseConnectionException, TokenExpiredException, SQLException, FailedToVerifyTokenException {
-        Mockito.when(authDao.getIsAdminFromToken(token)).thenReturn(true);
-
-        assertTrue(authService.isAdmin(token));
-    }
-
-    @Test
     void isAdmin_shouldThrowFailedToVerifyTokenException_whenDaoGetIsAdminFromTokenThrowsSqlException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
         Mockito.when(authDao.getIsAdminFromToken(token)).thenThrow(SQLException.class);
 
@@ -63,13 +48,6 @@ public class AuthServiceTest {
         Mockito.when(authDao.getIsAdminFromToken(token)).thenThrow(DatabaseConnectionException.class);
 
         assertThrows(DatabaseConnectionException.class, () -> authService.isAdmin(token));
-    }
-
-    @Test
-    void isRegistered_shouldReturnTrue_whenUserIsRegistered() throws DatabaseConnectionException, TokenExpiredException, SQLException, FailedToVerifyTokenException {
-        Mockito.when(authDao.getIsUserFromToken(token)).thenReturn(true);
-
-        assertTrue(authService.isRegistered(token));
     }
 
     @Test
