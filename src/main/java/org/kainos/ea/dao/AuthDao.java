@@ -10,18 +10,15 @@ import java.util.UUID;
 public class AuthDao {
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public boolean validLogin(Login login) throws DatabaseConnectionException {
-        try (Connection c = databaseConnector.getConnection()) {
-            Statement st = c.createStatement();
+    public boolean validLogin(Login login) throws DatabaseConnectionException, SQLException {
+        Connection c = databaseConnector.getConnection();
+        Statement st = c.createStatement();
 
-            ResultSet rs = st.executeQuery("SELECT password FROM users WHERE email = '"
-                    + login.getEmail() + "';");
+        ResultSet rs = st.executeQuery("SELECT password FROM users WHERE email = '"
+                + login.getEmail() + "';");
 
-            while (rs.next()) {
-                return rs.getString("password").equals(login.getPassword());
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
+        while (rs.next()) {
+            return rs.getString("password").equals(login.getPassword());
         }
         return false;
     }
@@ -32,20 +29,16 @@ public class AuthDao {
 
         Connection c = databaseConnector.getConnection();
 
-        try {
-            String insertStatement = "INSERT INTO tokens (email, token, expiry) VALUES (?,?,?)";
+        String insertStatement = "INSERT INTO tokens (email, token, expiry) VALUES (?,?,?)";
 
-            PreparedStatement st = c.prepareStatement(insertStatement);
+        PreparedStatement st = c.prepareStatement(insertStatement);
 
-            st.setString(1, email);
-            st.setString(2, token);
-            st.setTimestamp(3, new java.sql.Timestamp(expiry.getTime()));
+        st.setString(1, email);
+        st.setString(2, token);
+        st.setTimestamp(3, new java.sql.Timestamp(expiry.getTime()));
 
-            st.executeUpdate();
+        st.executeUpdate();
 
-            return token;
-        } catch (Exception e) {
-            throw new SQLException(e);
-        }
+        return token;
     }
 }

@@ -37,9 +37,7 @@ public class AuthControllerIntegrationTest {
                 .request()
                 .post(Entity.entity(validLogin, MediaType.APPLICATION_JSON_TYPE));
 
-        String responseToken = APP.client().target("http://localhost:8080/api/login")
-                .request()
-                .post(Entity.entity(validLogin, MediaType.APPLICATION_JSON_TYPE), String.class);
+        String responseToken = responseLogin.readEntity(String.class);
 
         Assertions.assertEquals(200, responseLogin.getStatus());
         Assertions.assertNotNull(responseToken);

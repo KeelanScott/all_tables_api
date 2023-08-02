@@ -38,7 +38,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void login_shouldThrowFailedToLoginException_whenDaoValidLoginThrowsSqlException() throws DatabaseConnectionException {
+    void login_shouldThrowFailedToLoginException_whenDaoValidLoginThrowsSqlException() throws DatabaseConnectionException, SQLException {
         Mockito.when(authDao.validLogin(login)).thenReturn(false);
 
         assertThrows(FailedToLoginException.class, () -> authService.login(login));
