@@ -6,6 +6,7 @@ import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.service.AuthService;
 import org.kainos.ea.validator.AuthValidator;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
@@ -18,8 +19,8 @@ public class AuthServiceTest {
     AuthService authService = new AuthService(authDao, authValidator);
 
     Login login = new Login(
-            "admin",
-            "admin"
+            "admin@email.com",
+            "adminxxx"
     );
     String token = "73768rr37734r87678368";
 
@@ -86,6 +87,39 @@ public class AuthServiceTest {
         Mockito.when(authDao.getIsUserFromToken(token)).thenThrow(DatabaseConnectionException.class);
 
         assertThrows(DatabaseConnectionException.class, () -> authService.isRegistered(token));
+    }
+
+    @Test
+    void register_shouldGenerateToken_whenSuccessfulRegister() throws SQLException, DatabaseConnectionException, FailedToRegisterException, FailedToGenerateTokenException, InvalidLoginException {
+        Mockito.when(authDao.register(login)).thenReturn(true);
+        Mockito.when(authDao.generateToken(login.getEmail())).thenReturn(token);
+        Mockito.when(authValidator.isValidLogin(login)).thenReturn(true);
+
+        assertEquals(token, authService.register(login));
+    }
+
+    @Test
+    void register_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException, InvalidLoginException {
+        Mockito.when(authDao.register(login)).thenReturn(true);
+        Mockito.when(authDao.generateToken(login.getEmail())).thenThrow(new SQLException());
+        Mockito.when(authValidator.isValidLogin(login)).thenReturn(true);
+
+        assertThrows(FailedToGenerateTokenException.class, () -> authService.register(login));
+    }
+
+    @Test
+    void register_shouldThrowFailedToRegisterException_whenDaoRegisterThrowsSqlException() throws SQLException, DatabaseConnectionException, InvalidLoginException {
+        Mockito.when(authDao.register(login)).thenThrow(new SQLException());
+        Mockito.when(authValidator.isValidLogin(login)).thenReturn(true);
+
+        assertThrows(FailedToRegisterException.class, () -> authService.register(login));
+    }
+
+    @Test
+    void register_shouldThrowInvalidLoginException_whenAuthValidatorIsValidLoginThrowsInvalidLoginException() throws InvalidLoginException, DatabaseConnectionException, SQLException {
+        Mockito.when(authValidator.isValidLogin(login)).thenThrow(new InvalidLoginException("Invalid login"));
+
+        assertThrows(InvalidLoginException.class, () -> authService.register(login));
     }
 }
 

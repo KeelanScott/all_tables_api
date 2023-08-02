@@ -49,8 +49,8 @@ public class AuthService {
                 return authDao.generateToken(login.getEmail());
             }
         } catch (SQLException | DatabaseConnectionException e) {
-            throw new FailedToGenerateTokenException();
-        }
+            throw new FailedToRegisterException();
+        };
         throw new FailedToRegisterException();
     }
 }
