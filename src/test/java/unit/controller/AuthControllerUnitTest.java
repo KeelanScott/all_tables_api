@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.controller.AuthController;
 import org.kainos.ea.dao.AuthDao;
-import org.kainos.ea.exception.DatabaseConnectionException;
-import org.kainos.ea.exception.FailedToGenerateTokenException;
-import org.kainos.ea.exception.FailedToLoginException;
+import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.service.AuthService;
 import org.mockito.Mockito;
@@ -20,8 +18,8 @@ public class AuthControllerUnitTest {
     AuthController authController = new AuthController(authService);
 
     Login login = new Login(
-            "admin",
-            "admin"
+            "admin@email.com",
+            "adminxxx"
     );
     String token = "4677678787878";
 
@@ -53,6 +51,38 @@ public class AuthControllerUnitTest {
     void login_shouldReturnInternalServerError_whenDatabaseConnectionExceptionThrown() throws FailedToLoginException, FailedToGenerateTokenException, DatabaseConnectionException {
         Mockito.when(authService.login(login)).thenThrow(new DatabaseConnectionException());
         Response response = authController.login(login);
+
+        Assertions.assertEquals(500, response.getStatus());
+    }
+
+    @Test
+    void register_shouldReturnOK_whenRegisterSuccessful() throws FailedToGenerateTokenException, InvalidLoginException, FailedToRegisterException {
+        Mockito.when(authService.register(login)).thenReturn(token);
+        Response response = authController.register(login);
+
+        Assertions.assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void register_shouldReturn400_whenInvalidLogin() throws FailedToGenerateTokenException, InvalidLoginException, FailedToRegisterException {
+        Mockito.when(authService.register(login)).thenThrow(InvalidLoginException.class);
+        Response response = authController.register(login);
+
+        Assertions.assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    void register_shouldReturn500_whenFailedToGenerateTokenExceptionThrown() throws FailedToGenerateTokenException, InvalidLoginException, FailedToRegisterException {
+        Mockito.when(authService.register(login)).thenThrow(new FailedToGenerateTokenException());
+        Response response = authController.register(login);
+
+        Assertions.assertEquals(500, response.getStatus());
+    }
+
+    @Test
+    void register_shouldReturn500_whenFailedToRegisterExceptionThrown() throws FailedToGenerateTokenException, InvalidLoginException, FailedToRegisterException {
+        Mockito.when(authService.register(login)).thenThrow(new FailedToRegisterException());
+        Response response = authController.register(login);
 
         Assertions.assertEquals(500, response.getStatus());
     }
