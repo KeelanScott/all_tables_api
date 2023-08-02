@@ -20,31 +20,4 @@ public class AuthService {
         }
         throw new FailedToLoginException();
     }
-
-    public boolean isAdmin(String token) throws TokenExpiredException, FailedToVerifyTokenException {
-        try {
-            return authDao.getIsAdminFromToken(token);
-        } catch (SQLException | DatabaseConnectionException e) {
-            throw new FailedToVerifyTokenException();
-        }
-    }
-
-    public boolean isRegistered(String token) throws TokenExpiredException, FailedToVerifyTokenException {
-        try {
-          return authDao.getIsUserFromToken(token);
-        } catch (SQLException | DatabaseConnectionException e) {
-            throw new FailedToVerifyTokenException();
-        }
-    }
-
-    public String register(Login login) throws FailedToGenerateTokenException, UsernameAlreadyExistsException, FailedToRegisterException {
-        try{
-            if(authDao.register(login)){
-                return authDao.generateToken(login.getEmail());
-            }
-        } catch (SQLException | DatabaseConnectionException e) {
-            throw new FailedToGenerateTokenException();
-        }
-        throw new FailedToRegisterException();
-    }
 }

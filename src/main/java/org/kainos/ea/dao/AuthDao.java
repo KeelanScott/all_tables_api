@@ -1,6 +1,5 @@
 package org.kainos.ea.dao;
 import org.apache.commons.lang3.time.DateUtils;
-import org.kainos.ea.exception.UsernameAlreadyExistsException;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.TokenExpiredException;
@@ -23,8 +22,6 @@ public class AuthDao {
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
-        } catch (DatabaseConnectionException e) {
-            throw new DatabaseConnectionException();
         }
         return false;
     }
@@ -50,71 +47,5 @@ public class AuthDao {
         } catch (Exception e) {
             throw new SQLException(e);
         }
-    }
-
-    public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
-        Connection c = databaseConnector.getConnection();
-
-        Statement st = c.createStatement();
-
-        ResultSet rs = st.executeQuery("SELECT is_admin, expiry FROM users join tokens using (email)" + "where token = '" + token + "';");
-
-        while (rs.next()) {
-            Timestamp expiry = rs.getTimestamp("expiry");
-
-            if (expiry.after(new Date())) {
-                return rs.getBoolean("is_admin");
-            } else {
-                throw new TokenExpiredException();
-            }
-        }
-        return false;
-    }
-
-    public boolean getIsUserFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
-        Connection c = databaseConnector.getConnection();
-
-        boolean isRegistered = false;
-        Statement st = c.createStatement();
-
-        ResultSet rs = st.executeQuery("SELECT email, expiry FROM users join tokens using (email)" + "where token = '" + token + "';");
-
-        while (rs.next()) {
-            Timestamp expiry = rs.getTimestamp("expiry");
-            String email = rs.getString("email");
-
-            if (email != null) {
-                isRegistered = true;
-            }
-
-            if (expiry.after(new Date())) {
-                return isRegistered;
-            } else {
-                throw new TokenExpiredException();
-            }
-        }
-        return false;
-    }
-
-    public boolean register(Login login) throws UsernameAlreadyExistsException, SQLException, DatabaseConnectionException {
-        Connection c = databaseConnector.getConnection();
-        Statement st = c.createStatement();
-        ResultSet rs = st.executeQuery("SELECT email FROM `users` " +
-                "WHERE email = '" + login.getEmail() + "'");
-
-        if (rs.next()){
-            throw new UsernameAlreadyExistsException();
-        }
-
-        // insert user and role
-        String insertStatement = "INSERT INTO users (email, password, is_admin) VALUES (?,?, ?)";
-
-        PreparedStatement stl = c.prepareStatement(insertStatement);
-        stl.setString(1, login.getEmail());
-        stl.setString(2, login.getPassword());
-        stl.setInt(3, 0);
-        stl.executeUpdate();
-
-        return true;
     }
 }
