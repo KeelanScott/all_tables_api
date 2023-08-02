@@ -62,10 +62,10 @@ public class AuthServiceTest {
     }
 
     @Test
-    void isAdmin_shouldThrowDatabaseConnectionException_whenDaoGetIsAdminFromTokenThrowsDatabaseConnectionException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
+    void isAdmin_shouldThrowFailedToVerifyTokenException_whenDaoGetIsAdminFromTokenThrowsDatabaseConnectionException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
         Mockito.when(authDao.getIsAdminFromToken(token)).thenThrow(DatabaseConnectionException.class);
 
-        assertThrows(DatabaseConnectionException.class, () -> authService.isAdmin(token));
+        assertThrows(FailedToVerifyTokenException.class, () -> authService.isAdmin(token));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class AuthServiceTest {
     void isRegistered_shouldThrowDatabaseConnectionException_whenDaoGetIsUserFromTokenThrowsDatabaseConnectionException() throws DatabaseConnectionException, TokenExpiredException, SQLException {
         Mockito.when(authDao.getIsUserFromToken(token)).thenThrow(DatabaseConnectionException.class);
 
-        assertThrows(DatabaseConnectionException.class, () -> authService.isRegistered(token));
+        assertThrows(FailedToVerifyTokenException.class, () -> authService.isRegistered(token));
     }
 
     @Test
@@ -99,12 +99,12 @@ public class AuthServiceTest {
     }
 
     @Test
-    void register_shouldThrowFailedToGenerateTokenException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException, InvalidLoginException {
+    void register_shouldThrowFailedToRegisterException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException, InvalidLoginException {
         Mockito.when(authDao.register(login)).thenReturn(true);
         Mockito.when(authDao.generateToken(login.getEmail())).thenThrow(new SQLException());
         Mockito.when(authValidator.isValidLogin(login)).thenReturn(true);
 
-        assertThrows(FailedToGenerateTokenException.class, () -> authService.register(login));
+        assertThrows(FailedToRegisterException.class, () -> authService.register(login));
     }
 
     @Test
