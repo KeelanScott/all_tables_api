@@ -10,18 +10,15 @@ import java.util.UUID;
 public class AuthDao {
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public boolean validLogin(Login login) throws DatabaseConnectionException {
-        try (Connection c = databaseConnector.getConnection()) {
-            Statement st = c.createStatement();
+    public boolean validLogin(Login login) throws DatabaseConnectionException, SQLException {
+        Connection c = databaseConnector.getConnection();
+        Statement st = c.createStatement();
 
-            ResultSet rs = st.executeQuery("SELECT password FROM users WHERE email = '"
-                    + login.getEmail() + "';");
+        ResultSet rs = st.executeQuery("SELECT password FROM users WHERE email = '"
+                + login.getEmail() + "';");
 
-            while (rs.next()) {
-                return rs.getString("password").equals(login.getPassword());
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
+        while (rs.next()) {
+            return rs.getString("password").equals(login.getPassword());
         }
         return false;
     }
@@ -32,7 +29,6 @@ public class AuthDao {
 
         Connection c = databaseConnector.getConnection();
 
-        try {
             String insertStatement = "INSERT INTO tokens (email, token, expiry) VALUES (?,?,?)";
 
             PreparedStatement st = c.prepareStatement(insertStatement);
@@ -44,52 +40,5 @@ public class AuthDao {
             st.executeUpdate();
 
             return token;
-        } catch (Exception e) {
-            throw new SQLException(e);
-        }
-    }
-
-    public boolean getIsAdminFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
-        Connection c = databaseConnector.getConnection();
-
-        Statement st = c.createStatement();
-
-        ResultSet rs = st.executeQuery("SELECT is_admin, expiry FROM users join tokens using (email)" + "where token = '" + token + "';");
-
-        while (rs.next()) {
-            Timestamp expiry = rs.getTimestamp("expiry");
-
-            if (expiry.after(new Date())) {
-                return rs.getBoolean("is_admin");
-            } else {
-                throw new TokenExpiredException();
-            }
-        }
-        return false;
-    }
-
-    public boolean getIsUserFromToken(String token) throws SQLException, TokenExpiredException, DatabaseConnectionException {
-        Connection c = databaseConnector.getConnection();
-
-        boolean isRegistered = false;
-        Statement st = c.createStatement();
-
-        ResultSet rs = st.executeQuery("SELECT email, expiry FROM users join tokens using (email)" + "where token = '" + token + "';");
-
-        while (rs.next()) {
-            Timestamp expiry = rs.getTimestamp("expiry");
-            String email = rs.getString("email");
-
-            if (email != null) {
-                isRegistered = true;
-            }
-
-            if (expiry.after(new Date())) {
-                return isRegistered;
-            } else {
-                throw new TokenExpiredException();
-            }
-        }
-        return false;
     }
 }
