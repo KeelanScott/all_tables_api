@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JobRoleValidatorTest {
 
@@ -70,7 +71,7 @@ public class JobRoleValidatorTest {
     public void isValidJobRole_shouldReturnTrue_whenValidJobRole() throws InvalidJobRoleException, DatabaseConnectionException, SQLException {
         Mockito.when(bandDao.getBandById(1)).thenReturn(band);
         Mockito.when(capabilityDao.getCapabilityById(1)).thenReturn(capability);
-        assert(jobRoleValidator.isValidJobRole(jobRoleRequest));
+        assertTrue(jobRoleValidator.isValidJobRole(jobRoleRequest));
     }
 
     @Test
