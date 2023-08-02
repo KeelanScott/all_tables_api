@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BandCompetencyValidatorTest {
     CompetencyService competencyService = Mockito.mock(CompetencyService.class);
     BandCompetencyValidator bandCompetencyValidator = new BandCompetencyValidator(competencyService);
+    BandCompetencyValidator mockBandCompetencyValidator = Mockito.mock(BandCompetencyValidator.class);
 
     Competency competency = new Competency(
             1,
@@ -74,6 +75,34 @@ public class BandCompetencyValidatorTest {
         );
         assertThrows(InvalidBandCompetencyException.class, () -> {
             bandCompetencyValidator.isValidBandCompetency(bandCompetencyRequest);
+        });
+    }
+
+    @Test
+    public void areValidBandCompetencies_shouldReturnTrue_whenIsValidBandCompetencyReturnsTrue() throws InvalidBandCompetencyException {
+        BandCompetencyRequest  bandCompetencyRequest = new BandCompetencyRequest(
+                1,
+                "Responsibilities"
+        );
+        Mockito.when(mockBandCompetencyValidator.isValidBandCompetency(bandCompetencyRequest)).thenReturn(true);
+        BandCompetencyRequest[] bandCompetencyRequests = new BandCompetencyRequest[] {
+                bandCompetencyRequest, bandCompetencyRequest
+        };
+        assert(bandCompetencyValidator.areValidBandCompetencies(bandCompetencyRequests, mockBandCompetencyValidator));
+    }
+
+    @Test
+    public void areValidBandCompetencies_shouldThrowInvalidBandCompetencyException_whenIsValidBandCompetencyThrowsInvalidBandCompetencyException() throws InvalidBandCompetencyException {
+        BandCompetencyRequest  bandCompetencyRequest = new BandCompetencyRequest(
+                1,
+                "Responsibilities"
+        );
+        Mockito.when(mockBandCompetencyValidator.isValidBandCompetency(bandCompetencyRequest)).thenThrow(InvalidBandCompetencyException.class);
+        BandCompetencyRequest[] bandCompetencyRequests = new BandCompetencyRequest[] {
+                bandCompetencyRequest, bandCompetencyRequest
+        };
+        assertThrows(InvalidBandCompetencyException.class, () -> {
+            bandCompetencyValidator.areValidBandCompetencies(bandCompetencyRequests, mockBandCompetencyValidator);
         });
     }
 }

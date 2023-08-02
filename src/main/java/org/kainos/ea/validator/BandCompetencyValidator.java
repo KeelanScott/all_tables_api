@@ -29,4 +29,12 @@ public class BandCompetencyValidator {
 
         return true;
     }
+
+    public boolean areValidBandCompetencies(BandCompetencyRequest[] bandCompetencies, BandCompetencyValidator validator) throws InvalidBandCompetencyException {
+        for (BandCompetencyRequest bandCompetency : bandCompetencies) {
+            validator.isValidBandCompetency(bandCompetency);
+        }
+
+        return true;
+    }
 }

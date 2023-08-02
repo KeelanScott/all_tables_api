@@ -28,9 +28,7 @@ public class BandService {
         try {
             bandValidator.isValidBand(bandWithDetailsRequest.getBand());
 
-            for (BandCompetencyRequest bandCompetency : bandWithDetailsRequest.getBandCompetencies()) {
-                bandCompetencyValidator.isValidBandCompetency(bandCompetency);
-            }
+            bandCompetencyValidator.areValidBandCompetencies(bandWithDetailsRequest.getBandCompetencies(), bandCompetencyValidator);
 
             int id = bandDao.createBand(bandWithDetailsRequest.getBand());
             if (id == -1) throw new FailedToCreateBandException();
