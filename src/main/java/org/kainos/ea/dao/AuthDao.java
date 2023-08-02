@@ -115,4 +115,10 @@ public class AuthDao {
 
         return rs.next();
     }
+
+    public void deleteUser(String email) throws SQLException, DatabaseConnectionException {
+        Connection c = databaseConnector.getConnection();
+        Statement st = c.createStatement();
+        st.executeUpdate("DELETE FROM `users` WHERE email = '" + email + "'");
+    }
 }
