@@ -4,8 +4,6 @@ import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.BandRequest;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BandDao {
     public int createBand(BandRequest bandRequest) throws SQLException, DatabaseConnectionException {
@@ -42,31 +40,6 @@ public class BandDao {
         st.setInt(4, id);
 
         return st.executeUpdate();
-    }
-
-    public List<Band> getAllBands() throws SQLException, DatabaseConnectionException {
-        Connection c = DatabaseConnector.getConnection();
-
-        String selectStatement = "SELECT * FROM bands;";
-
-        PreparedStatement st = c.prepareStatement(selectStatement);
-
-        ResultSet rs = st.executeQuery();
-
-        List<Band> bands = new ArrayList<>();
-
-        while (rs.next()) {
-            Band band = new Band(
-                    rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getString("level"),
-                    rs.getString("responsibilities")
-            );
-
-            bands.add(band);
-        }
-
-        return bands;
     }
 
     public Band getBandById(int id) throws SQLException, DatabaseConnectionException {

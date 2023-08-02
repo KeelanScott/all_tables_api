@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,6 +25,13 @@ public class BandServiceUnitTest {
     BandCompetencyValidator bandCompetencyValidator = Mockito.mock(BandCompetencyValidator.class);
 
     BandService bandService = new BandService(bandDao, competencyDao, trainingCourseDao, bandValidator, bandCompetencyValidator);
+
+    Band band = new Band(
+            1,
+            "Band 1",
+            "Executive",
+            "These are the responsibilities"
+    );
 
     BandRequest bandRequest = new BandRequest(
             "Band 1",
@@ -43,17 +49,10 @@ public class BandServiceUnitTest {
 
     BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
 
-    Band band = new Band(
-            1,
-            "Band 1",
-            "Executive",
-            "These are the responsibilities"
-    );
-
     @Test
     void createBand_shouldReturnId_whenDaoReturnsId() throws SQLException, InvalidBandException, FailedToCreateBandException, DatabaseConnectionException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
         Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
-        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.areValidBandCompetencies(competencies, bandCompetencyValidator)).thenReturn(true);
         Mockito.when(bandDao.createBand(bandRequest)).thenReturn(1);
         Mockito.when(competencyDao.createBandCompetency(competency, 1)).thenReturn(1);
         Mockito.when(trainingCourseDao.createBandTrainingCourse(1, 1)).thenReturn(1);
@@ -81,14 +80,14 @@ public class BandServiceUnitTest {
 
     @Test
     void createBand_shouldThrowInvalidBandCompetencyException_whenValidatorThrowsInvalidBandCompetencyException() throws InvalidBandCompetencyException {
-        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenThrow(InvalidBandCompetencyException.class);
+        Mockito.when(bandCompetencyValidator.areValidBandCompetencies(competencies, bandCompetencyValidator)).thenThrow(InvalidBandCompetencyException.class);
         assertThrows(InvalidBandCompetencyException.class, () -> bandService.createBand(bandWithDetailsRequest));
     }
 
     @Test
     void createBand_shouldThrowFailedToCreateBandException_whenBandIsNotCreated() throws DatabaseConnectionException, SQLException, InvalidBandException, InvalidBandCompetencyException {
         Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
-        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.areValidBandCompetencies(competencies, bandCompetencyValidator)).thenReturn(true);
         Mockito.when(bandDao.createBand(bandRequest)).thenReturn(-1);
 
         assertThrows(FailedToCreateBandException.class, () -> bandService.createBand(bandWithDetailsRequest));
@@ -97,7 +96,7 @@ public class BandServiceUnitTest {
     @Test
     void createBand_shouldThrowFailedToCreateBandCompetencyException_whenBandIsNotCreated() throws DatabaseConnectionException, SQLException, InvalidBandException, InvalidBandCompetencyException {
         Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
-        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.areValidBandCompetencies(competencies, bandCompetencyValidator)).thenReturn(true);
         Mockito.when(bandDao.createBand(bandRequest)).thenReturn(1);
         Mockito.when(competencyDao.createBandCompetency(competency, 1)).thenReturn(-1);
 
@@ -107,36 +106,12 @@ public class BandServiceUnitTest {
     @Test
     void createBand_shouldThrowFailedToCreateBandTrainingCourseException_whenBandIsNotCreated() throws DatabaseConnectionException, SQLException, InvalidBandException, InvalidBandCompetencyException {
         Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
-        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.areValidBandCompetencies(competencies, bandCompetencyValidator)).thenReturn(true);
         Mockito.when(bandDao.createBand(bandRequest)).thenReturn(1);
         Mockito.when(competencyDao.createBandCompetency(competency, 1)).thenReturn(1);
         Mockito.when(trainingCourseDao.createBandTrainingCourse(1, 1)).thenReturn(-1);
 
         assertThrows(FailedToCreateBandTrainingCourseException.class, () -> bandService.createBand(bandWithDetailsRequest));
-    }
-
-    @Test
-    void getAllBands_shouldReturnBandList_whenDaoReturnsBandList() throws FailedToGetBandsException, SQLException, DatabaseConnectionException {
-        ArrayList<Band> list = new ArrayList<>();
-        list.add(band);
-        list.add(band);
-        list.add(band);
-
-        Mockito.when(bandDao.getAllBands()).thenReturn(list);
-
-        assertEquals(list, bandService.getAllBands());
-    }
-
-    @Test
-    void getAllBands_shouldThrowFailedToGetBandException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(bandDao.getAllBands()).thenThrow(SQLException.class);
-        assertThrows(FailedToGetBandsException.class, () -> bandService.getAllBands());
-    }
-
-    @Test
-    void getAllBands_shouldThrowFailedToGetBandException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(bandDao.getAllBands()).thenThrow(DatabaseConnectionException.class);
-        assertThrows(FailedToGetBandsException.class, () -> bandService.getAllBands());
     }
 
     @Test

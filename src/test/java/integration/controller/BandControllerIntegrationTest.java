@@ -9,10 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
 import org.kainos.ea.model.*;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class BandControllerIntegrationTest {
@@ -38,7 +36,8 @@ public class BandControllerIntegrationTest {
     );
 
     @Test
-    void createBand_shouldReturnId(){
+    void createBand_shouldReturnId() {
+        BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
         int response = APP.client().target("http://localhost:8080/api/bands")
                 .request()
                 .post(Entity.json(bandWithDetailsRequest), Response.class)
@@ -47,12 +46,14 @@ public class BandControllerIntegrationTest {
     }
 
     @Test
-    void getBands_shouldReturnList() {
-        List<JobRole> response = APP.client().target("http://localhost:8080/api/bands")
-                .request()
-                .get(List.class);
+    void createBand_shouldReturn400_whenInvalid() {
+        bandRequest.setResponsibilities("");
+        BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
 
-        Assertions.assertTrue(response.size() > 0);
+        Response response = APP.client().target("http://localhost:8080/api/bands")
+                .request()
+                .post(Entity.json(bandWithDetailsRequest), Response.class);
+        Assertions.assertEquals(400, response.getStatus());
     }
 
     @Test

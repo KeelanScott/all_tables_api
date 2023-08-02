@@ -2,7 +2,6 @@ package org.kainos.ea.controller;
 
 import io.swagger.annotations.Api;
 import org.kainos.ea.exception.*;
-import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.service.CompetencyService;
 
 import javax.ws.rs.*;

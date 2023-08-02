@@ -31,13 +31,16 @@ public class CompetencyDao {
         Statement st = c.createStatement();
 
         ResultSet rs = st.executeQuery("SELECT id, name " +
-                "FROM competencies WHERE id = " + id + ";");
+                "FROM competencies " +
+                "WHERE id = " + id + ";");
 
-        while (rs.next()) {
-            return new Competency(
+        if (rs.next()) {
+            Competency competency = new Competency(
                     rs.getInt("competencies.id"),
                     rs.getString("competencies.name"));
+            return competency;
         }
+
         return null;
     }
 

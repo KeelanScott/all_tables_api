@@ -7,7 +7,6 @@ import org.kainos.ea.exception.*;
 import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.service.CompetencyService;
-import org.kainos.ea.validator.BandCompetencyValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
@@ -18,9 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class CompetencyServiceUnitTest {
     CompetencyDao competencyDao = Mockito.mock(CompetencyDao.class);
-    BandCompetencyValidator bandCompetencyValidator = Mockito.mock(BandCompetencyValidator.class);
 
-    CompetencyService competencyService = new CompetencyService(competencyDao, bandCompetencyValidator);
+    CompetencyService competencyService = new CompetencyService(competencyDao);
 
     Competency competency = new Competency(
             1,
@@ -83,5 +81,26 @@ public class CompetencyServiceUnitTest {
         Mockito.when(competencyDao.getBandCompetencies(1)).thenThrow(DatabaseConnectionException.class);
 
         assertThrows(FailedToGetBandCompetenciesException.class, () -> competencyService.getBandCompetencies(1));
+    }
+
+    @Test
+    void getCompetencyById_shouldReturnCompetency_whenDaoReturnsCompetency() throws FailedToGetCompetencyException, SQLException, DatabaseConnectionException, CompetencyDoesNotExistException {
+        Mockito.when(competencyDao.getCompetencyById(1)).thenReturn(competency);
+
+        assertEquals(competency, competencyService.getCompetencyById(1));
+    }
+
+    @Test
+    void getCompetencyById_shouldThrowFailedToGetCompetencyException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(competencyDao.getCompetencyById(1)).thenThrow(SQLException.class);
+
+        assertThrows(FailedToGetCompetencyException.class, () -> competencyService.getCompetencyById(1));
+    }
+
+    @Test
+    void getCompetencyById_shouldThrowFailedToGetCompetencyException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(competencyDao.getCompetencyById(1)).thenThrow(DatabaseConnectionException.class);
+
+        assertThrows(FailedToGetCompetencyException.class, () -> competencyService.getCompetencyById(1));
     }
 }

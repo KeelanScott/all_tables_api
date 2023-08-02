@@ -10,11 +10,9 @@ import java.util.List;
 
 public class CompetencyService {
     private final CompetencyDao competencyDao;
-    private final BandCompetencyValidator bandCompetencyValidator;
 
-    public CompetencyService(CompetencyDao competencyDao, BandCompetencyValidator bandCompetencyValidator) {
+    public CompetencyService(CompetencyDao competencyDao) {
         this.competencyDao = competencyDao;
-        this.bandCompetencyValidator = bandCompetencyValidator;
     }
 
     public List<Competency> getAllCompetencies() throws FailedToGetCompetenciesException {
@@ -30,18 +28,17 @@ public class CompetencyService {
     }
 
     public Competency getCompetencyById(int id) throws FailedToGetCompetencyException, CompetencyDoesNotExistException {
+        Competency competency = null;
         try {
-            Competency competency = competencyDao.getCompetencyById(id);
-
-            if (competency != null) {
-                return competency;
-            } else {
-                throw new CompetencyDoesNotExistException();
-            }
+            competency = competencyDao.getCompetencyById(id);
         } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToGetCompetencyException();
         }
+
+        if (competency == null) throw new CompetencyDoesNotExistException();
+
+        return competency;
     }
 
     public List<BandCompetency> getBandCompetencies(int id) throws FailedToGetBandCompetenciesException {

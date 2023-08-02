@@ -52,18 +52,6 @@ public class BandController {
     }
 
     @GET
-    @Path("/bands")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllBands() {
-        try {
-            return Response.ok(bandService.getAllBands()).build();
-        } catch (FailedToGetBandsException e) {
-            System.err.println(e.getMessage());
-            return Response.serverError().build();
-        }
-    }
-
-    @GET
     @Path("/bands/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBandById(@PathParam("id") int id) {
