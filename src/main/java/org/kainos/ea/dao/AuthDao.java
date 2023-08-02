@@ -1,6 +1,5 @@
 package org.kainos.ea.dao;
 import org.apache.commons.lang3.time.DateUtils;
-import org.kainos.ea.exception.EmailTakenException;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.TokenExpiredException;
@@ -94,17 +93,9 @@ public class AuthDao {
         return false;
     }
 
-    public boolean register(Login login) throws EmailTakenException, SQLException, DatabaseConnectionException {
+    public boolean register(Login login) throws SQLException, DatabaseConnectionException {
         Connection c = databaseConnector.getConnection();
-        Statement st = c.createStatement();
-        ResultSet rs = st.executeQuery("SELECT email FROM `users` " +
-                "WHERE email = '" + login.getEmail() + "'");
 
-        if (rs.next()){
-            throw new EmailTakenException();
-        }
-
-        // insert user and role
         String insertStatement = "INSERT INTO users (email, password, is_admin) VALUES (?,?, ?)";
 
         PreparedStatement stl = c.prepareStatement(insertStatement);
@@ -114,5 +105,14 @@ public class AuthDao {
         stl.executeUpdate();
 
         return true;
+    }
+
+    public boolean isEmailTaken(String email) throws SQLException, DatabaseConnectionException {
+        Connection c = databaseConnector.getConnection();
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery("SELECT email FROM `users` " +
+                "WHERE email = '" + email + "'");
+
+        return rs.next();
     }
 }

@@ -41,7 +41,7 @@ public class AuthController {
         } catch (FailedToGenerateTokenException | FailedToRegisterException e) {
             System.err.println(e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-        } catch (EmailTakenException | InvalidLoginException e) {
+        } catch (InvalidLoginException e) {
             System.err.println(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }

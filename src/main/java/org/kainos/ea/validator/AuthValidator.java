@@ -1,13 +1,22 @@
 package org.kainos.ea.validator;
 
+import org.kainos.ea.dao.AuthDao;
+import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.InvalidLoginException;
 import org.kainos.ea.model.Login;
 
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AuthValidator {
-    public boolean isValidLogin(Login login) throws InvalidLoginException {
+
+    private final AuthDao authDao;
+    public AuthValidator(AuthDao authDao) {
+        this.authDao = authDao;
+    }
+
+    public boolean isValidLogin(Login login) throws InvalidLoginException, DatabaseConnectionException, SQLException {
         if (!isValidEmail(login.getEmail())) {
             throw new InvalidLoginException("Invalid email format");
         }
@@ -22,6 +31,12 @@ public class AuthValidator {
         }
         if (login.getPassword().length() > 64) {
             throw new InvalidLoginException("Password cannot be longer than 64 characters");
+        }
+        if (login.getPassword().length() < 8) {
+            throw new InvalidLoginException("Password cannot be shorter than 8 characters");
+        }
+        if (authDao.isEmailTaken(login.getEmail())) {
+            throw new InvalidLoginException("Email already taken");
         }
         return true;
     }

@@ -11,7 +11,7 @@ public class AuthService {
     private final AuthValidator authValidator;
 
     public AuthService(AuthDao authDao, AuthValidator authValidator){
-        this.authDao= authDao;
+        this.authDao = authDao;
         this.authValidator = authValidator;
     }
 
@@ -42,7 +42,7 @@ public class AuthService {
         }
     }
 
-    public String register(Login login) throws FailedToGenerateTokenException, EmailTakenException, FailedToRegisterException, InvalidLoginException {
+    public String register(Login login) throws FailedToGenerateTokenException, FailedToRegisterException, InvalidLoginException {
         try{
             authValidator.isValidLogin(login);
             if(authDao.register(login)){

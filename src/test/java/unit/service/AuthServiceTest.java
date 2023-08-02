@@ -5,6 +5,7 @@ import org.kainos.ea.dao.AuthDao;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.Login;
 import org.kainos.ea.service.AuthService;
+import org.kainos.ea.validator.AuthValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
@@ -13,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
     AuthDao authDao = Mockito.mock(AuthDao.class);
-    AuthService authService = new AuthService(authDao);
+    AuthValidator authValidator = Mockito.mock(AuthValidator.class);
+    AuthService authService = new AuthService(authDao, authValidator);
 
     Login login = new Login(
             "admin",

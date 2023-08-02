@@ -37,8 +37,9 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
     @Override
     public void run(final all_tables_apiConfiguration configuration,
                     final Environment environment) {
+        AuthDao authDao = new AuthDao();
         environment.jersey().register(new JobRoleController(new JobRoleService(new JobRoleDao())));
-        environment.jersey().register(new AuthController(new AuthService(new AuthDao(), new AuthValidator())));
+        environment.jersey().register(new AuthController(new AuthService(authDao, new AuthValidator(authDao))));
     }
 
 }
