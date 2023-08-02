@@ -30,6 +30,20 @@ public class BandDao {
         return -1;
     }
 
+    public int updateBand(int id, BandRequest bandRequest) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+
+        String updateStatement = "UPDATE bands SET name = ?, level = ?, responsibilities = ? WHERE id = ?;";
+
+        PreparedStatement st = c.prepareStatement(updateStatement);
+        st.setString(1, bandRequest.getName());
+        st.setString(2, bandRequest.getLevel());
+        st.setString(3, bandRequest.getResponsibilities());
+        st.setInt(4, id);
+
+        return st.executeUpdate();
+    }
+
     public List<Band> getAllBands() throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 

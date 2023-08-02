@@ -157,4 +157,24 @@ public class BandServiceUnitTest {
         Mockito.when(bandDao.getBandById(1)).thenThrow(DatabaseConnectionException.class);
         assertThrows(FailedToGetBandException.class, () -> bandService.getBandById(1));
     }
+
+    @Test
+    void getBandById_shouldThrowBandDoesNotExistException_whenBandDoesNotExist() throws SQLException, DatabaseConnectionException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(null);
+        assertThrows(BandDoesNotExistException.class, () -> bandService.getBandById(1));
+    }
+
+    @Test
+    void updateBand_shouldReturnOne_whenBandIsUpdated() throws SQLException, DatabaseConnectionException, FailedToUpdateBandException, InvalidBandException, InvalidBandCompetencyException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, BandDoesNotExistException {
+        Mockito.when(bandDao.getBandById(1)).thenReturn(band);
+        Mockito.when(bandValidator.isValidBand(bandRequest)).thenReturn(true);
+        Mockito.when(bandCompetencyValidator.isValidBandCompetency(competency)).thenReturn(true);
+        Mockito.when(bandDao.updateBand(1, bandRequest)).thenReturn(1);
+        Mockito.when(competencyDao.deleteBandCompetencies(1)).thenReturn(1);
+        Mockito.when(competencyDao.createBandCompetency(competency, 1)).thenReturn(1);
+        Mockito.when(trainingCourseDao.deleteBandTrainingCourses(1)).thenReturn(1);
+        Mockito.when(trainingCourseDao.createBandTrainingCourse(1, 1)).thenReturn(1);
+
+        assertEquals(1, bandService.updateBand(1, bandWithDetailsRequest));
+    }
 }

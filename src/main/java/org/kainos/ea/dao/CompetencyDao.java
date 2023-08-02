@@ -59,6 +59,17 @@ public class CompetencyDao {
         else return result;
     }
 
+    public int deleteBandCompetencies(int bandId) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+
+        String deleteStatement = "DELETE FROM bands_competencies WHERE band_id = ?;";
+
+        PreparedStatement st = c.prepareStatement(deleteStatement);
+        st.setInt(1, bandId);
+
+        return st.executeUpdate();
+    }
+
     public List<BandCompetency> getBandCompetencies(int id) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
         Statement st = c.createStatement();

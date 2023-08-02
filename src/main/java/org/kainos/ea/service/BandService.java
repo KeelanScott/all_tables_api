@@ -54,6 +54,42 @@ public class BandService {
         }
     }
 
+    public void updateBand(int id, BandWithDetailsRequest bandWithDetailsRequest) throws FailedToUpdateBandException, InvalidBandException, InvalidBandCompetencyException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, BandDoesNotExistException {
+        try {
+            Band band = bandDao.getBandById(id);
+            if (band == null) throw new BandDoesNotExistException();
+
+            bandValidator.isValidBand(bandWithDetailsRequest.getBand());
+
+            for (BandCompetencyRequest bandCompetency : bandWithDetailsRequest.getBandCompetencies()) {
+                bandCompetencyValidator.isValidBandCompetency(bandCompetency);
+            }
+
+            int result = bandDao.updateBand(id, bandWithDetailsRequest.getBand());
+            if (result == -1) throw new FailedToUpdateBandException();
+
+            // Deleting the band competencies and creating them again is safer than updating them as new competencies may have been added
+            result = competencyDao.deleteBandCompetencies(id);
+            if (result == -1) throw new FailedToUpdateBandCompetencyException();
+
+            for (BandCompetencyRequest bandCompetency : bandWithDetailsRequest.getBandCompetencies()) {
+                result = competencyDao.createBandCompetency(bandCompetency, id);
+                if (result == -1) throw new FailedToUpdateBandCompetencyException();
+            }
+
+            result = trainingCourseDao.deleteBandTrainingCourses(id);
+            if (result == -1) throw new FailedToUpdateBandTrainingCourseException();
+
+            for (int trainingCourseId : bandWithDetailsRequest.getTrainingCourses()) {
+                result = trainingCourseDao.createBandTrainingCourse(id, trainingCourseId);
+                if (result == -1) throw new FailedToUpdateBandTrainingCourseException();
+            }
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToUpdateBandException();
+        }
+    }
+
     public List<Band> getAllBands() throws FailedToGetBandsException {
         try {
             return bandDao.getAllBands();

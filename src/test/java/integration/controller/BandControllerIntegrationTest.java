@@ -75,4 +75,22 @@ public class BandControllerIntegrationTest {
 
         Assertions.assertEquals(400, response);
     }
+
+    @Test
+    void updateBand_shouldReturn200() {
+        Response response = APP.client().target("http://localhost:8080/api/bands/1")
+                .request()
+                .put(Entity.json(bandWithDetailsRequest), Response.class);
+
+        Assertions.assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void updateBand_shouldReturn400_whenIDNotFound() {
+        Response response = APP.client().target("http://localhost:8080/api/bands/" + 0)
+                .request()
+                .put(Entity.json(bandWithDetailsRequest), Response.class);
+
+        Assertions.assertEquals(400, response.getStatus());
+    }
 }

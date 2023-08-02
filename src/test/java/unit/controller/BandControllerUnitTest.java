@@ -129,4 +129,60 @@ public class BandControllerUnitTest {
         Response response = bandController.getBandById(1);
         assert(response.getStatus() == 400);
     }
+
+    @Test
+    void updateBand_shouldReturnOK_whenServiceSucceeds() throws FailedToUpdateBandException, BandDoesNotExistException, InvalidBandException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, InvalidBandCompetencyException {
+        Mockito.doNothing().when(bandService).updateBand(1, bandWithDetailsRequest);
+
+        Response response = bandController.updateBand(1, bandWithDetailsRequest);
+        assert(response.getStatus() == 200);
+    }
+
+    @Test
+    void updateBand_shouldReturnInternalServerError_whenServiceThrowsFailedToUpdateBandException() throws FailedToUpdateBandException, BandDoesNotExistException, InvalidBandException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, InvalidBandCompetencyException {
+        Mockito.doThrow(FailedToUpdateBandException.class).when(bandService).updateBand(1, bandWithDetailsRequest);
+
+        Response response = bandController.updateBand(1, bandWithDetailsRequest);
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
+    void updateBand_shouldReturnInternalServerError_whenServiceThrowsFailedToUpdateBandCompetencyException() throws FailedToUpdateBandException, BandDoesNotExistException, InvalidBandException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, InvalidBandCompetencyException {
+        Mockito.doThrow(FailedToUpdateBandCompetencyException.class).when(bandService).updateBand(1, bandWithDetailsRequest);
+
+        Response response = bandController.updateBand(1, bandWithDetailsRequest);
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
+    void updateBand_shouldReturnInternalServerError_whenServiceThrowsFailedToUpdateBandTrainingCourseException() throws FailedToUpdateBandException, BandDoesNotExistException, InvalidBandException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, InvalidBandCompetencyException {
+        Mockito.doThrow(FailedToUpdateBandTrainingCourseException.class).when(bandService).updateBand(1, bandWithDetailsRequest);
+
+        Response response = bandController.updateBand(1, bandWithDetailsRequest);
+        assert(response.getStatus() == 500);
+    }
+
+    @Test
+    void updateBand_shouldReturnBadRequest_whenServiceThrowsBandDoesNotExistException() throws FailedToUpdateBandException, BandDoesNotExistException, InvalidBandException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, InvalidBandCompetencyException {
+        Mockito.doThrow(BandDoesNotExistException.class).when(bandService).updateBand(1, bandWithDetailsRequest);
+
+        Response response = bandController.updateBand(1, bandWithDetailsRequest);
+        assert(response.getStatus() == 400);
+    }
+
+    @Test
+    void updateBand_shouldReturnBadRequest_whenServiceThrowsInvalidBandException() throws FailedToUpdateBandException, BandDoesNotExistException, InvalidBandException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, InvalidBandCompetencyException {
+        Mockito.doThrow(InvalidBandException.class).when(bandService).updateBand(1, bandWithDetailsRequest);
+
+        Response response = bandController.updateBand(1, bandWithDetailsRequest);
+        assert(response.getStatus() == 400);
+    }
+
+    @Test
+    void updateBand_shouldReturnBadRequest_whenServiceThrowsInvalidBandCompetencyException() throws FailedToUpdateBandException, BandDoesNotExistException, InvalidBandException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, InvalidBandCompetencyException {
+        Mockito.doThrow(InvalidBandCompetencyException.class).when(bandService).updateBand(1, bandWithDetailsRequest);
+
+        Response response = bandController.updateBand(1, bandWithDetailsRequest);
+        assert(response.getStatus() == 400);
+    }
 }
