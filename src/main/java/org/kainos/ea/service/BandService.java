@@ -8,6 +8,7 @@ import org.kainos.ea.validator.BandCompetencyValidator;
 import org.kainos.ea.validator.BandValidator;
 import org.kainos.ea.dao.BandDao;
 import java.sql.SQLException;
+import java.util.List;
 
 public class BandService {
     private final BandDao bandDao;
@@ -22,6 +23,14 @@ public class BandService {
         this.trainingCourseDao = trainingCourseDao;
         this.bandValidator = bandValidator;
         this.bandCompetencyValidator = bandCompetencyValidator;
+    }
+
+    public List<Band> getAllBands() throws FailedToGetBandException {
+        try {
+            return bandDao.getAllBands();
+        } catch (SQLException | DatabaseConnectionException e) {
+            throw new FailedToGetBandException();
+        }
     }
 
     public int createBand(BandWithDetailsRequest bandWithDetailsRequest) throws FailedToCreateBandException, InvalidBandException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {

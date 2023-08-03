@@ -4,7 +4,7 @@ import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.model.Band;
 import org.kainos.ea.model.Capability;
 import org.kainos.ea.model.JobRole;
-
+import org.kainos.ea.model.JobRoleRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class JobRoleDao {
         Statement st = c.createStatement();
 
         ResultSet rs = st.executeQuery(
-                "SELECT job_roles.id, job_roles.name, bands.`name`, level, bands.id, bands.responsibilities, capabilities.id, capabilities.name  FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
+                "SELECT job_roles.id, job_roles.name, bands.`name`, level, bands.id, capabilities.id, capabilities.name, bands.responsibilities  FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
                         "JOIN capabilities ON job_roles.capability_id = capabilities.id;");
 
         List<JobRole> jobRoleList = new ArrayList<>();
@@ -29,7 +29,7 @@ public class JobRoleDao {
             Band band = new Band(
                     rs.getInt("bands.id"),
                     rs.getString("bands.name"),
-                    rs.getString("bands.level"),
+                    rs.getString("level"),
                     rs.getString("bands.responsibilities")
             );
             JobRole jobRole = new JobRole (
@@ -49,7 +49,7 @@ public class JobRoleDao {
 
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT job_roles.id, job_roles.name, bands.id, bands.`name`, bands.responsibilities, level, job_roles.specification, capabilities.id, capabilities.name, capabilities.description FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
+        ResultSet rs = st.executeQuery("SELECT job_roles.id, job_roles.name, bands.id, bands.`name`, level, job_roles.specification, capabilities.id, capabilities.name, capabilities.description, bands.responsibilities FROM job_roles JOIN bands ON job_roles.band_id = bands.id " +
                 "JOIN capabilities ON job_roles.capability_id = capabilities.id WHERE job_roles.id = " + id + ";");
 
         while (rs.next()) {
@@ -62,7 +62,7 @@ public class JobRoleDao {
             Band band = new Band(
                     rs.getInt("bands.id"),
                     rs.getString("bands.name"),
-                    rs.getString("bands.level"),
+                    rs.getString("level"),
                     rs.getString("bands.responsibilities")
             );
 
@@ -75,5 +75,49 @@ public class JobRoleDao {
             );
         }
         return null;
+    }
+
+    public int createJobRole(JobRoleRequest jobRoleRequest) throws DatabaseConnectionException, SQLException {
+            Connection c = DatabaseConnector.getConnection();
+
+            PreparedStatement ps = c.prepareStatement("INSERT INTO job_roles (name, band_id, capability_id, specification) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, jobRoleRequest.getName());
+            ps.setInt(2, jobRoleRequest.getBandId());
+            ps.setInt(3, jobRoleRequest.getCapabilityId());
+            ps.setString(4, jobRoleRequest.getSpecification());
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        return -1;
+    }
+
+    public boolean updateJobRole(int id, JobRoleRequest jobRoleRequest) throws DatabaseConnectionException, SQLException {
+        Connection c = DatabaseConnector.getConnection();
+
+        PreparedStatement ps = c.prepareStatement("UPDATE job_roles SET name = ?, band_id = ?, capability_id = ?, specification = ? WHERE id = ?;");
+
+        ps.setString(1, jobRoleRequest.getName());
+        ps.setInt(2, jobRoleRequest.getBandId());
+        ps.setInt(3, jobRoleRequest.getCapabilityId());
+        ps.setString(4, jobRoleRequest.getSpecification());
+        ps.setInt(5, id);
+
+        return ps.executeUpdate() > 0;
+    }
+
+    public boolean deleteJobRole(int id) throws DatabaseConnectionException, SQLException {
+        Connection c = DatabaseConnector.getConnection();
+
+        PreparedStatement ps = c.prepareStatement("DELETE FROM job_roles WHERE id = ?;");
+
+        ps.setInt(1, id);
+
+        return ps.executeUpdate() > 0;
     }
 }
