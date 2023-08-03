@@ -58,32 +58,6 @@ public class CompetencyServiceUnitTest {
     }
 
     @Test
-    void getBandCompetencies_shouldReturnBandCompetencyList_whenDaoReturnsBandCompetencyList() throws FailedToGetBandCompetenciesException, SQLException, DatabaseConnectionException {
-        ArrayList<BandCompetency> list = new ArrayList<>();
-        list.add(bandCompetency);
-        list.add(bandCompetency);
-        list.add(bandCompetency);
-
-        Mockito.when(competencyDao.getBandCompetencies(1)).thenReturn(list);
-
-        assertEquals(list, competencyService.getBandCompetencies(1));
-    }
-
-    @Test
-    void getBandCompetencies_shouldThrowFailedToGetBandCompetenciesException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(competencyDao.getBandCompetencies(1)).thenThrow(SQLException.class);
-
-        assertThrows(FailedToGetBandCompetenciesException.class, () -> competencyService.getBandCompetencies(1));
-    }
-
-    @Test
-    void getBandCompetencies_shouldThrowFailedToGetBandCompetenciesException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(competencyDao.getBandCompetencies(1)).thenThrow(DatabaseConnectionException.class);
-
-        assertThrows(FailedToGetBandCompetenciesException.class, () -> competencyService.getBandCompetencies(1));
-    }
-
-    @Test
     void getCompetencyById_shouldReturnCompetency_whenDaoReturnsCompetency() throws FailedToGetCompetencyException, SQLException, DatabaseConnectionException, CompetencyDoesNotExistException {
         Mockito.when(competencyDao.getCompetencyById(1)).thenReturn(competency);
 

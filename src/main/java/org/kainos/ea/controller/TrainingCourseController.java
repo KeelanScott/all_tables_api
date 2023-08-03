@@ -27,16 +27,4 @@ public class TrainingCourseController {
             return Response.serverError().build();
         }
     }
-
-    @GET
-    @Path("/training-courses/band/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getTrainingForBand(@PathParam("id") int id) {
-        try {
-            return Response.ok(trainingCourseService.getTrainingForBand(id)).build();
-        } catch (FailedToGetTrainingCoursesException e) {
-            System.err.println(e.getMessage());
-            return Response.serverError().build();
-        }
-    }
 }

@@ -5,13 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.controller.BandController;
 import org.kainos.ea.exception.*;
-import org.kainos.ea.model.Band;
-import org.kainos.ea.model.BandCompetencyRequest;
-import org.kainos.ea.model.BandRequest;
-import org.kainos.ea.model.BandWithDetailsRequest;
+import org.kainos.ea.model.*;
 import org.kainos.ea.service.BandService;
 import org.mockito.Mockito;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class BandControllerUnitTest {
@@ -37,9 +35,17 @@ public class BandControllerUnitTest {
     );
 
     BandCompetencyRequest[] competencies = { competency, competency };
+    List<BandCompetency> competencyList = List.of(
+            new BandCompetency(1, 1, "Description"),
+            new BandCompetency(1, 1, "Description")
+    );
+
     int[] trainingCourses = { 1, 1 };
+    List<Integer> trainingCourseList = List.of(1, 1);
 
     BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
+
+    BandWithDetailsResponse bandWithDetailsResponse = new BandWithDetailsResponse(band, competencyList, trainingCourseList);
 
     @Test
     void createBand_shouldReturnOK_whenServiceReturnsId() throws InvalidBandException, FailedToCreateBandException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
@@ -85,7 +91,7 @@ public class BandControllerUnitTest {
 
     @Test
     void getBandById_shouldReturnBand_whenBandExists() throws FailedToGetBandException, BandDoesNotExistException {
-        Mockito.when(bandService.getBandById(1)).thenReturn(band);
+        Mockito.when(bandService.getBandById(1)).thenReturn(bandWithDetailsResponse);
 
         Response response = bandController.getBandById(1);
         assert(response.getStatus() == 200);

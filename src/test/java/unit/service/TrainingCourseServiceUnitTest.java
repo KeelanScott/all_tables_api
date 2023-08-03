@@ -51,30 +51,4 @@ public class TrainingCourseServiceUnitTest {
 
         assertThrows(FailedToGetTrainingCoursesException.class, () -> trainingCourseService.getAllTrainingCourses());
     }
-
-    @Test
-    void getTrainingForBand_shouldReturnTrainingCourseList_whenDaoReturnsTrainingCourseList() throws FailedToGetTrainingCoursesException, SQLException, DatabaseConnectionException {
-        ArrayList<TrainingCourse> list = new ArrayList<>();
-        list.add(trainingCourse);
-        list.add(trainingCourse);
-        list.add(trainingCourse);
-
-        Mockito.when(trainingCourseDao.getTrainingForBand(1)).thenReturn(list);
-
-        assertEquals(list, trainingCourseService.getTrainingForBand(1));
-    }
-
-    @Test
-    void getTrainingForBand_shouldThrowFailedToGetTrainingCourseException_whenDaoThrowsSQLException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(trainingCourseDao.getTrainingForBand(1)).thenThrow(SQLException.class);
-
-        assertThrows(FailedToGetTrainingCoursesException.class, () -> trainingCourseService.getTrainingForBand(1));
-    }
-
-    @Test
-    void getTrainingForBand_shouldThrowFailedToGetTrainingCourseException_whenDaoThrowsDatabaseConnectionException() throws SQLException, DatabaseConnectionException {
-        Mockito.when(trainingCourseDao.getTrainingForBand(1)).thenThrow(DatabaseConnectionException.class);
-
-        assertThrows(FailedToGetTrainingCoursesException.class, () -> trainingCourseService.getTrainingForBand(1));
-    }
 }

@@ -58,11 +58,11 @@ public class BandControllerIntegrationTest {
 
     @Test
     void getBandById_shouldReturnBand() {
-        Band response = APP.client().target("http://localhost:8080/api/bands/1")
+        BandWithDetailsResponse response = APP.client().target("http://localhost:8080/api/bands/1")
                 .request()
-                .get(Band.class);
+                .get(BandWithDetailsResponse.class);
 
-        Assertions.assertEquals(1, response.getId());
+        Assertions.assertEquals(1, response.getBand().getId());
     }
 
     @Test

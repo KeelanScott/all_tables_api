@@ -27,13 +27,4 @@ public class TrainingCourseControllerIntegrationTest {
 
         Assertions.assertTrue(response.size() > 0);
     }
-
-    @Test
-    void getTrainingForBand_shouldReturnList() {
-        List<TrainingCourse> response = APP.client().target("http://localhost:8080/api/training-courses/band/1")
-                .request()
-                .get(List.class);
-
-        Assertions.assertTrue(response.size() > 0);
-    }
 }

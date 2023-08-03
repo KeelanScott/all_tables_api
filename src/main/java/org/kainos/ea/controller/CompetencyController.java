@@ -28,16 +28,4 @@ public class CompetencyController {
             return Response.serverError().build();
         }
     }
-
-    @GET
-    @Path("/competencies/band/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getBandCompetencies(@PathParam("id") int id) {
-        try {
-            return Response.ok(competencyService.getBandCompetencies(id)).build();
-        } catch (FailedToGetBandCompetenciesException e) {
-            System.err.println(e.getMessage());
-            return Response.serverError().build();
-        }
-    }
 }

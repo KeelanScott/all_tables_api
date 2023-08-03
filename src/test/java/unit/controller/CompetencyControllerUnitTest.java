@@ -49,25 +49,4 @@ public class CompetencyControllerUnitTest {
         Response response = competencyController.getAllCompetencies();
         assert(response.getStatus() == 500);
     }
-
-    @Test
-    void getBandCompetencies_shouldReturnOK_whenServiceReturnsList() throws FailedToGetBandCompetenciesException {
-        List<BandCompetency> sampleBandCompetencies = new ArrayList<>();
-        sampleBandCompetencies.add(bandCompetency);
-        sampleBandCompetencies.add(bandCompetency);
-        sampleBandCompetencies.add(bandCompetency);
-
-        Mockito.when(competencyService.getBandCompetencies(1)).thenReturn(sampleBandCompetencies);
-
-        Response response = competencyController.getBandCompetencies(1);
-        assert(response.getStatus() == 200);
-    }
-
-    @Test
-    void getBandCompetencies_shouldReturnInternalServerError_whenServiceThrowsException() throws FailedToGetBandCompetenciesException {
-        Mockito.when(competencyService.getBandCompetencies(1)).thenThrow(FailedToGetBandCompetenciesException.class);
-
-        Response response = competencyController.getBandCompetencies(1);
-        assert(response.getStatus() == 500);
-    }
 }

@@ -13,7 +13,7 @@ import org.kainos.ea.validator.BandValidator;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,7 +45,12 @@ public class BandServiceUnitTest {
     );
 
     BandCompetencyRequest[] competencies = { competency, competency };
+    List<BandCompetency> bandCompetencyList = List.of(
+            new BandCompetency(1, 1, "Description"),
+            new BandCompetency(1, 1, "Description")
+    );
     int[] trainingCourses = { 1, 1 };
+    List<Integer> trainingCourseList = List.of(1, 1);
 
     BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
 
@@ -117,7 +122,12 @@ public class BandServiceUnitTest {
     @Test
     void getBandById_shouldReturnBand_whenDaoReturnsBand() throws SQLException, FailedToGetBandException, DatabaseConnectionException, BandDoesNotExistException {
         Mockito.when(bandDao.getBandById(1)).thenReturn(band);
-        assertEquals(band, bandService.getBandById(1));
+        Mockito.when(competencyDao.getBandCompetencies(1)).thenReturn(bandCompetencyList);
+        Mockito.when(trainingCourseDao.getTrainingForBand(1)).thenReturn(trainingCourseList);
+
+        BandWithDetailsResponse response = new BandWithDetailsResponse(band, bandCompetencyList, trainingCourseList);
+
+        assertEquals(response, bandService.getBandById(1));
     }
 
     @Test

@@ -5,6 +5,7 @@ import org.kainos.ea.model.TrainingCourse;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainingCourseDao {
     public List<TrainingCourse> getAllTrainingCourses() throws SQLException, DatabaseConnectionException {
@@ -53,7 +54,7 @@ public class TrainingCourseDao {
         return st.executeUpdate();
     }
 
-    public List<TrainingCourse> getTrainingForBand(int id) throws SQLException, DatabaseConnectionException {
+    public List<Integer> getTrainingForBand(int id) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
         Statement st = c.createStatement();
 
@@ -70,6 +71,7 @@ public class TrainingCourseDao {
                     rs.getString("training_courses.description"));
             trainingCourseList.add(trainingCourse);
         }
-        return trainingCourseList;
+
+        return trainingCourseList.stream().map(TrainingCourse::getId).collect(Collectors.toList());
     }
 }
