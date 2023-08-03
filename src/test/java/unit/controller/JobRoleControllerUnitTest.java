@@ -11,7 +11,6 @@ import org.kainos.ea.model.JobRole;
 import org.kainos.ea.model.JobRoleRequest;
 import org.kainos.ea.service.JobRoleService;
 import org.mockito.Mockito;
-
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
