@@ -22,11 +22,12 @@ public class JobRoleService {
         try {
             return this.jobRoleDao.getAllJobRoles();
         } catch (SQLException e) {
+            System.out.println(e);
             throw new FailedToGetJobRoleException();
         }
     }
 
-    public JobRole getJobRolesById(int id) throws FailedToGetJobRoleException, DatabaseConnectionException, JobRoleDoesNotExistException {
+    public JobRole getJobRolesById(int id) throws FailedToGetJobRoleException, JobRoleDoesNotExistException, DatabaseConnectionException {
         try{
             JobRole jobRole = jobRoleDao.getJobRoleById(id);
 
