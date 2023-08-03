@@ -15,6 +15,7 @@ public class AuthController {
         this.authService= authService;
     }
     private final AuthService authService;
+
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
@@ -27,6 +28,22 @@ public class AuthController {
         } catch (FailedToGenerateTokenException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
+
+
+    @POST
+    @Path("/register")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response register(Login login) {
+        try {
+            return Response.ok(authService.register(login)).build();
+        } catch (FailedToGenerateTokenException | FailedToRegisterException e) {
+            System.err.println(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        } catch (InvalidLoginException e) {
+            System.err.println(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 }

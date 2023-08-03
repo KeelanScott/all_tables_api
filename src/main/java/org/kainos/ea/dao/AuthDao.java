@@ -41,4 +41,33 @@ public class AuthDao {
 
         return token;
     }
+
+    public boolean register(Login login) throws SQLException, DatabaseConnectionException {
+        Connection c = databaseConnector.getConnection();
+
+        String insertStatement = "INSERT INTO users (email, password, is_admin) VALUES (?,?, ?)";
+
+        PreparedStatement stl = c.prepareStatement(insertStatement);
+        stl.setString(1, login.getEmail());
+        stl.setString(2, login.getPassword());
+        stl.setInt(3, 0);
+        stl.executeUpdate();
+
+        return true;
+    }
+
+    public boolean isEmailTaken(String email) throws SQLException, DatabaseConnectionException {
+        Connection c = databaseConnector.getConnection();
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery("SELECT email FROM `users` " +
+                "WHERE email = '" + email + "'");
+
+        return rs.next();
+    }
+
+    public void deleteUser(String email) throws SQLException, DatabaseConnectionException {
+        Connection c = databaseConnector.getConnection();
+        Statement st = c.createStatement();
+        st.executeUpdate("DELETE FROM `users` WHERE email = '" + email + "'");
+    }
 }

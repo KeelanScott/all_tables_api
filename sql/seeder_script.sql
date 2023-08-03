@@ -29,6 +29,10 @@ BEGIN
     INSERT INTO bands_competencies VALUES (1, 5, "Understands the markets and sectors in which Kainos operates while acknowledging how role links in and has an impact on other teams and the business.");
     INSERT INTO bands_competencies VALUES (1, 6, "Acts in a respectful manner in all forms of communication while being open and honest. Displays a positive approach when interacting with others.");
 
+    INSERT INTO bands (name, level) VALUES ('Band 1', 1);
+    INSERT INTO bands (name, level) VALUES ('Band 2', 2);
+    INSERT INTO bands (name, level) VALUES ('Band 3', 3);
+
     INSERT INTO bands_competencies VALUES (2, 1, "Understands others strengths and areas for development. Recognising diversity and its value within self and team. Proactively uses well-being tools to support self-regulation.");
     INSERT INTO bands_competencies VALUES (2, 2, "Builds strong working relationships within team and project teams and start to consider building a wider network.");
     INSERT INTO bands_competencies VALUES (2, 3, "Plans time effectively to ensure deadlines are met, and seen to be honest, escalating in advance any issues with completing tasks within the specified time.");
@@ -56,13 +60,6 @@ BEGIN
     INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Trainee Quality Assurance Engineer', 'Ensures software quality', 1, 3);
     INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Senior Quality Assurance Engineer', 'Ensures software quality', 2, 3);
     INSERT INTO job_roles (name, specification, band_id, capability_id) VALUES ('Lead Quality Assurance Engineer', 'Ensures software quality', 3, 3);
-
-
-
-
-
-
-
 
     INSERT INTO training_courses (name, description) VALUES ('Java', 'Java training');
     INSERT INTO training_courses (name, description) VALUES ('C#', 'C# training');

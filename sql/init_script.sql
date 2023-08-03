@@ -42,7 +42,7 @@ BEGIN
 		email VARCHAR(64) NOT NULL,
         token VARCHAR(64) NOT NULL,
         expiry DATETIME NOT NULL,
-        FOREIGN KEY (email) REFERENCES users(email)
+        FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
     );
 
     CREATE TABLE IF NOT EXISTS competencies (
