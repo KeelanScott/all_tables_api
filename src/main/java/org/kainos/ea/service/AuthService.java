@@ -31,15 +31,12 @@ public class AuthService {
         }
     }
 
-    public String register(Login login) throws FailedToGenerateTokenException, FailedToRegisterException, InvalidLoginException {
+    public boolean register(Login login) throws FailedToGenerateTokenException, FailedToRegisterException, InvalidLoginException {
         try{
             authValidator.isValidLogin(login);
-            if(authDao.register(login)){
-                return authDao.generateToken(login.getEmail());
-            }
-        } catch (SQLException | DatabaseConnectionException e) {
+            return authDao.register(login);
+        } catch (SQLException | DatabaseConnectionException e ) {
             throw new FailedToRegisterException();
-        };
-        throw new FailedToRegisterException();
+        }
     }
 }

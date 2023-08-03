@@ -50,20 +50,11 @@ public class AuthServiceTest {
     @Test
     void register_shouldGenerateToken_whenSuccessfulRegister() throws SQLException, DatabaseConnectionException, FailedToRegisterException, FailedToGenerateTokenException, InvalidLoginException {
         Mockito.when(authDao.register(login)).thenReturn(true);
-        Mockito.when(authDao.generateToken(login.getEmail())).thenReturn(token);
         Mockito.when(authValidator.isValidLogin(login)).thenReturn(true);
 
-        assertEquals(token, authService.register(login));
+        assertEquals(true, authService.register(login));
     }
-
-    @Test
-    void register_shouldThrowFailedToRegisterException_whenDaoGenerateTokenThrowsSqlException() throws SQLException, DatabaseConnectionException, InvalidLoginException {
-        Mockito.when(authDao.register(login)).thenReturn(true);
-        Mockito.when(authDao.generateToken(login.getEmail())).thenThrow(new SQLException());
-        Mockito.when(authValidator.isValidLogin(login)).thenReturn(true);
-
-        assertThrows(FailedToRegisterException.class, () -> authService.register(login));
-    }
+    
 
     @Test
     void register_shouldThrowFailedToRegisterException_whenDaoRegisterThrowsSqlException() throws SQLException, DatabaseConnectionException, InvalidLoginException {

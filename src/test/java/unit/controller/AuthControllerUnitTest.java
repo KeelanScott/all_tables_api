@@ -57,7 +57,7 @@ public class AuthControllerUnitTest {
 
     @Test
     void register_shouldReturnOK_whenRegisterSuccessful() throws FailedToGenerateTokenException, InvalidLoginException, FailedToRegisterException {
-        Mockito.when(authService.register(login)).thenReturn(token);
+        Mockito.when(authService.register(login)).thenReturn(true);
         Response response = authController.register(login);
 
         Assertions.assertEquals(200, response.getStatus());
