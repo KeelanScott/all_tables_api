@@ -72,7 +72,7 @@ public class BandDao {
     public Band getBandById(int id) throws SQLException, DatabaseConnectionException {
         Connection c = DatabaseConnector.getConnection();
 
-        String selectStatement = "SELECT * FROM bands WHERE id = ?;";
+        String selectStatement = "SELECT id, name, level, responsibilities FROM bands WHERE id = ?;";
 
         PreparedStatement st = c.prepareStatement(selectStatement);
         st.setInt(1, id);
