@@ -7,14 +7,14 @@ import java.util.List;
 public class BandWithDetailsResponse {
     private Band band;
     private List<BandCompetency> bandCompetencies;
-    private List<Integer> trainingCourses;
+    private List<Integer> trainingCourseIds;
 
     public BandWithDetailsResponse(@JsonProperty("band") Band band,
                                    @JsonProperty("bandCompetencies") List<BandCompetency> bandCompetencies,
-                                   @JsonProperty("trainingCourseIds") List<Integer> trainingCourses) {
+                                   @JsonProperty("trainingCourseIds") List<Integer> trainingCourseIds) {
         this.band = band;
         this.bandCompetencies = bandCompetencies;
-        this.trainingCourses = trainingCourses;
+        this.trainingCourseIds = trainingCourseIds;
     }
 
     public Band getBand() {
@@ -33,12 +33,12 @@ public class BandWithDetailsResponse {
         this.bandCompetencies = bandCompetencies;
     }
 
-    public List<Integer> getTrainingCourses() {
-        return trainingCourses;
+    public List<Integer> getTrainingCourseIds() {
+        return trainingCourseIds;
     }
 
-    public void setTrainingCourses(List<Integer> trainingCourses) {
-        this.trainingCourses = trainingCourses;
+    public void setTrainingCourseIds(List<Integer> trainingCourses) {
+        this.trainingCourseIds = trainingCourses;
     }
 
     @Override
@@ -50,6 +50,6 @@ public class BandWithDetailsResponse {
         BandWithDetailsResponse bandWithDetailsResponse = (BandWithDetailsResponse) o;
         return band.equals(bandWithDetailsResponse.band) &&
                 bandCompetencies.equals(bandWithDetailsResponse.bandCompetencies) &&
-                trainingCourses.equals(bandWithDetailsResponse.trainingCourses);
+                trainingCourseIds.equals(bandWithDetailsResponse.trainingCourseIds);
     }
 }
