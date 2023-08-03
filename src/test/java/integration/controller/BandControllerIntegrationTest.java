@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
-import org.kainos.ea.model.BandCompetencyRequest;
-import org.kainos.ea.model.BandRequest;
-import org.kainos.ea.model.BandWithDetailsRequest;
+import org.kainos.ea.model.*;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
@@ -30,7 +28,7 @@ public class BandControllerIntegrationTest {
     BandCompetencyRequest[] competencies = { competency };
     int[] trainingCourses = { 1, 2 };
 
-
+    BandWithDetailsRequest bandWithDetailsRequest = new BandWithDetailsRequest(bandRequest, competencies, trainingCourses);
 
     static final DropwizardAppExtension<all_tables_apiConfiguration> APP = new DropwizardAppExtension<>(
             all_tables_apiApplication.class, null,
@@ -55,6 +53,45 @@ public class BandControllerIntegrationTest {
         Response response = APP.client().target("http://localhost:8080/api/bands")
                 .request()
                 .post(Entity.json(bandWithDetailsRequest), Response.class);
+        Assertions.assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    void getBandById_shouldReturnBand() {
+        BandWithDetailsResponse response = APP.client().target("http://localhost:8080/api/bands/1")
+                .request()
+                .get(BandWithDetailsResponse.class);
+
+        Assertions.assertEquals(1, response.getBand().getId());
+    }
+
+    @Test
+    void getBand_shouldReturn400_whenIDNotFound() {
+        Response responseBand = APP.client().target("http://localhost:8080/api/bands/" + 0)
+                .request()
+                .get(Response.class);
+
+        int response = responseBand.getStatus();
+        System.out.println(response);
+
+        Assertions.assertEquals(400, response);
+    }
+
+    @Test
+    void updateBand_shouldReturn200() {
+        Response response = APP.client().target("http://localhost:8080/api/bands/1")
+                .request()
+                .put(Entity.json(bandWithDetailsRequest), Response.class);
+
+        Assertions.assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void updateBand_shouldReturn400_whenIDNotFound() {
+        Response response = APP.client().target("http://localhost:8080/api/bands/" + 0)
+                .request()
+                .put(Entity.json(bandWithDetailsRequest), Response.class);
+
         Assertions.assertEquals(400, response.getStatus());
     }
 }

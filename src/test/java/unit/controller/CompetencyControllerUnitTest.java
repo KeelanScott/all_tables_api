@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.controller.CompetencyController;
 import org.kainos.ea.exception.*;
+import org.kainos.ea.model.BandCompetency;
 import org.kainos.ea.model.Competency;
 import org.kainos.ea.service.CompetencyService;
 import org.mockito.Mockito;
@@ -20,6 +21,12 @@ public class CompetencyControllerUnitTest {
     Competency competency = new Competency(
             1,
             "Competency 1"
+    );
+
+    BandCompetency bandCompetency = new BandCompetency(
+            1,
+            1,
+            "description"
     );
 
     @Test

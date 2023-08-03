@@ -9,6 +9,7 @@ import org.kainos.ea.validator.BandValidator;
 import org.kainos.ea.dao.BandDao;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BandService {
     private final BandDao bandDao;
@@ -56,6 +57,56 @@ public class BandService {
         } catch (SQLException | DatabaseConnectionException e) {
             System.err.println(e.getMessage());
             throw new FailedToCreateBandException();
+        }
+    }
+
+    public void updateBand(int id, BandWithDetailsRequest bandWithDetailsRequest) throws FailedToUpdateBandException, InvalidBandException, InvalidBandCompetencyException, FailedToUpdateBandCompetencyException, FailedToUpdateBandTrainingCourseException, BandDoesNotExistException {
+        try {
+            Band band = bandDao.getBandById(id);
+            if (band == null) throw new BandDoesNotExistException();
+
+            bandValidator.isValidBand(bandWithDetailsRequest.getBand());
+
+            for (BandCompetencyRequest bandCompetency : bandWithDetailsRequest.getBandCompetencies()) {
+                bandCompetencyValidator.isValidBandCompetency(bandCompetency);
+            }
+
+            int result = bandDao.updateBand(id, bandWithDetailsRequest.getBand());
+            if (result == -1) throw new FailedToUpdateBandException();
+
+            // Deleting the band competencies and creating them again is safer than updating them as new competencies may have been added
+            result = competencyDao.deleteBandCompetencies(id);
+            if (result == -1) throw new FailedToUpdateBandCompetencyException();
+
+            for (BandCompetencyRequest bandCompetency : bandWithDetailsRequest.getBandCompetencies()) {
+                result = competencyDao.createBandCompetency(bandCompetency, id);
+                if (result == -1) throw new FailedToUpdateBandCompetencyException();
+            }
+
+            result = trainingCourseDao.deleteBandTrainingCourses(id);
+            if (result == -1) throw new FailedToUpdateBandTrainingCourseException();
+
+            for (int trainingCourseId : bandWithDetailsRequest.getTrainingCourses()) {
+                result = trainingCourseDao.createBandTrainingCourse(id, trainingCourseId);
+                if (result == -1) throw new FailedToUpdateBandTrainingCourseException();
+            }
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToUpdateBandException();
+        }
+    }
+
+    public BandWithDetailsResponse getBandById(int id) throws FailedToGetBandException, BandDoesNotExistException {
+        try {
+            Band band =  bandDao.getBandById(id);
+            if (band != null) {
+                List<BandCompetency> bandCompetencies = competencyDao.getBandCompetencies(id);
+                List<Integer> trainingCourses = trainingCourseDao.getTrainingForBand(id);
+
+                return new BandWithDetailsResponse(band, bandCompetencies, trainingCourses);
+            } else throw new BandDoesNotExistException();
+        } catch (SQLException | DatabaseConnectionException e) {
+            throw new FailedToGetBandException();
         }
     }
 }

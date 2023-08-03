@@ -61,4 +61,36 @@ public class CompetencyDao {
         if (result == 0) return -1;
         else return result;
     }
+
+    public int deleteBandCompetencies(int bandId) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+
+        String deleteStatement = "DELETE FROM bands_competencies WHERE band_id = ?;";
+
+        PreparedStatement st = c.prepareStatement(deleteStatement);
+        st.setInt(1, bandId);
+
+        return st.executeUpdate();
+    }
+
+    public List<BandCompetency> getBandCompetencies(int id) throws SQLException, DatabaseConnectionException {
+        Connection c = DatabaseConnector.getConnection();
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT bands_competencies.band_id, bands_competencies.band_id, bands_competencies.competency_id, bands_competencies.description " +
+                "FROM bands_competencies " +
+                "WHERE bands_competencies.band_id = " + id + ";");
+
+        List<BandCompetency> bandCompetencyList = new ArrayList<>();
+
+        while (rs.next()) {
+            BandCompetency bandCompetency = new BandCompetency(
+                    rs.getInt("bands_competencies.band_id"),
+                    rs.getInt("bands_competencies.competency_id"),
+                    rs.getString("bands_competencies.description"));
+            bandCompetencyList.add(bandCompetency);
+        }
+
+        return bandCompetencyList;
+    }
 }

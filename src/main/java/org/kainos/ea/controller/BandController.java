@@ -35,6 +35,38 @@ public class BandController {
         }
     }
 
+    @PUT
+    @Path("/bands/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateBand(@PathParam("id") int id, BandWithDetailsRequest bandWithDetailsRequest) {
+        try {
+            bandService.updateBand(id, bandWithDetailsRequest);
+            return Response.ok().build();
+        } catch (FailedToUpdateBandException | FailedToUpdateBandCompetencyException |
+                 FailedToUpdateBandTrainingCourseException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        } catch (InvalidBandException | InvalidBandCompetencyException | BandDoesNotExistException e) {
+            System.err.println(e);
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/bands/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBandById(@PathParam("id") int id) {
+        try {
+            return Response.ok(bandService.getBandById(id)).build();
+        } catch (FailedToGetBandException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        } catch (BandDoesNotExistException e) {
+            System.err.println(e);
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+
     @GET
     @Path("/bands")
     @Produces(MediaType.APPLICATION_JSON)
