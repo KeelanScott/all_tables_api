@@ -15,6 +15,13 @@ BEGIN
     INSERT INTO competencies (name) VALUES ("Commerciality and Risk");
     INSERT INTO competencies (name) VALUES ("Communicating and Influence");
 
+    INSERT INTO users (email, password, is_admin) VALUES ('keelan@gmail.com', 'Scott', 0);
+    INSERT INTO users (email, password, is_admin) VALUES ('joshua@gmail.com', 'Young', 0);
+    INSERT INTO users (email, password, is_admin) VALUES ('jimmys@gmail.com', 'Edgar', 0);
+    INSERT INTO users (email, password, is_admin) VALUES ('darragh@gmail.com', 'Melarkey', 0);
+    INSERT INTO users (email, password, is_admin) VALUES ('james@gmail.com', 'McKee', 0);
+    INSERT INTO users (email, password, is_admin) VALUES ('shaun@gmail.com', 'Ganley', 1);
+
     INSERT INTO bands_competencies VALUES (1, 1, "Understands own strengths and areas of development. Self-aware of own well-being and seeks support where appropriate.");
     INSERT INTO bands_competencies VALUES (1, 2, "Recognises the need to build internal networks within immediate teams and projects.");
     INSERT INTO bands_competencies VALUES (1, 3, "Understands role, tasks and deadlines and work towards these, escalating any issues where appropriate to People/Project Manager.");
@@ -25,13 +32,6 @@ BEGIN
     INSERT INTO bands (name, level) VALUES ('Band 1', 1);
     INSERT INTO bands (name, level) VALUES ('Band 2', 2);
     INSERT INTO bands (name, level) VALUES ('Band 3', 3);
-
-    INSERT INTO users (email, password, is_admin) VALUES ('keelan@gmail.com', 'Scott', 0);
-    INSERT INTO users (email, password, is_admin) VALUES ('joshua@gmail.com', 'Young', 0);
-    INSERT INTO users (email, password, is_admin) VALUES ('jimmys@gmail.com', 'Edgar', 0);
-    INSERT INTO users (email, password, is_admin) VALUES ('darragh@gmail.com', 'Melarkey', 0);
-    INSERT INTO users (email, password, is_admin) VALUES ('james@gmail.com', 'McKee', 0);
-    INSERT INTO users (email, password, is_admin) VALUES ('shaun@gmail.com', 'Ganley', 1);
 
     INSERT INTO bands_competencies VALUES (2, 1, "Understands others strengths and areas for development. Recognising diversity and its value within self and team. Proactively uses well-being tools to support self-regulation.");
     INSERT INTO bands_competencies VALUES (2, 2, "Builds strong working relationships within team and project teams and start to consider building a wider network.");
@@ -84,6 +84,7 @@ BEGIN
     INSERT INTO band_training_courses (band_id, training_course_id) VALUES (3, 5);
     INSERT INTO band_training_courses (band_id, training_course_id) VALUES (3, 6);
     INSERT INTO band_training_courses (band_id, training_course_id) VALUES (3, 7);
+
 
 -- check the number of affected rows
 	GET DIAGNOSTICS @rows = ROW_COUNT;
