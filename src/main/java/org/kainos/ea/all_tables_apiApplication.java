@@ -5,6 +5,20 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.kainos.ea.controller.AuthController;
+import org.kainos.ea.dao.AuthDao;
+import org.kainos.ea.service.AuthService;
+import org.kainos.ea.controller.BandController;
+import org.kainos.ea.controller.CapabilityController;
+import org.kainos.ea.controller.JobRoleController;
+import org.kainos.ea.dao.BandDao;
+import org.kainos.ea.dao.CapabilityDao;
+import org.kainos.ea.dao.JobRoleDao;
+import org.kainos.ea.service.BandService;
+import org.kainos.ea.service.CapabilityService;
+import org.kainos.ea.service.JobRoleService;
+import org.kainos.ea.validator.JobRoleValidator;
+import org.kainos.ea.validator.AuthValidator;
 import org.kainos.ea.controller.*;
 import org.kainos.ea.dao.*;
 import org.kainos.ea.service.*;
@@ -40,12 +54,12 @@ public class all_tables_apiApplication extends Application<all_tables_apiConfigu
         BandDao bandDao = new BandDao();
         JobRoleDao jobRoleDao = new JobRoleDao();
         CompetencyService competencyService = new CompetencyService(competencyDao);
-
+        AuthDao authDao = new AuthDao();
         environment.jersey().register(new BandController(new BandService(bandDao, competencyDao, trainingCourseDao, new BandValidator(), new BandCompetencyValidator(competencyService))));
         environment.jersey().register(new CompetencyController(competencyService));
         environment.jersey().register(new TrainingCourseController(new TrainingCourseService(trainingCourseDao)));
         environment.jersey().register(new JobRoleController(new JobRoleService(jobRoleDao, new JobRoleValidator(jobRoleDao, bandDao, capabilityDao))));
         environment.jersey().register(new CapabilityController(new CapabilityService(capabilityDao)));
-
+        environment.jersey().register(new AuthController(new AuthService(authDao, new AuthValidator(authDao))));
     }
 }
