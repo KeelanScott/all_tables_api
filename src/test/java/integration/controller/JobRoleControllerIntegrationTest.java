@@ -9,16 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.all_tables_apiApplication;
 import org.kainos.ea.all_tables_apiConfiguration;
-import org.kainos.ea.dao.BandDao;
-import org.kainos.ea.dao.CapabilityDao;
-import org.kainos.ea.dao.JobRoleDao;
 import org.kainos.ea.exception.DatabaseConnectionException;
 import org.kainos.ea.exception.FailedToCreateJobRoleException;
 import org.kainos.ea.exception.InvalidJobRoleException;
 import org.kainos.ea.model.JobRole;
 import org.kainos.ea.model.JobRoleRequest;
-import org.kainos.ea.service.JobRoleService;
-import org.kainos.ea.validator.JobRoleValidator;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
