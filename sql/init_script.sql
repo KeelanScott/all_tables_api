@@ -31,6 +31,20 @@ BEGIN
         FOREIGN KEY (capability_id) REFERENCES capabilities(id)
     );
 
+    CREATE TABLE IF NOT EXISTS users (
+		email VARCHAR(64) NOT NULL,
+        password VARCHAR(64) NOT NULL,
+        is_admin BOOLEAN NOT NULL,
+        PRIMARY KEY (email)
+    );
+
+    CREATE TABLE IF NOT EXISTS tokens (
+		email VARCHAR(64) NOT NULL,
+        token VARCHAR(64) NOT NULL,
+        expiry DATETIME NOT NULL,
+        FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
+    );
+
     CREATE TABLE IF NOT EXISTS competencies (
         id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL
@@ -57,7 +71,7 @@ BEGIN
          FOREIGN KEY (band_id) REFERENCES bands(id),
          FOREIGN KEY (training_course_id) REFERENCES training_courses(id)
     );
-	
+
 END $$
 DELIMITER ;
 CALL init_script();			
