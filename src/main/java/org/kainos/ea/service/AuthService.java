@@ -12,7 +12,6 @@ public class AuthService {
         this.authDao= authDao;
     }
     private AuthDao authDao;
-    private DatabaseConnector databaseConnector = new DatabaseConnector();
     public String login(Login login) throws FailedToLoginException, FailedToGenerateTokenException, DatabaseConnectionException {
         try {
             if (authDao.validLogin(login)) {
