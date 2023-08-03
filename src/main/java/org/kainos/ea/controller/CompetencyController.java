@@ -8,7 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Api("All Tables Competency API")
+@Api("Competencies")
 @Path("/api")
 public class CompetencyController {
     private final CompetencyService competencyService;

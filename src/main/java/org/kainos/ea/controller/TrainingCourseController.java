@@ -7,7 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Api("All Tables Training API")
+@Api("Training Courses")
 @Path("/api")
 public class TrainingCourseController {
     private final TrainingCourseService trainingCourseService;

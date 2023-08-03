@@ -8,7 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Api("All Tables Band API")
+@Api("Bands")
 @Path("/api")
 public class BandController {
     private final BandService bandService;
@@ -63,6 +63,18 @@ public class BandController {
         } catch (BandDoesNotExistException e) {
             System.err.println(e);
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/bands")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllBands() {
+        try {
+            return Response.ok(bandService.getAllBands()).build();
+        } catch (FailedToGetBandException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
         }
     }
 }
