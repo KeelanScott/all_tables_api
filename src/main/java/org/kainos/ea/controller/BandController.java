@@ -3,6 +3,7 @@ package org.kainos.ea.controller;
 import io.swagger.annotations.Api;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.BandWithDetailsRequest;
+import org.kainos.ea.exception.FailedToGetBandException;
 import org.kainos.ea.service.BandService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

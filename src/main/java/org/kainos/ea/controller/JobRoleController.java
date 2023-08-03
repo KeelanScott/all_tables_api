@@ -3,6 +3,8 @@ package org.kainos.ea.controller;
 import io.swagger.annotations.Api;
 import org.kainos.ea.exception.*;
 import org.kainos.ea.model.JobRoleRequest;
+import org.kainos.ea.exception.DatabaseConnectionException;
+import org.kainos.ea.exception.JobRoleDoesNotExistException;
 import org.kainos.ea.service.JobRoleService;
 import org.kainos.ea.exception.FailedToGetJobRoleException;
 import javax.ws.rs.*;

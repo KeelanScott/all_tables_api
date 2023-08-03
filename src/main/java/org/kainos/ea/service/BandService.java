@@ -25,6 +25,14 @@ public class BandService {
         this.bandCompetencyValidator = bandCompetencyValidator;
     }
 
+    public List<Band> getAllBands() throws FailedToGetBandException {
+        try {
+            return bandDao.getAllBands();
+        } catch (SQLException | DatabaseConnectionException e) {
+            throw new FailedToGetBandException();
+        }
+    }
+
     public int createBand(BandWithDetailsRequest bandWithDetailsRequest) throws FailedToCreateBandException, InvalidBandException, InvalidBandCompetencyException, FailedToCreateBandCompetencyException, FailedToCreateBandTrainingCourseException {
         try {
             bandValidator.isValidBand(bandWithDetailsRequest.getBand());
@@ -92,14 +100,6 @@ public class BandService {
             Band band =  bandDao.getBandById(id);
             if (band != null) return band;
             else throw new BandDoesNotExistException();
-        } catch (SQLException | DatabaseConnectionException e) {
-            throw new FailedToGetBandException();
-        }
-    }
-
-    public List<Band> getAllBands() throws FailedToGetBandException {
-        try {
-            return bandDao.getAllBands();
         } catch (SQLException | DatabaseConnectionException e) {
             throw new FailedToGetBandException();
         }
